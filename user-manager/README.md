@@ -1,30 +1,98 @@
-# React + TypeScript + Vite
+# REACT - User Management
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
 
-Currently, two official plugins are available:
+- Getting started with React-Typescript-Vite and using Storybook
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Design
 
-## Expanding the ESLint configuration
+[Webix](https://webix.com/demos/user-manager/)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Targets
 
-- Configure the top-level `parserOptions` property like this:
+- Understand & apply knowledge of React/ TypeScript
+- Understand and apply React
+- Apply ErrorBoundary
+- Known how to optimize rendering performance using useCallback, useMemo, and memo.
+- Known how to state management with useReducer and useContext.
+- [PageSpeed](https://pagespeed.web.dev/) scores at minimum 98 points
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+## Requirements
+
+- [docs](https://docs.google.com/document/d/1zGBaCrptkQuzsg-Q48ToL7C3XiaYtVLbs9M5mpLYBxs/edit?usp=sharing)
+
+## Informations
+
+- Technologies: **React + Vite**
+- Editor: **VSCode**
+- Timeline: **16 days** (Jan 31, 2024 - Mar 04, 2024)
+- Team size: **1 developer**
+- Source code manager: **GitHub**
+- Estimation details plan: [Plan](https://docs.google.com/document/d/1XIBwj3kN9eNCUq9RS8sfHXvgVpcLdhP8gV-SDe6t16Y/edit?usp=sharing)
+
+## Environments
+
+- Node: v18.16.1
+- Vite: Vite requires Node.js version 14.18+, 16+. However, some templates require a higher Node.js version to work, please upgrade if your package manager warns about it.
+
+## The relationship database diagram
+
+- [Database diagram](https://drive.google.com/file/d/1hrhZB7zKCqG8mCX16Vs3xCaxWHA-jiU1/view?usp=sharing)
+
+## Deploy
+
+...
+
+## StoryBook
+
+...
+
+## Install repository
+
+Open Windows PowerShell or cmd or [Windows Terminal](https://www.microsoft.com/en-gb/p/windows-terminal/9n0dx20hk701?rtc=1&activetab=pivot:overviewtab)
+
+- **Step 1: Clone repository with HTTPS**
+
+```bash
+git clone https://github.com/mthanh2209/user-management.git
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Run server
+
+- **Step 2: Move to json-server folder**
+
+```bash
+cd json-server
+```
+
+- **Step 3: Install server**
+
+```bash
+npm install
+```
+
+- **Step 4: Run json-server**
+
+```bash
+npm start
+```
+
+## Run app
+
+- **Step 5: Move to user-manager folder**
+
+```bash
+cd user-manager
+```
+
+- **Step 6: Install project**
+
+```bash
+npm install
+```
+
+- **Step 7: Run project**
+
+```bash
+npm run dev
+```
