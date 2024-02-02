@@ -5,7 +5,7 @@ import '@components/DataDisplay/ItemNav/ItemNav.css';
 import { capitalizeLetter } from '@helpers/capitalizeLetter';
 
 interface IItemNav {
-  icon: string;
+  icon?: string;
   content: string;
   additionalClass?: string;
   isSelected?: boolean;
