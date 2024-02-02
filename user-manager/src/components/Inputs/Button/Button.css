@@ -43,3 +43,12 @@
 .btn-lg {
   padding: 6.5px 60px;
 }
+
+.btn-icon {
+  margin-right: 10px;
+}
+
+.btn-popover {
+  display: flex;
+  align-items: center;
+}
