@@ -1,0 +1,29 @@
+:root {
+  --primary-font: 'Roboto';
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+
+  --font-sm: 14px;
+  --font-md: 16px;
+
+  --primary-color: #1ca1c1;
+  --primary-color-hover: #1992af;
+  --primary-color-active: #17839d;
+  --secondary-color: #475466;
+
+  --light-grey: #f4f5f9;
+  --light-grey-hover: #e7e9f2;
+  --light-grey-active: #daddeb;
+
+  --not-active-color: #ff6455;
+  --light-red: #ffdedb;
+
+  --active-color: #55cd97;
+  --light-green: #d4ede5;
+
+  --white-color: #fff;
+  --black-color: #000;
+  --dark-color: #313131;
+  --border-color: #ccd7e6;
+}

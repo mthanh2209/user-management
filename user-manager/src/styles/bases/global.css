@@ -1,0 +1,10 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+html {
+  font-size: var(--font-md);
+  font-family: var(--primary-font);
+  line-height: 1;
+}
