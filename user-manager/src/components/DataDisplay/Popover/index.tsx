@@ -19,7 +19,7 @@ interface IPopoverProps {
   icon: string;
   children: string;
   options: IPopoverOption[];
-  onOpenModal: () => void;
+  onOpenModal: (option: IPopoverOption) => void;
 }
 
 const Popover = ({
@@ -67,7 +67,7 @@ const Popover = ({
               key={index}
               className='btn-option'
               type='button'
-              onClick={onOpenModal}
+              onClick={() => onOpenModal(option)}
             >
               {option.text}
             </button>
