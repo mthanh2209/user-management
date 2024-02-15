@@ -6,6 +6,10 @@ import ItemNav from '@components/DataDisplay/ItemNav/index';
 // Icons
 import userIconSelected from '@assets/images/user-icon-selected.svg';
 import userIcon from '@assets/images/user-icon.svg';
+import shieldIcon from '@assets/images/shield-icon.svg';
+import shieldIconSelected from '@assets/images/shield-icon-selected.svg';
+import fileCheckIcon from '@assets/images/file-check-icon.svg';
+import fileCheckIconSelected from '@assets/images/file-check-icon-selected.svg';
 
 interface IListNav {
   items: string[];
@@ -21,6 +25,12 @@ const ListNav = ({
   const renderIcon = (type: string, index: number) => {
     if (type === 'users') {
       return itemSelected === index ? userIconSelected : userIcon;
+    }
+    if (type === 'roles') {
+      return itemSelected === index ? shieldIconSelected : shieldIcon;
+    }
+    if (type === 'rules') {
+      return itemSelected === index ? fileCheckIconSelected : fileCheckIcon;
     }
   };
 
