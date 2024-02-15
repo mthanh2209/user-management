@@ -1,0 +1,49 @@
+.label-input {
+  margin-right: 20px;
+  font-size: var(--font-md);
+  font-weight: var(--fw-medium);
+}
+
+.hide {
+  display: none;
+}
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.text-field {
+  padding: 8px;
+  font-size: var(--font-sm);
+  font-weight: var(--fw-regular);
+  color: var(--secondary-color);
+  border: 1px solid var(--border-color);
+  border-radius: 2px;
+  outline: none;
+  text-align: left;
+}
+
+.text-field:focus {
+  border-color: var(--primary-color);
+}
+
+.input-text {
+  width: 18rem;
+}
+
+.input-search {
+  width: 100%;
+}
+
+.input-submit {
+  width: 13rem;
+}
+
+.error-message {
+  font-size: var(--font-sm);
+  font-weight: var(--fw-regular);
+  color: var(--not-active-color);
+  margin: 5px;
+  text-align: start;
+}
