@@ -14,7 +14,7 @@
 }
 
 .text-field {
-  padding: 8px;
+  padding: 7px;
   font-size: var(--font-sm);
   font-weight: var(--fw-regular);
   color: var(--secondary-color);
