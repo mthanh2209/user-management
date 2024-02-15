@@ -1,0 +1,22 @@
+.item-nav {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  font-size: var(--font-sm);
+  font-weight: var(--fw-regular);
+  color: var(--white-color);
+  list-style: none;
+  padding: 0.65rem 0.5rem;
+  cursor: pointer;
+}
+
+.selected {
+  color: var(--primary-color);
+  box-shadow: 2px 0 var(--primary-color) inset;
+  background-color: #3e424b;
+}
+
+.item-icon {
+  width: 23px;
+  height: 23px;
+}
