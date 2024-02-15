@@ -1,7 +1,7 @@
-// Components
+// CSS
 import '@components/DataDisplay/Status/Status.css';
 
-interface IStatus {
+interface IStatusProps {
   isActive?: boolean;
   active?: string;
   notActive?: string;
@@ -11,7 +11,7 @@ const Status = ({
   isActive,
   active = 'Active',
   notActive = 'Not active'
-}: IStatus) => (
+}: IStatusProps) => (
   <span
     className={`status status-${isActive
       ? 'active' : 'not-active'}`}>
