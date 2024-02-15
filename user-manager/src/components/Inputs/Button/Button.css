@@ -2,6 +2,7 @@
   border: none;
   border-radius: 2px;
   cursor: pointer;
+  font-family: var(--primary-font);
   font-size: var(--font-md);
   font-weight: var(--fw-medium);
 }
@@ -33,7 +34,7 @@
 }
 
 .btn-sm {
-  padding: 6.5px 40px;
+  padding: 6.5px 27px;
 }
 
 .btn-md {

@@ -13,7 +13,7 @@ interface IButtonProps {
   icon?: string;
   additionalClass?: string;
   children: ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const Button = ({
