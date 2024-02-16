@@ -21,19 +21,13 @@ export default {
 } as Meta;
 type Story = StoryObj<typeof TextField>;
 
-const isValid = (value: string): string | undefined => {
-  if (!value.trim()) {
-    return 'The field is required';
-  }
-  return undefined;
-};
-
 export const Default: Story = {
   args: {
     isShowLabel: true,
     label: 'Label',
     additionalClass: 'input-search',
     placeholder: 'Full Name',
-    validate: isValid
+    validate: (value: string) =>
+      !value.trim() ? 'Field cannot be empty' : undefined
   }
 };
