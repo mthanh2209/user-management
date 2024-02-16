@@ -11,14 +11,17 @@ import shieldIconSelected from '@assets/images/shield-icon-selected.svg';
 import fileCheckIcon from '@assets/images/file-check-icon.svg';
 import fileCheckIconSelected from '@assets/images/file-check-icon-selected.svg';
 
+interface ListNavItem {
+  label: string;
+  action: (data: string) => void;
+}
+
 interface IListNav {
-  items: string[];
-  onClick: (key: string) => void;
+  items: ListNavItem[];
 }
 
 const ListNav = ({
-  items,
-  onClick
+  items
 }: IListNav) => {
   const [itemSelected, setItemSelected] = useState<number | null>(null);
 
@@ -36,26 +39,26 @@ const ListNav = ({
 
   const handleClickedItem = (item: string, index: number) => {
     setItemSelected(index);
-    onClick(item);
+    items[index].action(item);
   };
 
   useEffect(() => {
-    handleClickedItem('users', 0);
+    handleClickedItem(items[0].label, 0);
   }, []);
 
   return (
     <ul>
       {items.map((item, index) => (
         <ItemNav
-          key={item}
+          key={item.label}
           additionalClass={
             itemSelected === index
             ? 'selected'
             : ''
           }
-          icon={renderIcon(item, index)}
-          content={item}
-          onClick={() => handleClickedItem(item, index)}
+          icon={renderIcon(item.label, index)}
+          content={item.label}
+          onClick={() => handleClickedItem(item.label, index)}
         />
       ))}
     </ul>

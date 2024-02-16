@@ -18,7 +18,9 @@ interface IDrawerProps {
   text?: string;
   icon?: string;
   popperOption: IPopoverOption[];
-  onItemClick: (data: string) => void;
+  onUserClick: (data: string) => void;
+  onRoleClick: (data: string) => void;
+  onRuleClick: (data: string) => void;
   onSubmit: (data: string) => void;
 }
 
@@ -27,7 +29,9 @@ const Drawer = ({
   text = 'New',
   icon = plusIcon,
   popperOption,
-  onItemClick,
+  onUserClick,
+  onRoleClick,
+  onRuleClick,
   onSubmit
 }: IDrawerProps) => {
   const [isOpenModal, setOpenModal] = useState(false);
@@ -62,8 +66,11 @@ const Drawer = ({
       />
 
       <ListNav
-        items={['users', 'roles', 'rules']}
-        onClick={onItemClick}
+        items={[
+          { label: 'users', action: onUserClick },
+          { label: 'roles', action: onRoleClick },
+          { label: 'rules', action: onRuleClick }
+        ]}
       />
 
       {isOpenModal && (
