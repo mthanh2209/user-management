@@ -6,7 +6,7 @@ import '@components/DataDisplay/Drawer/Drawer.css';
 // Components
 import Popover from '@components/DataDisplay/Popover';
 import ListNav from '@components/DataDisplay/ListNav';
-import Modal from '@components/DataDisplay/Modal';
+import ModalFormInput from '@components/DataDisplay/Modal/ModalFormInput';
 
 // Icons
 import plusIcon from '@assets/images/plus-icon.svg';
@@ -36,14 +36,14 @@ const Drawer = ({
 }: IDrawerProps) => {
   const [isOpenModal, setOpenModal] = useState(false);
   const [textInput, setTextInput] = useState('');
-  const [modalDesc, setModalDesc] = useState('');
+  const [modalTitle, setModalTitle] = useState('');
 
   const handleInputChange = (value: string) => {
     setTextInput(value);
   };
 
   const handleOpenModal = (option: IPopoverOption) => {
-    setModalDesc(option.label || '');
+    setModalTitle(option.label || '');
     setOpenModal(true);
   };
 
@@ -74,10 +74,9 @@ const Drawer = ({
       />
 
       {isOpenModal && (
-        <Modal
+        <ModalFormInput
           isOpen={isOpenModal}
-          type='submit'
-          modalDesc={modalDesc}
+          modalTitle={modalTitle}
           confirmText='Save'
           onClose={handleCloseModal}
           onConfirmText={handleOnSubmit}
