@@ -9,6 +9,9 @@ import useBackDrop from '@hooks/useBackDrop';
 //Components
 import Button from '@components/Inputs/Button';
 
+// Types
+import { IPopoverOption } from '@types';
+
 interface IPopoverProps {
   isOpen?: boolean;
   icon: string;

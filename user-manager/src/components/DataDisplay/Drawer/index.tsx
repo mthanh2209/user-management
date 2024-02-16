@@ -11,6 +11,9 @@ import ModalFormInput from '@components/DataDisplay/Modal/ModalFormInput';
 // Icons
 import plusIcon from '@assets/images/plus-icon.svg';
 
+// Types
+import { IItemNav, IPopoverOption } from '@types';
+
 type TAnchor = 'top' | 'left' | 'bottom' | 'right';
 
 interface IDrawerProps {
@@ -18,9 +21,9 @@ interface IDrawerProps {
   text?: string;
   icon?: string;
   popperOption: IPopoverOption[];
-  onUserClick: (data: string) => void;
-  onRoleClick: (data: string) => void;
-  onRuleClick: (data: string) => void;
+  // onUserClick: (data: string) => void;
+  // onRoleClick: (data: string) => void;
+  // onRuleClick: (data: string) => void;
   onSubmit: (data: string) => void;
 }
 
@@ -29,9 +32,9 @@ const Drawer = ({
   text = 'New',
   icon = plusIcon,
   popperOption,
-  onUserClick,
-  onRoleClick,
-  onRuleClick,
+  // onUserClick,
+  // onRoleClick,
+  // onRuleClick,
   onSubmit
 }: IDrawerProps) => {
   const [isOpenModal, setOpenModal] = useState(false);
@@ -42,7 +45,7 @@ const Drawer = ({
     setTextInput(value);
   };
 
-  const handleOpenModal = (option: IPopoverOption) => {
+  const handleOpenModal = (option: IItemNav) => {
     setModalTitle(option.label || '');
     setOpenModal(true);
   };
