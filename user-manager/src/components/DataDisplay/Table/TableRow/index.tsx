@@ -1,9 +1,9 @@
 // Components
-import TableRowItem from "@components/DataDisplay/Table/TableRow/TableRowItem";
-import TableRowCell from "@components/DataDisplay/Table/TableRow/TableRowCell";
+import TableRowItem from '@components/DataDisplay/Table/TableRow/TableRowItem';
+import TableRowCell from '@components/DataDisplay/Table/TableRow/TableRowCell';
 
 // Interfaces
-import { IColumnProps } from "@interfaces/columns";
+import { IColumnProps } from '@interfaces/columns';
 
 interface ITableRow<T> {
   rowData: T[];
@@ -29,12 +29,9 @@ const TableRow = <T,>({
           item={item}
           index={itemIndex}
           selectedRowIndex={selectedRowIndex}
-          onRowItemClick={onRowClick}>
-
-          {columns.map((
-              column,
-              columnIndex
-            ) => (
+          onRowItemClick={onRowClick}
+        >
+          {columns.map((column, columnIndex) => (
             <TableRowCell
               key={`table-row-cell-${columnIndex}`}
               item={item}

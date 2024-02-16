@@ -13,11 +13,8 @@ const TableHeader = <T,>({
 }: ITableHeader<T>): JSX.Element => {
   return (
     <tr className='table-header'>
-      {columns.map((
-        column,
-        columnIndex
-      ) => (
-        <TableHeaderCell key={`table-header-cell-${columnIndex}`}>
+      {columns.map((column) => (
+        <TableHeaderCell key={`table-header-cell-${column.id}`}>
           {column.title}
         </TableHeaderCell>
       ))}
