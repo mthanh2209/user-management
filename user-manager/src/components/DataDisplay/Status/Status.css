@@ -1,0 +1,16 @@
+.status {
+  font-weight: var(--fw-medium);
+  font-size: var(--font-md);
+  padding: 5px 12px;
+  border-radius: 7px;
+}
+
+.status-active {
+  background-color: var(--light-green);
+  color: var(--active-color);
+}
+
+.status-not-active {
+  background-color: var(--light-red);
+  color: var(--not-active-color);
+}
