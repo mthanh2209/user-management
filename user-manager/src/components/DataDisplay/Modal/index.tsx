@@ -1,7 +1,11 @@
 // CSS
 import '@components/DataDisplay/Modal/Modal.css';
 
-const Modal = (children: React.ReactNode) => {
+interface IModalProps {
+  children: React.ReactNode;
+}
+
+const Modal = ({ children }: IModalProps) => {
   return <div className={`modal-wrapper`}>{children}</div>;
 };
 
