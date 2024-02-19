@@ -1,0 +1,77 @@
+.sidebar {
+  margin: 8px;
+  min-width: 350px;
+  background-color: var(--white-color);
+  border: 1px solid var(--border-color);
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 10px;
+  font-weight: var(--fw-medium);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.sidebar-title {
+  color: var(--secondary-color);
+}
+
+.sidebar-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 0;
+}
+
+.info-name {
+  margin: 20px 0 0;
+  font-size: var(--font-sm);
+  font-weight: var(--fw-medium);
+  color: var(--dark-color);
+  letter-spacing: 0.2px;
+}
+
+.info-list {
+  padding: 0 16px;
+  font-size: var(--font-sm);
+  color: var(--dark-color);
+  letter-spacing: 0.2px;
+}
+
+.info-list-header {
+  margin: 0 0 0.6rem;
+  font-weight: var(--fw-medium);
+}
+
+.info-list-content {
+  margin: 0 0 24px;
+  font-weight: var(--fw-regular);
+}
+
+.info-list-icon::before {
+  display: block;
+  content: '';
+  width: 24px;
+  height: 40px;
+  float: left;
+  margin: -4px 6px 0 0;
+}
+
+.email-icon::before {
+  background: url('../../../assets/images/email-icon.svg') no-repeat;
+  background-size: 20px 20px;
+}
+
+.date-icon::before {
+  background: url('../../../assets/images/clock-icon.svg') no-repeat;
+  background-size: 20px 20px;
+}
+
+.edit-icon {
+  background: url('../../../assets/images/edit-icon.svg') no-repeat;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
