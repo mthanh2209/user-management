@@ -47,6 +47,10 @@ const Popover = ({
     setShowOption(isOpen);
   }, [isOpen]);
 
+  const handleOptionClick = (option: IPopoverOption) => () => {
+    onOpenModal(option);
+  };
+
   return (
     <div className='popover' ref={optionRef}>
       <Button
@@ -65,7 +69,7 @@ const Popover = ({
               key={index}
               className='btn-option'
               type='button'
-              onClick={() => onOpenModal(option)}
+              onClick={handleOptionClick(option)}
             >
               {option.text}
             </button>
