@@ -5,7 +5,7 @@ import TableCell from "@components/DataDisplay/Table/TableRow/TableRowCell/Table
 import { IColumnProps } from "@interfaces/columns";
 
 // Helpers
-import { getObjValue } from "@helpers/getObjValue";
+import { getObjValue } from "@helpers";
 
 interface ITableRowCell<T> {
   item: T,
