@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 // Components
 import ItemNav from '@components/DataDisplay/ItemNav/index';
@@ -10,6 +10,8 @@ import shieldIcon from '@assets/images/shield-icon.svg';
 import shieldIconSelected from '@assets/images/shield-icon-selected.svg';
 import fileCheckIcon from '@assets/images/file-check-icon.svg';
 import fileCheckIconSelected from '@assets/images/file-check-icon-selected.svg';
+
+// Types
 import { IItemNav } from '@types';
 
 interface IListNav {
@@ -17,7 +19,9 @@ interface IListNav {
 }
 
 const ListNav = ({ items }: IListNav) => {
-  const [itemSelected, setItemSelected] = useState<number | null>(null);
+  const [itemSelected, setItemSelected] = useState<number | null>(
+    items.length > 0 ? items[0].id : null
+  );
 
   const renderIcon = (type: string, index: number) => {
     if (type === 'users') {
@@ -30,12 +34,6 @@ const ListNav = ({ items }: IListNav) => {
       return itemSelected === index ? fileCheckIconSelected : fileCheckIcon;
     }
   };
-
-  useEffect(() => {
-    if (itemSelected === null && items.length > 0) {
-      setItemSelected(items[0].id);
-    }
-  }, [itemSelected, items]);
 
   const handleClickedItem = (item: IItemNav) => () => {
     setItemSelected(item.id);
