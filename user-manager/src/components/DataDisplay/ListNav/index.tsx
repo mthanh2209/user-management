@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // Components
 import ItemNav from '@components/DataDisplay/ItemNav/index';
@@ -31,7 +31,13 @@ const ListNav = ({ items }: IListNav) => {
     }
   };
 
-  const handleClickedItem = (item: IItemNav) => {
+  useEffect(() => {
+    if (itemSelected === null && items.length > 0) {
+      setItemSelected(items[0].id);
+    }
+  }, [itemSelected, items]);
+
+  const handleClickedItem = (item: IItemNav) => () => {
     setItemSelected(item.id);
   };
 
@@ -43,7 +49,7 @@ const ListNav = ({ items }: IListNav) => {
           additionalClass={itemSelected === item.id ? 'selected' : ''}
           icon={renderIcon(item.label, index)}
           content={item.label}
-          onClick={() => handleClickedItem(item)}
+          onClick={handleClickedItem(item)}
         />
       ))}
     </ul>

@@ -22,7 +22,7 @@ type Story = StoryObj<typeof Drawer>;
 export const Default: Story = {
   args: {
     icon: plusIcon,
-    popperOption: [
+    popoverOption: [
       {
         text: 'Add new user',
         label: 'Enter user name',

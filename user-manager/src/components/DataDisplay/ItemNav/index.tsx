@@ -9,7 +9,7 @@ interface IItemNav {
   content: string;
   additionalClass?: string;
   isSelected?: boolean;
-  onClick?: () => void;
+  onClick: () => void;
 }
 
 const ItemNav = ({

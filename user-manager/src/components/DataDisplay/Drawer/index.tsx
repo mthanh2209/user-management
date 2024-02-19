@@ -12,7 +12,7 @@ import ModalFormInput from '@components/DataDisplay/Modal/ModalFormInput';
 import plusIcon from '@assets/images/plus-icon.svg';
 
 // Types
-import { IItemNav, IPopoverOption } from '@types';
+import { IPopoverOption } from '@types';
 
 type TAnchor = 'top' | 'left' | 'bottom' | 'right';
 
@@ -20,10 +20,7 @@ interface IDrawerProps {
   anchor?: TAnchor;
   text?: string;
   icon?: string;
-  popperOption: IPopoverOption[];
-  // onUserClick: (data: string) => void;
-  // onRoleClick: (data: string) => void;
-  // onRuleClick: (data: string) => void;
+  popoverOption: IPopoverOption[];
   onSubmit: (data: string) => void;
 }
 
@@ -31,10 +28,7 @@ const Drawer = ({
   anchor = 'left',
   text = 'New',
   icon = plusIcon,
-  popperOption,
-  // onUserClick,
-  // onRoleClick,
-  // onRuleClick,
+  popoverOption,
   onSubmit
 }: IDrawerProps) => {
   const [isOpenModal, setOpenModal] = useState(false);
@@ -45,7 +39,7 @@ const Drawer = ({
     setTextInput(value);
   };
 
-  const handleOpenModal = (option: IItemNav) => {
+  const handleOpenModal = (option: IPopoverOption) => {
     setModalTitle(option.label || '');
     setOpenModal(true);
   };
@@ -64,15 +58,15 @@ const Drawer = ({
       <Popover
         icon={icon}
         children={text}
-        options={popperOption}
+        options={popoverOption}
         onOpenModal={handleOpenModal}
       />
 
       <ListNav
         items={[
-          { label: 'users', action: onUserClick },
-          { label: 'roles', action: onRoleClick },
-          { label: 'rules', action: onRuleClick }
+          { id: 0, label: 'users' },
+          { id: 1, label: 'roles' },
+          { id: 2, label: 'rules' }
         ]}
       />
 
