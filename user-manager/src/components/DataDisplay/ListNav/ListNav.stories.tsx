@@ -17,9 +17,9 @@ type Story = StoryObj<typeof ListNav>;
 export const Default: Story = {
   args: {
     items: [
-      { id: 0, label: 'users' },
-      { id: 1, label: 'roles' },
-      { id: 2, label: 'rules' }
+      { id: 0, label: 'users', onClick: () => {} },
+      { id: 1, label: 'roles', onClick: () => {} },
+      { id: 2, label: 'rules', onClick: () => {} }
     ]
   }
 };

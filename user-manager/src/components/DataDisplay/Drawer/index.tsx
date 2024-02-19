@@ -21,6 +21,7 @@ interface IDrawerProps {
   text?: string;
   icon?: string;
   popoverOption: IPopoverOption[];
+  onItemClick: () => void;
   onSubmit: (data: string) => void;
 }
 
@@ -29,6 +30,7 @@ const Drawer = ({
   text = 'New',
   icon = plusIcon,
   popoverOption,
+  onItemClick,
   onSubmit
 }: IDrawerProps) => {
   const [isOpenModal, setOpenModal] = useState(false);
@@ -64,9 +66,9 @@ const Drawer = ({
 
       <ListNav
         items={[
-          { id: 0, label: 'users' },
-          { id: 1, label: 'roles' },
-          { id: 2, label: 'rules' }
+          { id: 0, label: 'users', onClick: onItemClick },
+          { id: 1, label: 'roles', onClick: onItemClick },
+          { id: 2, label: 'rules', onClick: onItemClick }
         ]}
       />
 
