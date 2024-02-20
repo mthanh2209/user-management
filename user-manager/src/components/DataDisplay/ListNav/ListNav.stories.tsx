@@ -8,7 +8,7 @@ export default {
   component: ListNav,
   tags: ['autodocs'],
   argTypes: {
-    items: { description: 'List of nav items' },
+    items: { description: 'List of nav items' }
   }
 } as Meta;
 
@@ -16,7 +16,10 @@ type Story = StoryObj<typeof ListNav>;
 
 export const Default: Story = {
   args: {
-    items: ['users', 'roles', 'rules'],
-    onClick: () => {}
+    items: [
+      { id: 0, label: 'users', onClick: () => {} },
+      { id: 1, label: 'roles', onClick: () => {} },
+      { id: 2, label: 'rules', onClick: () => {} }
+    ]
   }
 };

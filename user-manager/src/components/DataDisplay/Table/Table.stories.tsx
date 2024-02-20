@@ -9,8 +9,8 @@ import Status from '@components/DataDisplay/Status';
 import { getRandomColor } from '@helpers/getRandomColor';
 
 // Interfaces
-import { IUserProps } from '@interfaces/users';
-import { IColumnProps } from '@interfaces/columns';
+import { IUserProps } from '@types';
+import { IColumnProps } from '@types';
 
 export default {
   title: 'Components/Table',

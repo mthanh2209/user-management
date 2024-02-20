@@ -3,7 +3,7 @@ import TableRowItem from '@components/DataDisplay/Table/TableRow/TableRowItem';
 import TableRowCell from '@components/DataDisplay/Table/TableRow/TableRowCell';
 
 // Interfaces
-import { IColumnProps } from '@interfaces/columns';
+import { IColumnProps } from '@types';
 
 interface ITableRow<T> {
   rowData: T[];
