@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import validator from 'validator';
+import {useState } from 'react';
 
 // CSS
 import '@components/DataDisplay/ProfileEditor/ProfileEditor.css';
@@ -19,9 +18,7 @@ import { IUserProps } from '@types';
 
 // Helpers
 import { formatDate } from '@helpers';
-
-//Constants
-import { VALIDATION_MESSAGE } from '@constants';
+import { isEmailValid, isFullNameValid } from '@helpers';
 
 interface IProfileEditor {
   id: number;
@@ -52,38 +49,31 @@ const ProfileEditor = ({
   onDeleteUser,
   showToast
 }: IProfileEditor) => {
-  const [currentAvatar, setAvatar] = useState(avatar);
-  const [currentFullName, setFullName] = useState(fullName);
-  const [currentEmail, setEmail] = useState(email);
-  const [currentStatus, setStatus] = useState(isActive);
-  const [currentDetails, setDetails] = useState(details);
+  const [formData, setFormData] = useState({
+    fullName,
+    email,
+    status: isActive,
+    details,
+    avatar
+  });
   const [isOpenModal, setOpenModal] = useState(false);
 
-  const handleFullNameChange = (value: string) => {
-    setFullName(value);
-  };
-
-  const handleEmailChange = (value: string) => {
-    setEmail(value);
+  const handleOnChange = (field: string, value: string | boolean) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [field]: value
+    }));
   };
 
   const handleSwitchChange = () => {
-    setStatus(!currentStatus);
-  };
-
-  const handleDetailsChange = (value: string) => {
-    setDetails(value);
-  };
-
-  const handleAvatarChange = (value: string) => {
-    setAvatar(value);
+    handleOnChange('status', !formData.status);
   };
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const emailError = isEmailValid(currentEmail);
-    const fullNameError = isFullNameValid(currentFullName);
+    const emailError = isEmailValid(formData.email);
+    const fullNameError = isFullNameValid(formData.fullName);
 
     if (emailError || fullNameError) {
       showToast(true, true);
@@ -93,14 +83,14 @@ const ProfileEditor = ({
     const currentDate = new Date().toString();
     const updatedItem = {
       id: id,
-      avatar: currentAvatar,
-      fullName: currentFullName,
-      email: currentEmail,
-      isActive: currentStatus,
+      avatar: formData.avatar,
+      fullName: formData.fullName,
+      email: formData.email,
+      isActive: formData.status,
       registeredDate: registeredDate,
       lastVisitedDate: currentDate,
-      details: currentDetails,
-      bgColor: bgColor
+      details: formData.details,
+      bgColor
     };
     onSaveUser(updatedItem as IUserProps);
     showToast(true, false);
@@ -117,30 +107,6 @@ const ProfileEditor = ({
 
   const handleCloseModal = () => {
     setOpenModal(false);
-  };
-
-  useEffect(() => {
-    setFullName(fullName);
-    setEmail(email);
-    setStatus(isActive);
-    setDetails(details);
-    setAvatar(avatar);
-  }, [fullName, email, isActive, details, avatar]);
-
-  const isEmailValid = (value: string): string | undefined => {
-    if (!value) {
-      return VALIDATION_MESSAGE.EMAIL_REQUIRED;
-    } else if (!validator.isEmail(value)) {
-      return VALIDATION_MESSAGE.INVALID_EMAIL;
-    }
-    return undefined;
-  };
-
-  const isFullNameValid = (value: string): string | undefined => {
-    if (!value.trim()) {
-      return VALIDATION_MESSAGE.INVALID_NAME;
-    }
-    return undefined;
   };
 
   return (
@@ -182,8 +148,8 @@ const ProfileEditor = ({
             isShowLabel={true}
             label='Full Name'
             additionalClass='input-text'
-            value={currentFullName}
-            onChange={handleFullNameChange}
+            value={formData.fullName}
+            onChange={(value) => handleOnChange('fullName', value)}
             validate={isFullNameValid}
           />
         </div>
@@ -193,8 +159,8 @@ const ProfileEditor = ({
             isShowLabel={true}
             label='Email'
             additionalClass='input-text'
-            value={currentEmail}
-            onChange={handleEmailChange}
+            value={formData.email}
+            onChange={(value) => handleOnChange('email', value)}
             validate={isEmailValid}
           />
         </div>
@@ -202,22 +168,22 @@ const ProfileEditor = ({
         <div className='form-item form-item-avatar'>
           <span className='form-item-title'>Avatar</span>
           <ImageUploader
-            initialImage={currentAvatar}
-            alt={currentFullName}
+            initialImage={formData.avatar}
+            alt={formData.fullName}
             bgColor={bgColor}
-            onChange={handleAvatarChange}
+            onChange={(value) => handleOnChange('avatar', value)}
           />
         </div>
 
         <div className='form-item form-item-status'>
           <span className='form-item-title'>Status</span>
           <SwitchStatus
-            isChecked={currentStatus}
+            isChecked={formData.status}
             onChange={handleSwitchChange}
           />
 
           <div className='status-wrapper'>
-            <Status isActive={currentStatus} />
+            <Status isActive={formData.status} />
           </div>
         </div>
 
@@ -241,13 +207,14 @@ const ProfileEditor = ({
 
         <div className='form-item form-item-details'>
           <span className='form-item-title'>Details</span>
-            <TextArea
-              onChange={handleDetailsChange}
-              value={currentDetails} />
-          </div>
-        </form>
-      </>
-    );
+          <TextArea
+            onChange={(value) => handleOnChange('details', value)}
+            value={formData.details}
+          />
+        </div>
+      </form>
+    </>
+  );
 };
 
 export default ProfileEditor;
