@@ -1,0 +1,25 @@
+.uploader-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.uploader {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.uploader-button {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  font-weight: var(--fw-medium);
+  font-size: var(--font-md);
+  color: var(--primary-color);
+  cursor: pointer;
+}
+
+.input-uploader {
+  display: none;
+}
