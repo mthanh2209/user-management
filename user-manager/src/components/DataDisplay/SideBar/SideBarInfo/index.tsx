@@ -18,12 +18,12 @@ export interface SideBarInfoProps {
 const SideBarInfo = ({ data }: SideBarInfoProps) => {
   return (
     <div>
-      {data.map((item, index) => {
+      {data.map((item) => {
         switch (item.type) {
           case INFO_TYPE.TEXT_VIEW:
             return (
               <TextView
-                key={index}
+                key={item.id}
                 icon={item.icon}
                 title={item.title}
                 content={item.content}
@@ -32,7 +32,7 @@ const SideBarInfo = ({ data }: SideBarInfoProps) => {
           case INFO_TYPE.LIST_VIEW:
             return (
               <ListView
-                key={index}
+                key={item.id}
                 items={item.items as ItemViewProps[]}
               />
             );

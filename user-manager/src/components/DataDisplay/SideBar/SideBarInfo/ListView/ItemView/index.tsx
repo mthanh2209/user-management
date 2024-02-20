@@ -6,6 +6,7 @@ import { ItemViewProps } from '@types';
 const ItemView = ({
   icon,
   title,
+  additionalClass,
   content
 }: ItemViewProps) => {
   return (
@@ -15,11 +16,11 @@ const ItemView = ({
         {title}
       </div>
       <div className='info-list-link'>
-        {content.map((item, index) => (
+        {content.map((item) => (
           <Link
-            key={index}
+            key={item.link}
             to={item.link}
-            className='text-link'
+            className={`text-link ${additionalClass}`}
           >
             {item.text}
           </Link>

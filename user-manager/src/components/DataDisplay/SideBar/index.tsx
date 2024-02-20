@@ -30,11 +30,19 @@ const InformationSidebar = ({
       <header className='sidebar-header'>
         <h2 className='sidebar-title'>{title}</h2>
         <Status isActive={isActive} />
-        <span className='edit-icon' onClick={onShowPanel}></span>
+        <span
+          className='edit-icon'
+          onClick={onShowPanel}>
+        </span>
       </header>
 
       <div className='sidebar-info'>
-        <Avatar src={src} alt={fullName} bgColor={bgColor} size='lg' />
+        <Avatar
+          src={src}
+          alt={fullName}
+          bgColor={bgColor}
+          size='lg'
+        />
         <p className='info-name'>{fullName}</p>
       </div>
       <div className='info-list'>

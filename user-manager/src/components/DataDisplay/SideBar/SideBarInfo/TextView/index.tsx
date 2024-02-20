@@ -16,7 +16,7 @@ const TextView = ({
         {title}
       </div>
       <p className='info-list-content'>
-        {content === null || content === '' ? 'Unknown' : content}
+        {content || 'Unknown'}
       </p>
     </>
   );

@@ -11,9 +11,9 @@ interface ListViewProps {
 const ListView = ({ items }: ListViewProps) => {
   return (
     <>
-      {items.map((item, index) => (
+      {items.map((item) => (
         <ItemView
-          key={index}
+          key={item.title}
           icon={item.icon}
           title={item.title}
           content={item.content}
