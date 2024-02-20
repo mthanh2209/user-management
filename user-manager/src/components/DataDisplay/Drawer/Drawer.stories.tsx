@@ -33,6 +33,20 @@ export const Default: Story = {
         label: 'Enter role name',
         onClick: () => {}
       }
+    ],
+    items: [
+      {
+        id: 0,
+        label: 'users'
+      },
+      {
+        id: 1,
+        label: 'roles'
+      },
+      {
+        id: 2,
+        label: 'rules'
+      }
     ]
   }
 };
