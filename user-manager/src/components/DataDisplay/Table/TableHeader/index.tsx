@@ -2,7 +2,7 @@
 import TableHeaderCell from '@components/DataDisplay/Table/TableHeader/TableHeaderCell';
 
 // Interfaces
-import { IColumnProps } from '@interfaces/columns';
+import { IColumnProps } from '@types';
 
 interface ITableHeader<T> {
   columns: IColumnProps<T>[];
