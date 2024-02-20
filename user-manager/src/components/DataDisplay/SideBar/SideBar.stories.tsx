@@ -46,7 +46,7 @@ export const Default: Story = {
         type: 'listView',
         icon: 'date-icon',
         title: 'Roles',
-        navigation: [
+        content: [
           {
             text: 'Admin',
             link: '/'

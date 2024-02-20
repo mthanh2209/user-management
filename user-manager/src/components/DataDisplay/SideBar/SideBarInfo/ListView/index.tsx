@@ -1,6 +1,8 @@
-import ItemView, {
-  ItemViewProps
-} from '@components/DataDisplay/SideBar/SideBarInfo/ListView/ItemView';
+// Components
+import ItemView from '@components/DataDisplay/SideBar/SideBarInfo/ListView/ItemView';
+
+// Types
+import { ItemViewProps } from '@components/DataDisplay/SideBar/SideBarInfo/ListView/ItemView';
 
 interface ListViewProps {
   items: ItemViewProps[];
@@ -9,12 +11,12 @@ interface ListViewProps {
 const ListView = ({ items }: ListViewProps) => {
   return (
     <>
-      {items.map(({ icon, title, navigation }, index) => (
+      {items.map(({ icon, title, content }, index) => (
         <ItemView
           key={index}
           icon={icon}
           title={title}
-          navigation={navigation}
+          content={content}
         />
       ))}
     </>

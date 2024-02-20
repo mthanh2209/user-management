@@ -1,5 +1,8 @@
-// Types
-import { IInfoList } from "@types";
+interface IInfoList {
+  icon?: string;
+  title?: string;
+  content?: string | null;
+}
 
 const TextView = ({
   icon,
@@ -13,7 +16,7 @@ const TextView = ({
         {title}
       </div>
       <p className='info-list-content'>
-      {content === null || content === '' ? 'Unknown' : content}
+        {content === null || content === '' ? 'Unknown' : content}
       </p>
     </>
   );

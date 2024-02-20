@@ -1,10 +1,10 @@
-// Components
+// CSS
 import '@components/DataDisplay/SideBar/SideBar.css';
+
+// Components
 import Status from '@components/DataDisplay/Status';
 import Avatar from '@components/DataDisplay/Avatar/index';
-
-// Types
-import SideBarInfo, { SideBarInfoProps } from './SideBarInfo';
+import SideBarInfo, { SideBarInfoProps } from '@components/DataDisplay/SideBar/SideBarInfo';
 
 interface ISideBarProps {
   title?: string;

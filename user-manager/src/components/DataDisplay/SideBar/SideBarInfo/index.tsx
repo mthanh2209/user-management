@@ -1,6 +1,9 @@
-import ListView from './ListView';
-import { ItemViewProps } from './ListView/ItemView';
-import TextView from './TextView';
+// Components
+import ListView from '@components/DataDisplay/SideBar/SideBarInfo/ListView';
+import TextView from '@components/DataDisplay/SideBar/SideBarInfo/TextView';
+
+// Types
+import { ItemViewProps } from '@components/DataDisplay/SideBar/SideBarInfo/ListView/ItemView';
 
 export interface SideBarInfoProps {
   data: Array<{
@@ -25,7 +28,10 @@ const SideBarInfo = ({ data }: SideBarInfoProps) => {
             );
           case 'listView':
             return (
-              <ListView key={index} items={item.items as ItemViewProps[]} />
+              <ListView
+                key={index}
+                items={item.items as ItemViewProps[]}
+              />
             );
           default:
             return null;

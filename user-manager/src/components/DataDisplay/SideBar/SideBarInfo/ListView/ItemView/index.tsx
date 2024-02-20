@@ -3,13 +3,17 @@ import { Link } from 'react-router-dom';
 export interface ItemViewProps {
   icon: string;
   title: string;
-  navigation: Array<{
+  content: Array<{
     text: string;
     link: string;
   }>;
 }
 
-const ItemView = ({ icon, title, navigation }: ItemViewProps) => {
+const ItemView = ({
+  icon,
+  title,
+  content
+}: ItemViewProps) => {
   return (
     <>
       <div className='info-list-header'>
@@ -17,7 +21,7 @@ const ItemView = ({ icon, title, navigation }: ItemViewProps) => {
         {title}
       </div>
       <div className='info-list-link'>
-        {navigation.map((item, index) => (
+        {content.map((item, index) => (
           <Link
             key={index}
             to={item.link}
