@@ -1,6 +1,6 @@
 .status {
   font-weight: var(--fw-medium);
-  font-size: var(--font-md);
+  font-size: var(--font-sm);
   padding: 5px 12px;
   border-radius: 7px;
 }

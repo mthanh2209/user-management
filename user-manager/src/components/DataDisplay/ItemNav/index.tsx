@@ -2,7 +2,7 @@
 import '@components/DataDisplay/ItemNav/ItemNav.css';
 
 // Helpers
-import { capitalizeLetter } from '@helpers/capitalizeLetter';
+import { capitalizeLetter } from '@helpers';
 
 interface IItemNav {
   icon?: string;

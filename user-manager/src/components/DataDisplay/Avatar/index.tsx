@@ -2,7 +2,7 @@
 import '@components/DataDisplay/Avatar/Avatar.css';
 
 // Helpers
-import { capitalizeLetter } from '@helpers/capitalizeLetter';
+import { capitalizeLetter } from '@helpers';
 
 type TAvatarSize = 'sm' | 'md' | 'lg';
 
