@@ -1,13 +1,7 @@
 import { Link } from 'react-router-dom';
 
-export interface ItemViewProps {
-  icon: string;
-  title: string;
-  content: Array<{
-    text: string;
-    link: string;
-  }>;
-}
+// Types
+import { ItemViewProps } from '@types';
 
 const ItemView = ({
   icon,

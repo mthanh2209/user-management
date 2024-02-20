@@ -7,6 +7,9 @@ import SideBar from '@components/DataDisplay/SideBar/index';
 import { getRandomColor } from '@helpers/getRandomColor';
 import { formatDate } from '@helpers/formatDate';
 
+// Constants
+import { INFO_TYPE } from '@constants';
+
 export default {
   title: 'Components/SideBar',
   component: SideBar,
@@ -31,19 +34,19 @@ export const Default: Story = {
     fullName: 'UserName',
     data: [
       {
-        type: 'textView',
+        type: INFO_TYPE.TEXT_VIEW,
         icon: 'email-icon',
         title: 'Email:',
         content: ''
       },
       {
-        type: 'textView',
+        type: INFO_TYPE.TEXT_VIEW,
         icon: 'date-icon',
         title: 'Last visited:',
         content: formatDate(new Date().toISOString())
       },
       {
-        type: 'listView',
+        type: INFO_TYPE.LIST_VIEW,
         icon: 'date-icon',
         title: 'Roles',
         content: [

@@ -3,7 +3,10 @@ import ListView from '@components/DataDisplay/SideBar/SideBarInfo/ListView';
 import TextView from '@components/DataDisplay/SideBar/SideBarInfo/TextView';
 
 // Types
-import { ItemViewProps } from '@components/DataDisplay/SideBar/SideBarInfo/ListView/ItemView';
+import { ItemViewProps } from '@types';
+
+// Constants
+import { INFO_TYPE } from '@constants';
 
 export interface SideBarInfoProps {
   data: Array<{
@@ -17,7 +20,7 @@ const SideBarInfo = ({ data }: SideBarInfoProps) => {
     <div>
       {data.map((item, index) => {
         switch (item.type) {
-          case 'textView':
+          case INFO_TYPE.TEXT_VIEW:
             return (
               <TextView
                 key={index}
@@ -26,7 +29,7 @@ const SideBarInfo = ({ data }: SideBarInfoProps) => {
                 content={item.content}
               />
             );
-          case 'listView':
+          case INFO_TYPE.LIST_VIEW:
             return (
               <ListView
                 key={index}

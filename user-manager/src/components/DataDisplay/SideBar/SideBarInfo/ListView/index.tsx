@@ -2,7 +2,7 @@
 import ItemView from '@components/DataDisplay/SideBar/SideBarInfo/ListView/ItemView';
 
 // Types
-import { ItemViewProps } from '@components/DataDisplay/SideBar/SideBarInfo/ListView/ItemView';
+import { ItemViewProps } from '@types';
 
 interface ListViewProps {
   items: ItemViewProps[];
