@@ -9,17 +9,15 @@ import useBackDrop from '@hooks/useBackDrop';
 //Components
 import Button from '@components/Inputs/Button';
 
-interface IPopoverOption {
-  text: string;
-  onClick?: () => void;
-}
+// Types
+import { IPopoverOption } from '@types';
 
 interface IPopoverProps {
   isOpen?: boolean;
   icon: string;
   children: string;
   options: IPopoverOption[];
-  onOpenModal: () => void;
+  onOpenModal: (option: IPopoverOption) => void;
 }
 
 const Popover = ({
@@ -49,6 +47,10 @@ const Popover = ({
     setShowOption(isOpen);
   }, [isOpen]);
 
+  const handleOptionClick = (option: IPopoverOption) => () => {
+    onOpenModal(option);
+  };
+
   return (
     <div className='popover' ref={optionRef}>
       <Button
@@ -67,7 +69,7 @@ const Popover = ({
               key={index}
               className='btn-option'
               type='button'
-              onClick={onOpenModal}
+              onClick={handleOptionClick(option)}
             >
               {option.text}
             </button>

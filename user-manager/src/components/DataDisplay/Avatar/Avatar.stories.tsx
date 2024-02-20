@@ -4,7 +4,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import Avatar from '@components/DataDisplay/Avatar/index';
 
 // Helpers
-import { getRandomColor } from '@helpers/getRandomColor';
+import { getRandomColor } from '@helpers';
 
 export default {
   title: 'Components/Avatar',

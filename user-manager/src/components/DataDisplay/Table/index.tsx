@@ -6,7 +6,7 @@ import TableHeader from "@components/DataDisplay/Table/TableHeader";
 import TableRow from "@components/DataDisplay/Table/TableRow";
 
 // Interfaces
-import { IColumnProps } from '@interfaces/columns';
+import { IColumnProps } from '@types';
 
 interface ITableProps<T> {
   rowData: T[];

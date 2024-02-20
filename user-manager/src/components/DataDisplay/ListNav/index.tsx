@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 // Components
 import ItemNav from '@components/DataDisplay/ItemNav/index';
@@ -11,16 +11,17 @@ import shieldIconSelected from '@assets/images/shield-icon-selected.svg';
 import fileCheckIcon from '@assets/images/file-check-icon.svg';
 import fileCheckIconSelected from '@assets/images/file-check-icon-selected.svg';
 
+// Types
+import { IItemNav } from '@types';
+
 interface IListNav {
-  items: string[];
-  onClick: (key: string) => void;
+  items: IItemNav[];
 }
 
-const ListNav = ({
-  items,
-  onClick
-}: IListNav) => {
-  const [itemSelected, setItemSelected] = useState<number | null>(null);
+const ListNav = ({ items }: IListNav) => {
+  const [itemSelected, setItemSelected] = useState<number | null>(
+    items.length > 0 ? items[0].id : null
+  );
 
   const renderIcon = (type: string, index: number) => {
     if (type === 'users') {
@@ -34,28 +35,19 @@ const ListNav = ({
     }
   };
 
-  const handleClickedItem = (item: string, index: number) => {
-    setItemSelected(index);
-    onClick(item);
+  const handleClickedItem = (item: IItemNav) => () => {
+    setItemSelected(item.id);
   };
-
-  useEffect(() => {
-    handleClickedItem('users', 0);
-  }, []);
 
   return (
     <ul>
       {items.map((item, index) => (
         <ItemNav
-          key={item}
-          additionalClass={
-            itemSelected === index
-            ? 'selected'
-            : ''
-          }
-          icon={renderIcon(item, index)}
-          content={item}
-          onClick={() => handleClickedItem(item, index)}
+          key={item.id}
+          additionalClass={itemSelected === item.id ? 'selected' : ''}
+          icon={renderIcon(item.label, index)}
+          content={item.label}
+          onClick={handleClickedItem(item)}
         />
       ))}
     </ul>

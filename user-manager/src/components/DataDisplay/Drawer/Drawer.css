@@ -1,0 +1,33 @@
+.drawer-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 210px;
+  padding: 20px 0;
+  background-color: #4a4e58;
+}
+
+.drawer-wrapper.top {
+  width: 100vw;
+  height: 210px;
+}
+
+.drawer-wrapper.left {
+  width: 210px;
+  height: 100vh;
+}
+
+.drawer-wrapper.bottom {
+  position: absolute;
+  bottom: 0;
+  width: 100vw;
+  height: 210px;
+}
+
+.drawer-wrapper.right {
+  position: absolute;
+  right: 0;
+  width: 210px;
+  height: 100vh;
+}
