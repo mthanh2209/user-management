@@ -1,0 +1,62 @@
+.form-edit-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  overflow: auto;
+  margin: 20px 0 0 48px;
+}
+
+.form-item {
+  display: grid;
+  grid-template-columns: 128px 1fr;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 24px;
+}
+
+.form-item-input {
+  text-align: end;
+  align-items: baseline;
+  margin-right: 20px;
+}
+
+.form-item-avatar {
+  align-items: start;
+}
+
+.form-item-status {
+  grid-template-columns: 128px 40px 1fr;
+}
+
+.form-item-details {
+  align-items: start;
+}
+
+.status-wrapper {
+  margin-top: 6.5px;
+  margin-left: 20px;
+}
+
+.form-item-title {
+  margin: 0 20px 0 0;
+  font-weight: var(--fw-medium);
+  font-size: var(--font-sm);
+  text-align: end;
+}
+
+.form-edit-content {
+  min-width: 200px;
+  font-weight: var(--fw-regular);
+  font-size: var(--font-sm);
+}
+
+.confirm-buttons {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin: 16px;
+  background-color: var(--white-color);
+  z-index: 1;
+}
