@@ -1,0 +1,24 @@
+.tab {
+  border: none;
+  min-width: 144px;
+  padding: 12px 0;
+  font-family: var(--primary-font);
+  font-size: var(--font-md);
+  font-weight: var(--fw-medium);
+  color: var(--primary-color);
+  background-color: var(--white-color);
+  outline: none;
+  cursor: pointer;
+}
+
+.tab:hover {
+  background-color: var(--light-grey);
+}
+
+.tab.active {
+  border-bottom: 3px solid var(--primary-color);
+}
+
+.tab.active:hover {
+  background-color: var(--white-color);
+}
