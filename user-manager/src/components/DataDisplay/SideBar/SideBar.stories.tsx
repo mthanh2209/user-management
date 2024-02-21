@@ -35,19 +35,19 @@ export const Default: Story = {
     data: [
       {
         type: INFO_TYPE.TEXT_VIEW,
-        icon: 'email-icon',
+        icon: 'icon-email',
         title: 'Email:',
         content: ''
       },
       {
         type: INFO_TYPE.TEXT_VIEW,
-        icon: 'date-icon',
+        icon: 'icon-date',
         title: 'Last visited:',
         content: formatDate(new Date().toISOString())
       },
       {
         type: INFO_TYPE.LIST_VIEW,
-        icon: 'date-icon',
+        icon: 'icon-date',
         title: 'Roles',
         content: [
           {

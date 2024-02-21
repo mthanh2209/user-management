@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 // CSS
-import '@components/DataDisplay/ProfileEditor/ProfileEditor.css';
+import '@components/DataDisplay/EditorProfile/EditorProfile.css';
 
 // Components
 import Status from '@components/DataDisplay/Status';
@@ -10,7 +10,7 @@ import ImageUploader from '@components/Inputs/ImageUploader';
 import SwitchStatus from '@components/DataDisplay/SwitchStatus';
 import TextArea from '@components/Inputs/TextArea';
 import TextField from '@components/Inputs/TextField';
-import TextView from '@components/DataDisplay/ProfileEditor/TextView';
+import TextView from '@components/DataDisplay/EditorProfile/TextView';
 import ModalConfirm from '@components/DataDisplay/Modal/ModalConfirm';
 
 // Interfaces
@@ -20,7 +20,7 @@ import { IUserProps } from '@types';
 import { formatDate } from '@helpers';
 import { isEmailValid, isFullNameValid } from '@helpers';
 
-interface IProfileEditor {
+interface IEditorProfile {
   id: number;
   avatar: string;
   fullName: string;
@@ -35,7 +35,7 @@ interface IProfileEditor {
   showToast: (show: boolean, isError: boolean) => void;
 }
 
-const ProfileEditor = ({
+const EditorProfile = ({
   id,
   avatar,
   fullName,
@@ -48,7 +48,7 @@ const ProfileEditor = ({
   onSaveUser,
   onDeleteUser,
   showToast
-}: IProfileEditor) => {
+}: IEditorProfile) => {
   const [formData, setFormData] = useState({
     fullName,
     email,
@@ -216,4 +216,4 @@ const ProfileEditor = ({
   );
 };
 
-export default ProfileEditor;
+export default EditorProfile;

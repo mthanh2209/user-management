@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 // Components
-import ProfileEditor from '@components/DataDisplay/ProfileEditor';
+import EditorProfile from '@components/DataDisplay/EditorProfile';
 
 // Helpers
-import { getRandomColor } from '@helpers/getRandomColor';
+import { getRandomColor } from '@helpers';
 
 export default {
-  title: 'Components/ProfileEditor',
-  component: ProfileEditor,
+  title: 'Components/EditorProfile',
+  component: EditorProfile,
   tags: ['autodocs'],
   argTypes: {
     id: {
@@ -52,7 +52,7 @@ export default {
   }
 } as Meta;
 
-type Story = StoryObj<typeof ProfileEditor>;
+type Story = StoryObj<typeof EditorProfile>;
 
 export const Default: Story = {
   args: {
