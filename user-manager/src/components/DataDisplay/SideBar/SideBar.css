@@ -40,6 +40,14 @@
   letter-spacing: 0.2px;
 }
 
+.edit-icon {
+  background: url('../../../assets/images/edit-icon.svg') no-repeat;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+/* TextView */
 .info-list-header {
   margin: 0 0 0.6rem;
   font-weight: var(--fw-medium);
@@ -59,15 +67,10 @@
   margin: -4px 6px 0 0;
 }
 
-.email-icon::before {
+.icon-email::before {
   background: url('../../../assets/images/email-icon.svg') no-repeat;
 }
 
-.date-icon::before {
+.icon-date::before {
   background: url('../../../assets/images/clock-icon.svg') no-repeat;
-}
-
-.edit-icon {
-  background: url('../../../assets/images/edit-icon.svg') no-repeat;
-  cursor: pointer;
 }
