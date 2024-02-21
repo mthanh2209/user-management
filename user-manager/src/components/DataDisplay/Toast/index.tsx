@@ -46,19 +46,17 @@ const Toast = ({
 
       {showToast && (
         <div className='toast-wrapper'>
-      <p className='toast-message'>
-        {isError
-        ? failMessage
-        : successMessage}
-      </p>
-      <span
-        className={`toast-icon toast-icon-${
-          isError
-          ? TOAST_TYPE.ERROR
-          : TOAST_TYPE.SUCCESS
-        }`}>
-      </span>
-    </div>
+          <p className='toast-message'>
+            {isError ? failMessage : successMessage}
+          </p>
+          <span
+            className={`toast-icon toast-icon-${
+              isError
+                ? TOAST_TYPE.ERROR
+                : TOAST_TYPE.SUCCESS
+            }`}
+          ></span>
+        </div>
       )}
     </>
   );
