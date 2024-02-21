@@ -1,3 +1,6 @@
+/**
+ * Validation messages for form inputs and file uploads.
+ */
 export const VALIDATION_MESSAGE = {
   INVALID_NAME: 'Full name cannot be empty or contain only spaces',
 
