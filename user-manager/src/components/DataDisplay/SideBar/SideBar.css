@@ -61,17 +61,13 @@
 
 .email-icon::before {
   background: url('../../../assets/images/email-icon.svg') no-repeat;
-  background-size: 20px 20px;
 }
 
 .date-icon::before {
   background: url('../../../assets/images/clock-icon.svg') no-repeat;
-  background-size: 20px 20px;
 }
 
 .edit-icon {
   background: url('../../../assets/images/edit-icon.svg') no-repeat;
-  width: 20px;
-  height: 20px;
   cursor: pointer;
 }
