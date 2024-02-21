@@ -8,7 +8,7 @@ import { VALIDATION_MESSAGE } from '@constants';
  * @param value - The email address to validate.
  * @returns A validation error message if the email is invalid, undefined otherwise.
  */
-export const isEmailValid = (value: string): string | undefined => {
+export const isEmailValid = (value: string) => {
   if (!value) {
     return VALIDATION_MESSAGE.EMAIL_REQUIRED;
   }
@@ -23,7 +23,7 @@ export const isEmailValid = (value: string): string | undefined => {
  * @param value - The full name to validate.
  * @returns The invalid name error message if the name is empty or whitespace, undefined otherwise.
  */
-export const isFullNameValid = (value: string): string | undefined => {
+export const isFullNameValid = (value: string) => {
   if (!value.trim()) {
     return VALIDATION_MESSAGE.INVALID_NAME;
   }
