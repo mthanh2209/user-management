@@ -45,17 +45,17 @@ export const Default: Story = {
         title: 'Last visited:',
         content: formatDate(new Date().toISOString())
       },
-      // {
-      //   type: INFO_TYPE.LIST_VIEW,
-      //   icon: 'icon-date',
-      //   title: 'Roles',
-      //   content: [
-      //     {
-      //       text: 'Admin',
-      //       link: '/'
-      //     }
-      //   ]
-      // }
+      {
+        type: INFO_TYPE.LIST_VIEW,
+        icon: 'icon-date',
+        title: 'Roles',
+        content: [
+          {
+            text: 'Admin',
+            link: '/'
+          }
+        ]
+      }
     ]
   }
 };
