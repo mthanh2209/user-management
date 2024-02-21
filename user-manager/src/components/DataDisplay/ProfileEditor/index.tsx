@@ -1,4 +1,4 @@
-import {useState } from 'react';
+import { useState } from 'react';
 
 // CSS
 import '@components/DataDisplay/ProfileEditor/ProfileEditor.css';
@@ -58,7 +58,7 @@ const ProfileEditor = ({
   });
   const [isOpenModal, setOpenModal] = useState(false);
 
-  const handleOnChange = (field: string, value: string | boolean) => {
+  const handleOnChange = (field: string) => (value: string) => {
     setFormData((prevData) => ({
       ...prevData,
       [field]: value
@@ -66,7 +66,10 @@ const ProfileEditor = ({
   };
 
   const handleSwitchChange = () => {
-    handleOnChange('status', !formData.status);
+    setFormData((prevData) => ({
+      ...prevData,
+      status: !prevData.status
+    }));
   };
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -96,17 +99,13 @@ const ProfileEditor = ({
     showToast(true, false);
   };
 
-  const handleOpenModal = () => {
-    setOpenModal(true);
+  const handleToggleModal = () => {
+    setOpenModal(!isOpenModal);
   };
 
   const handleDeleteButton = () => {
     setOpenModal(false);
     onDeleteUser(id);
-  };
-
-  const handleCloseModal = () => {
-    setOpenModal(false);
   };
 
   return (
@@ -116,7 +115,7 @@ const ProfileEditor = ({
           variants='secondary'
           size='sm'
           children='Delete'
-          onClick={handleOpenModal}
+          onClick={handleToggleModal}
         />
         <Button
           variants='primary'
@@ -134,7 +133,7 @@ const ProfileEditor = ({
           confirmText='Delete'
           denyText='Cancel'
           onConfirmText={handleDeleteButton}
-          onDenyText={handleCloseModal}
+          onDenyText={handleToggleModal}
         />
       )}
 
@@ -149,7 +148,7 @@ const ProfileEditor = ({
             label='Full Name'
             additionalClass='input-text'
             value={formData.fullName}
-            onChange={(value) => handleOnChange('fullName', value)}
+            onChange={handleOnChange('fullName')}
             validate={isFullNameValid}
           />
         </div>
@@ -160,7 +159,7 @@ const ProfileEditor = ({
             label='Email'
             additionalClass='input-text'
             value={formData.email}
-            onChange={(value) => handleOnChange('email', value)}
+            onChange={handleOnChange('email')}
             validate={isEmailValid}
           />
         </div>
@@ -171,7 +170,7 @@ const ProfileEditor = ({
             initialImage={formData.avatar}
             alt={formData.fullName}
             bgColor={bgColor}
-            onChange={(value) => handleOnChange('avatar', value)}
+            onChange={handleOnChange('avatar')}
           />
         </div>
 
@@ -190,25 +189,25 @@ const ProfileEditor = ({
         <TextView
           label='Registered'
           content={
-            registeredDate === null || registeredDate === undefined
-              ? 'Unknown'
-              : formatDate(registeredDate)
+            registeredDate
+              ? formatDate(registeredDate)
+              : 'Unknown'
           }
         />
 
         <TextView
           label='Last visited'
           content={
-            lastVisitedDate === null || lastVisitedDate === undefined
-              ? 'Unknown'
-              : formatDate(lastVisitedDate)
+            lastVisitedDate
+              ? formatDate(lastVisitedDate)
+              : 'Unknown'
           }
         />
 
         <div className='form-item form-item-details'>
           <span className='form-item-title'>Details</span>
           <TextArea
-            onChange={(value) => handleOnChange('details', value)}
+            onChange={handleOnChange('details')}
             value={formData.details}
           />
         </div>

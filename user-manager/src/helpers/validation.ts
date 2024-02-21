@@ -11,10 +11,11 @@ import { VALIDATION_MESSAGE } from '@constants';
 export const isEmailValid = (value: string): string | undefined => {
   if (!value) {
     return VALIDATION_MESSAGE.EMAIL_REQUIRED;
-  } else if (!validator.isEmail(value)) {
+  }
+  if (!validator.isEmail(value)) {
     return VALIDATION_MESSAGE.INVALID_EMAIL;
   }
-  return undefined;
+  return '';
 };
 
 /**
@@ -26,5 +27,5 @@ export const isFullNameValid = (value: string): string | undefined => {
   if (!value.trim()) {
     return VALIDATION_MESSAGE.INVALID_NAME;
   }
-  return undefined;
+  return '';
 };
