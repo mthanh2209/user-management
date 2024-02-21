@@ -8,14 +8,15 @@ export default {
   component: RadioButton,
   tags: ['autodocs'],
   argTypes: {
-    src: { description: 'The image source.' },
-    alt: { description: 'An image with an alternate text specified.' },
-    bgColor: { description: 'A randomly generated background color.' },
-    size: {
-      description: 'The size of avatar.',
-      table: {
-        defaultValue: { summary: 'avatar-sm' }
-      }
+    id: { description: 'The unique identifier for the radio button.' },
+    name: { description: 'The name of the radio button group.' },
+    label: { description: 'The label text for the radio button.' },
+    isChecked: {
+      description: 'Indicates whether the radio button is checked.'
+    },
+    onChange: {
+      description:
+        'Callback function triggered when the radio button is changed.'
     }
   }
 } as Meta;
