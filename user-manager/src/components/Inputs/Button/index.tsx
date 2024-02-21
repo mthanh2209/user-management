@@ -13,6 +13,7 @@ interface IButtonProps {
   icon?: string;
   additionalClass?: string;
   children: ReactNode;
+  form?: string;
   onClick?: () => void;
 }
 
@@ -22,11 +23,13 @@ const Button = ({
   icon,
   additionalClass,
   children,
+  form,
   onClick
 }: IButtonProps) => {
   return (
     <button
       className={`btn btn-${variants} btn-${size} ${additionalClass}`}
+      form={form}
       onClick={onClick}
     >
       {icon &&
