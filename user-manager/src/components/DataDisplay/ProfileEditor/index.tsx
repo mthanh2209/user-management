@@ -10,7 +10,7 @@ import ImageUploader from '@components/Inputs/ImageUploader';
 import SwitchStatus from '@components/DataDisplay/SwitchStatus';
 import TextArea from '@components/Inputs/TextArea';
 import TextField from '@components/Inputs/TextField';
-import TextView from '@components/DataDisplay/Panel/TextView';
+import TextView from '@components/DataDisplay/ProfileEditor/TextView';
 import ModalConfirm from '@components/DataDisplay/Modal/ModalConfirm';
 
 // Interfaces
