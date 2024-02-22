@@ -14,6 +14,7 @@ interface IButtonProps {
   additionalClass?: string;
   children: ReactNode;
   form?: string;
+  isDisable?: boolean;
   onClick?: () => void;
 }
 
@@ -24,11 +25,17 @@ const Button = ({
   additionalClass,
   children,
   form,
+  isDisable,
   onClick
 }: IButtonProps) => {
   return (
     <button
-      className={`btn btn-${variants} btn-${size} ${additionalClass}`}
+      className={`
+        btn btn-${variants}
+        btn-${size}
+        ${additionalClass}
+        ${isDisable ? 'disabled' : ''}
+      `}
       form={form}
       onClick={onClick}
     >

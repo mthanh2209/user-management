@@ -6,7 +6,7 @@ interface IRadioButton {
   name?: string;
   label: string;
   isChecked: boolean;
-  onChange: () => void;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const RadioButton = ({
