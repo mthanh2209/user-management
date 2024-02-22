@@ -6,6 +6,8 @@ import EditorProfile from '@components/DataDisplay/EditorProfile';
 
 // Helpers
 import { getRandomColor } from '@helpers/getRandomColor';
+import AssignRule from '../Assign/AssignRule';
+import AssignRole from '../Assign/AssignRole';
 
 export default {
   title: 'Components/Panel',
@@ -39,6 +41,46 @@ export const Default: Story = {
             onSaveUser={() => {}}
             onDeleteUser={() => {}}
             showToast={() => {}}
+          />
+        )
+      },
+      {
+        title: 'Rules',
+        content: (
+          <AssignRule
+            title='Username'
+            rules={[
+              {
+                id: 1,
+                name: 'CanAdminProjects',
+                description: 'Can create projects',
+                isAssigned: true,
+                isAssignedDirectly: true,
+                assignedTo: [
+                  {
+                    id: 2,
+                    name: 'Admin'
+                  }
+                ]
+              }
+            ]}
+          />
+        )
+      },
+      {
+        title: 'Roles',
+        content: (
+          <AssignRole
+            title='Username'
+            roles={[
+              {
+                id: 1,
+                name: 'Admin',
+                bgColor: getRandomColor(),
+                isAssigned: true,
+                assignedTo: [{ id: 2, name: 'Admin' }]
+              }
+            ]}
           />
         )
       }
