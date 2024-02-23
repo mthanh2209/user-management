@@ -62,6 +62,19 @@ export const Default: Story = {
                     name: 'Admin'
                   }
                 ]
+              },
+              {
+                id: 2,
+                name: 'CanAdminProjects',
+                description: 'Can create projects',
+                isAssigned: true,
+                isAssignedDirectly: true,
+                assignedTo: [
+                  {
+                    id: 2,
+                    name: 'Leader'
+                  }
+                ]
               }
             ]}
           />

@@ -16,7 +16,7 @@ interface IAssignBody {
   items: ItemAssign[];
   isModifying: boolean;
   selectedType: AssignmentOptions;
-  handleItemSelect: (
+  handleItemChecked: (
     id: number
   ) => (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
@@ -26,7 +26,7 @@ const AssignBody = ({
   items,
   isModifying,
   selectedType,
-  handleItemSelect
+  handleItemChecked
 }: IAssignBody) => {
   return (
     <ul>
@@ -39,7 +39,7 @@ const AssignBody = ({
               bgColor={item.bgColor}
               isModifying={isModifying}
               isAssigned={item.isAssigned}
-              handleItemSelect={handleItemSelect}
+              handleItemChecked={handleItemChecked}
               src={src}
             />
           ) : (
@@ -51,7 +51,7 @@ const AssignBody = ({
               isModifying={isModifying}
               assignedTo={item.assignedTo}
               selectedType={selectedType}
-              handleItemSelect={handleItemSelect}
+              handleItemChecked={handleItemChecked}
             />
           )}
         </li>

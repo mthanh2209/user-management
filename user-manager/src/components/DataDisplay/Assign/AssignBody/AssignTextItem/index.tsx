@@ -14,7 +14,7 @@ interface IAssignTextItem {
     }
   ];
   selectedType: AssignmentOptions;
-  handleItemSelect: (
+  handleItemChecked: (
     id: number
   ) => (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
@@ -27,7 +27,7 @@ const AssignTextItem = ({
   isModifying,
   assignedTo,
   selectedType,
-  handleItemSelect
+  handleItemChecked
 }: IAssignTextItem) => {
   return (
     <>
@@ -65,15 +65,22 @@ const AssignTextItem = ({
             <input
               type='checkbox'
               checked={isAssigned}
-              onChange={handleItemSelect(id)}
+              onChange={handleItemChecked(id)}
               className='panel-assign-checkbox'
             />
           )}
-          
-          <div className='panel-assign-body-details'>
-            <span className='panel-assign-body-name'>{name}</span>
-            <p className='panel-assign-body-desc'>{description}</p>
-          </div>
+
+          {!isModifying && !isAssigned ? (
+            <div
+              className='panel-assign-body-details'
+              style={{ display: 'none' }}
+            ></div>
+          ) : (
+            <div className='panel-assign-body-details'>
+              <span className='panel-assign-body-name'>{name}</span>
+              <p className='panel-assign-body-desc'>{description}</p>
+            </div>
+          )}
         </div>
       )}
     </>

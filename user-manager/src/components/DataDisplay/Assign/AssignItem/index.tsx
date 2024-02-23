@@ -42,11 +42,6 @@ const AssignItem = ({
   const [searchField, setSearchField] = useState('');
 
   /**
-   * Custom hook for delayed search field value.
-   */
-  const delaySearchField = useDelayedValue(searchField, 500);
-
-  /**
    * Handles the change of assignment type.
    *
    * @param {React.ChangeEvent<HTMLInputElement>} event - The change event.
@@ -62,20 +57,12 @@ const AssignItem = ({
   const handleModifyClick = () => setIsModifying(!isModifying);
 
   /**
-   * Handles the change event for the search field.
-   *
-   * @param {React.ChangeEvent<HTMLInputElement>} event - The change event.
-   */
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) =>
-    setSearchField(event.target.value);
-
-  /**
    * Handles the selection of an assignment item.
    *
    * @param {number} id - The ID of the assignment item.
    * @returns {(event: React.ChangeEvent<HTMLInputElement>) => void} The event handler function.
    */
-  const handleItemSelect =
+  const handleItemChecked =
     (id: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
       const itemsClone = [...itemState];
       const index = itemsClone.findIndex((item) => item.id === id);
@@ -86,6 +73,19 @@ const AssignItem = ({
 
       setItemState(itemsClone);
     };
+
+  /**
+   * Handles the change event for the search field.
+   *
+   * @param {React.ChangeEvent<HTMLInputElement>} event - The change event.
+   */
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) =>
+    setSearchField(event.target.value);
+
+  /**
+   * Custom hook for delayed search field value.
+   */
+  const delaySearchField = useDelayedValue(searchField, 500);
 
   /**
    * Memoized array of filtered assignment items based on the search field.
@@ -124,7 +124,7 @@ const AssignItem = ({
         items={filteredItems}
         isModifying={isModifying}
         selectedType={selectedType}
-        handleItemSelect={handleItemSelect}
+        handleItemChecked={handleItemChecked}
       />
     </>
   );

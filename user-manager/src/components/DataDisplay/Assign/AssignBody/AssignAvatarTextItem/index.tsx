@@ -8,7 +8,7 @@ interface IAssignAvatarTextItem {
   bgColor?: string;
   isModifying: boolean;
   isAssigned: boolean;
-  handleItemSelect: (
+  handleItemChecked: (
     id: number
   ) => (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
@@ -20,7 +20,7 @@ const AssignAvatarTextItem = ({
   bgColor,
   isModifying,
   isAssigned,
-  handleItemSelect
+  handleItemChecked
 }: IAssignAvatarTextItem) => {
   return (
     <div className='panel-assign-avatar-text'>
@@ -28,7 +28,7 @@ const AssignAvatarTextItem = ({
         <input
           type='checkbox'
           checked={isAssigned}
-          onChange={handleItemSelect(id)}
+          onChange={handleItemChecked(id)}
           className='panel-assign-checkbox'
         />
       )}
