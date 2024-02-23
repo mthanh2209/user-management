@@ -37,7 +37,7 @@ const AssignItem = ({
   const [itemState, setItemState] = useState<ItemAssign[]>(items);
   const [isModifying, setIsModifying] = useState<boolean>(false);
   const [selectedType, setSelectedType] = useState<AssignmentOptions>(
-    AssignmentOptions.AllAssignment
+    AssignmentOptions.AssignDirectly
   );
   const [searchField, setSearchField] = useState('');
 

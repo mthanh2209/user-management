@@ -58,7 +58,7 @@ export const Default: Story = {
                 isAssignedDirectly: true,
                 assignedTo: [
                   {
-                    id: 2,
+                    id: 1,
                     name: 'Admin'
                   }
                 ]
@@ -78,7 +78,7 @@ export const Default: Story = {
                 name: 'Admin',
                 bgColor: getRandomColor(),
                 isAssigned: true,
-                assignedTo: [{ id: 2, name: 'Admin' }]
+                assignedTo: [{ id: 1, name: 'Admin' }]
               }
             ]}
           />

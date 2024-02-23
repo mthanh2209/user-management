@@ -86,6 +86,7 @@ const AssignHeader = ({
               key={item.id}
               id={item.id}
               name={item.name}
+              value={item.value}
               label={item.label}
               isChecked={item.isChecked}
               onChange={onTypeChange}
