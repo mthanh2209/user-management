@@ -18,7 +18,7 @@ interface IBackDropProps {
  * Hook that handles click events outside a specified element.
  * @param param0 - Object containing ref and callback properties.
  */
-const useBackDrop = ({
+export const useBackDrop = ({
   ref,
   callback
 }: IBackDropProps) => {
@@ -36,5 +36,3 @@ const useBackDrop = ({
     };
   }, [ref, callback]);
 };
-
-export default useBackDrop;

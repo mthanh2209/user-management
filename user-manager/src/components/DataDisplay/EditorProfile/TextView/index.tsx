@@ -1,5 +1,5 @@
 interface ITextView {
-  label: string;
+  label?: string;
   content: string;
 }
 const TextView = ({
@@ -7,7 +7,7 @@ const TextView = ({
   content
 }: ITextView) => (
   <div className='form-item'>
-    <label className='form-item-title'>{label}</label>
+    {label && <label className='form-item-title'>{label}</label>}
     <p className='form-edit-content'>
       {content}
     </p>
