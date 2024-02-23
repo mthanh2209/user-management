@@ -3,7 +3,7 @@ export const API = {
   USERS: 'users',
   ROLES: 'roles',
   RULES: 'rules',
-  USER_ROLE: 'userRole',
-  USER_RULE: 'userRule',
-  ROLE_RULE: 'roleRule'
+  USER_ROLES: 'userRoles',
+  USER_RULES: 'userRules',
+  ROLE_RULES: 'roleRules'
 };
