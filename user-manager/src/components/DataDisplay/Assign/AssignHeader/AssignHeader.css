@@ -1,0 +1,23 @@
+.panel-assign-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 17px;
+}
+
+.panel-assign-header-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-assign-header-title {
+  font-weight: var(--fw-medium);
+  font-size: var(--font-sm);
+  color: var(--dark-color);
+  margin-bottom: 16px;
+}
+
+.panel-assign-header-button {
+  height: 32px;
+  width: 156px;
+}

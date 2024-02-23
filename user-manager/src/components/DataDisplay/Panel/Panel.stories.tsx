@@ -3,9 +3,17 @@ import type { Meta, StoryObj } from '@storybook/react';
 // Components
 import Panel from '@components/DataDisplay/Panel/index';
 import EditorProfile from '@components/DataDisplay/EditorProfile';
+import AssignRule from '@components/DataDisplay/Assign/AssignRule';
+import AssignRole from '@components/DataDisplay/Assign/AssignRole';
 
 // Helpers
 import { getRandomColor } from '@helpers/getRandomColor';
+
+// Mocks
+import { mockData } from '@mocks';
+
+// Types
+import { ItemAssign } from '@types';
 
 export default {
   title: 'Components/Panel',
@@ -39,6 +47,24 @@ export const Default: Story = {
             onSaveUser={() => {}}
             onDeleteUser={() => {}}
             showToast={() => {}}
+          />
+        )
+      },
+      {
+        title: 'Rules',
+        content: (
+          <AssignRule
+            title='Username'
+            rules={mockData.rules as ItemAssign[]}
+          />
+        )
+      },
+      {
+        title: 'Roles',
+        content: (
+          <AssignRole
+            title='Username'
+            roles={mockData.roles as ItemAssign[]}
           />
         )
       }

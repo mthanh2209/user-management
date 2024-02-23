@@ -53,3 +53,13 @@
   display: flex;
   align-items: center;
 }
+
+.disabled {
+  background-color: var(--white-color);
+  cursor: not-allowed;
+  color: #94a1b3;
+}
+
+.disabled:hover{
+  background-color: var(--white-color)
+}
