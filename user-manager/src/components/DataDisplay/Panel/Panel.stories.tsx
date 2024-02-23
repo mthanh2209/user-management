@@ -3,11 +3,17 @@ import type { Meta, StoryObj } from '@storybook/react';
 // Components
 import Panel from '@components/DataDisplay/Panel/index';
 import EditorProfile from '@components/DataDisplay/EditorProfile';
+import AssignRule from '@components/DataDisplay/Assign/AssignRule';
+import AssignRole from '@components/DataDisplay/Assign/AssignRole';
 
 // Helpers
 import { getRandomColor } from '@helpers/getRandomColor';
-import AssignRule from '../Assign/AssignRule';
-import AssignRole from '../Assign/AssignRole';
+
+// Mocks
+import { mockData } from '@mocks';
+
+// Types
+import { ItemAssign } from '@types';
 
 export default {
   title: 'Components/Panel',
@@ -49,34 +55,7 @@ export const Default: Story = {
         content: (
           <AssignRule
             title='Username'
-            rules={[
-              {
-                id: 1,
-                name: 'CanAdminProjects',
-                description: 'Can create projects',
-                isAssigned: true,
-                isAssignedDirectly: true,
-                assignedTo: [
-                  {
-                    id: 1,
-                    name: 'Admin'
-                  }
-                ]
-              },
-              {
-                id: 2,
-                name: 'CanAdminProjects',
-                description: 'Can create projects',
-                isAssigned: true,
-                isAssignedDirectly: true,
-                assignedTo: [
-                  {
-                    id: 2,
-                    name: 'Leader'
-                  }
-                ]
-              }
-            ]}
+            rules={mockData.rules as ItemAssign[]}
           />
         )
       },
@@ -85,15 +64,7 @@ export const Default: Story = {
         content: (
           <AssignRole
             title='Username'
-            roles={[
-              {
-                id: 1,
-                name: 'Admin',
-                bgColor: getRandomColor(),
-                isAssigned: true,
-                assignedTo: [{ id: 1, name: 'Admin' }]
-              }
-            ]}
+            roles={mockData.roles as ItemAssign[]}
           />
         )
       }
