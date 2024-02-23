@@ -33,15 +33,19 @@ const AssignAvatarTextItem = ({
         />
       )}
 
-      <Avatar
-        src={src}
-        alt={name}
-        bgColor={bgColor}
-        size='sm'
-        additionalClass='panel-assign-body-avatar'
-      />
+      {!isModifying && !isAssigned ? null : (
+        <>
+          <Avatar
+            src={src}
+            alt={name}
+            bgColor={bgColor}
+            size='sm'
+            additionalClass='panel-assign-body-avatar'
+          />
 
-      <span className='panel-assign-avatar-title'>{name}</span>
+          <span className='panel-assign-avatar-title'>{name}</span>
+        </>
+      )}
     </div>
   );
 };

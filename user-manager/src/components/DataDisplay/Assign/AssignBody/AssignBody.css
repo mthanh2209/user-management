@@ -13,7 +13,7 @@
 /* Assign Avatar Text Item */
 .panel-assign-avatar-text {
   display: flex;
-  gap: 15px;
+  gap: 12px;
   align-items: center;
 }
 

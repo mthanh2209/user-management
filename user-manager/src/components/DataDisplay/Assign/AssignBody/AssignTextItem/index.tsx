@@ -1,18 +1,18 @@
 // Constants
 import { AssignmentOptions } from '@constants';
 
+// Components
+import AssignLink, {
+  IAssignItemLink
+} from '@components/DataDisplay/Assign/AssignLink';
+
 interface IAssignTextItem {
   id: number;
   name: string;
   description?: string;
   isAssigned: boolean;
   isModifying: boolean;
-  assignedTo: [
-    {
-      id: number;
-      name: string;
-    }
-  ];
+  assignedTo: IAssignItemLink[];
   selectedType: AssignmentOptions;
   handleItemChecked: (
     id: number
@@ -45,18 +45,7 @@ const AssignTextItem = ({
               </span>
             )}
 
-            {assignedTo?.map((role) => (
-              <>
-                <span className='icon-role'></span>
-                <a
-                  key={role.id}
-                  href={`/roles/${role.id}`}
-                  className='panel-assign-body-role'
-                >
-                  {role.name}
-                </a>
-              </>
-            ))}
+            <AssignLink assignTo={assignedTo} />
           </div>
         </>
       ) : (
@@ -70,12 +59,7 @@ const AssignTextItem = ({
             />
           )}
 
-          {!isModifying && !isAssigned ? (
-            <div
-              className='panel-assign-body-details'
-              style={{ display: 'none' }}
-            ></div>
-          ) : (
+          {!isModifying && !isAssigned ? null : (
             <div className='panel-assign-body-details'>
               <span className='panel-assign-body-name'>{name}</span>
               <p className='panel-assign-body-desc'>{description}</p>
