@@ -1,7 +1,7 @@
 export interface IItemNav {
   id: number;
   label: string;
-  onClick?: () => void;
+  onClick: () => void;
 }
 
 export interface ItemViewProps {

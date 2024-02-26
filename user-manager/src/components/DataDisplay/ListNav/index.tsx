@@ -37,6 +37,7 @@ const ListNav = ({ items }: IListNav) => {
 
   const handleClickedItem = (item: IItemNav) => () => {
     setItemSelected(item.id);
+    item.onClick();
   };
 
   return (
