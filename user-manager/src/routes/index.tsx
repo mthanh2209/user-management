@@ -2,10 +2,10 @@ import { Routes, Route } from 'react-router-dom';
 
 // Pages
 import {
-  HomePage,
   Layout,
+  HomePage,
   RolePage,
-  RulePage 
+  RulePage
 } from '@pages';
 
 // Constants
