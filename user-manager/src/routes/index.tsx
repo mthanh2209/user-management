@@ -1,7 +1,12 @@
 import { Routes, Route } from 'react-router-dom';
 
 // Pages
-import { HomePage, Layout, RolePage, RulePage } from '@pages';
+import {
+  HomePage,
+  Layout,
+  RolePage,
+  RulePage 
+} from '@pages';
 
 // Constants
 import { PATH } from '@constants';
