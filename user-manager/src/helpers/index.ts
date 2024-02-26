@@ -7,3 +7,4 @@ export { isEmailValid, isFullNameValid } from '@helpers/validation';
 export { fetcher } from '@helpers/fetcher';
 export { filterUsers } from '@helpers/filterUsers';
 export { highlightKeyword } from '@helpers/highlightKeyword';
+export { generateNewUser } from '@helpers/generateNewUser';
