@@ -1,19 +1,20 @@
-import useSWR from 'swr';
-
 // Constant
 import { API } from '@constants';
 
-// Helper
-import { fetcher } from '@helpers';
-
 // Types
-import { IRole } from '@types';
+import { IRole, IRoleRule } from '@types';
+
+// Services
+import { useApi, useApiData } from '@services/user';
 
 export const getRoles = (): {
-  data: IRole[] | undefined;
-} => {
-  const { data } = useSWR<IRole[]>(`${API.BASE}/${API.ROLES}`, fetcher);
-  return {
-    data
-  };
-};
+  data: IRole[];
+  error: string | null;
+} => useApi(`${API.BASE}/${API.ROLES}`);
+
+/**
+ * Fetches a list of role rules.
+ * @returns An object containing the list of role rules.
+ */
+export const getRoleRules = (): { data: IRoleRule[] } =>
+  useApiData(`${API.BASE}/${API.ROLE_RULES}`);
