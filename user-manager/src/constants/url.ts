@@ -1,5 +1,5 @@
 export const API = {
-  BASE: 'http://localhost:3000/',
+  BASE: 'http://localhost:3000',
   USERS: 'users',
   ROLES: 'roles',
   RULES: 'rules',
