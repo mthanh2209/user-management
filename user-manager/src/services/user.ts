@@ -1,12 +1,7 @@
 import useSWR from 'swr';
 
 // Types
-import {
-  IUser,
-  IUserRole,
-  IUserRule,
-  IRoleRule
-} from '@types';
+import { IUser, IUserRole, IUserRule } from '@types';
 
 // Constants
 import { API } from '@constants';
@@ -62,12 +57,14 @@ const makeRequest = async (
  * @param url - The URL to fetch data from.
  * @returns An object containing the fetched data and a flag indicating whether the data is being validated.
  */
-export const useApi = (url: string): {
+export const useApi = (
+  url: string
+): {
   data: any;
-  isValidating: boolean
+  error: string | null;
 } => {
-  const { data, isValidating } = useSWR(url, fetcher);
-  return { data, isValidating };
+  const { data, error } = useSWR(url, fetcher);
+  return { data, error };
 };
 
 /**
@@ -75,7 +72,7 @@ export const useApi = (url: string): {
  * @param url - The URL to fetch data from.
  * @returns An object containing the fetched data.
  */
-const useApiData = (url: string): { data: any } => {
+export const useApiData = (url: string): { data: any } => {
   const { data } = useSWR(url, fetcher);
   return { data };
 };
@@ -86,7 +83,7 @@ const useApiData = (url: string): { data: any } => {
  */
 export const getUsers = (): {
   data: IUser[];
-  isValidating: boolean;
+  error: string | null;
 } => useApi(`${API.BASE}/${API.USERS}`);
 
 /**
@@ -122,10 +119,7 @@ export const deleteUser = (userId: string): Promise<IResponse> =>
  * @param userData - The updated user data.
  * @returns A promise that resolves to the response object.
  */
-export const editUser = (
-  userId: string,
-  userData: IUser
-): Promise<IResponse> =>
+export const editUser = (userId: string, userData: IUser): Promise<IResponse> =>
   makeRequest(`${API.BASE}/${API.USERS}/${userId}`, {
     method: 'PUT',
     headers: {
@@ -147,10 +141,3 @@ export const getUserRoles = (): { data: IUserRole[] } =>
  */
 export const getUserRules = (): { data: IUserRule[] } =>
   useApiData(`${API.BASE}/${API.USER_RULES}`);
-
-/**
- * Fetches a list of role rules.
- * @returns An object containing the list of role rules.
- */
-export const getRoleRules = (): { data: IRoleRule[] } =>
-  useApiData(`${API.BASE}/${API.ROLE_RULES}`);

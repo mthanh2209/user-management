@@ -2,12 +2,19 @@
 import { API } from '@constants';
 
 // Types
-import { IRole } from '@types';
+import { IRole, IRoleRule } from '@types';
 
 // Services
-import { useApi } from '@services/user';
+import { useApi, useApiData } from '@services/user';
 
 export const getRoles = (): {
   data: IRole[];
-  isValidating: boolean;
+  error: string | null;
 } => useApi(`${API.BASE}/${API.ROLES}`);
+
+/**
+ * Fetches a list of role rules.
+ * @returns An object containing the list of role rules.
+ */
+export const getRoleRules = (): { data: IRoleRule[] } =>
+  useApiData(`${API.BASE}/${API.ROLE_RULES}`);

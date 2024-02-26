@@ -9,5 +9,5 @@ import { useApi } from '@services/user';
 
 export const getRules = (): {
   data: IRule[];
-  isValidating: boolean;
+  error: string | null;
 } => useApi(`${API.BASE}/${API.RULES}`);
