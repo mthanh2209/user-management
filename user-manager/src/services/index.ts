@@ -5,7 +5,6 @@ export {
   deleteUser,
   getUserRoles,
   getUserRules,
-  getRoleRules
 } from '@services/user';
-export { getRoles } from '@services/role';
+export { getRoles, getRoleRules } from '@services/role';
 export { getRules } from '@services/rule';
