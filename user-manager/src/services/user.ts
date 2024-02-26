@@ -62,7 +62,7 @@ const makeRequest = async (
  * @param url - The URL to fetch data from.
  * @returns An object containing the fetched data and a flag indicating whether the data is being validated.
  */
-const useApi = (url: string): {
+export const useApi = (url: string): {
   data: any;
   isValidating: boolean
 } => {
