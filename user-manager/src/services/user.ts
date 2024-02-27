@@ -7,7 +7,7 @@ import { IUser, IUserRole, IUserRule } from '@types';
 import { API } from '@constants';
 
 // Helpers
-import { fetcher } from '@helpers';
+import { fetcher, generateNewUser } from '@helpers';
 
 type IResponse = {
   data: any;
@@ -91,13 +91,13 @@ export const getUsers = (): {
  * @param userData - The user data to be added.
  * @returns A promise that resolves to the response object.
  */
-export const addUser = (userData: IUser): Promise<IResponse> =>
+export const addUser = (userName: string): Promise<IResponse> =>
   makeRequest(`${API.BASE}/${API.USERS}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(userData)
+    body: JSON.stringify(generateNewUser(userName))
   });
 
 /**

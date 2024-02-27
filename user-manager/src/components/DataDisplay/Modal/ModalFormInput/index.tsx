@@ -1,9 +1,13 @@
+import { useState } from 'react';
 import { createPortal } from 'react-dom';
 
 // Components
 import Modal from '@components/DataDisplay/Modal';
 import Button from '@components/Inputs/Button';
 import TextField from '@components/Inputs/TextField';
+
+// Helpers
+import { isModalInputValid } from '@helpers';
 
 interface IModalFormInputProps {
   isOpen?: boolean;
@@ -22,6 +26,15 @@ const ModalFormInput = ({
   onConfirmText,
   onChangeText
 }: IModalFormInputProps) => {
+  const [textInput, setTextInput] = useState('');
+
+  const handleInputChange = (value: string) => {
+    setTextInput(value);
+    onChangeText?.(value);
+  };
+
+  const isButtonDisabled = !textInput.trim();
+
   return (
     <>
       {isOpen &&
@@ -35,13 +48,16 @@ const ModalFormInput = ({
               <div className={`modal-submit-body`}>
                 <TextField
                   additionalClass='input-submit'
-                  onChange={onChangeText}
+                  value={textInput}
+                  validate={isModalInputValid}
+                  onChange={handleInputChange}
                 />
                 <Button
                   variants='primary'
                   size='sm'
                   children={confirmText}
                   onClick={onConfirmText}
+                  isDisable={isButtonDisabled}
                 />
               </div>
             </div>

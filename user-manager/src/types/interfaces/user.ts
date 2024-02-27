@@ -1,7 +1,7 @@
 import { IRole, IRule } from '@types';
 
 export interface IUser {
-  id: number;
+  id?: number;
   avatar: string;
   fullName: string;
   email: string;
