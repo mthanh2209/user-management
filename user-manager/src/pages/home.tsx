@@ -46,7 +46,7 @@ const COLUMNS = (searchKeyword: string): IColumnProps<IUser>[] => {
       )
     },
     {
-      id: '0',
+      id: '1',
       key: 'fullName',
       title: 'Full Name',
       /**
@@ -62,7 +62,7 @@ const COLUMNS = (searchKeyword: string): IColumnProps<IUser>[] => {
       )
     },
     {
-      id: '0',
+      id: '2',
       key: 'isActive',
       title: 'Status',
       /**
@@ -72,7 +72,7 @@ const COLUMNS = (searchKeyword: string): IColumnProps<IUser>[] => {
       render: (_, item) => <Status isActive={item.isActive} />
     },
     {
-      id: '0',
+      id: '3',
       key: 'email',
       title: 'Email',
       /**
@@ -163,7 +163,7 @@ const HomePage = () => {
       <div className='body-content'>
         <Toolbar
           onClose={handleCloseSearchBar}
-          onChange={handleChangeSearch} 
+          onChange={handleChangeSearch}
         />
 
         <Table
