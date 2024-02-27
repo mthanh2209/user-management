@@ -1,10 +1,11 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 // Components
 import Avatar from '@components/DataDisplay/Avatar';
 import Status from '@components/DataDisplay/Status';
 import Table from '@components/DataDisplay/Table';
 import Toolbar from '@components/DataDisplay/Toolbar';
+import InformationSidebar from '@components/DataDisplay/SideBar';
 
 // Helpers
 import { filterUsers, highlightKeyword } from '@helpers';
@@ -14,6 +15,9 @@ import { getUsers } from '@services';
 
 // Types
 import { IColumnProps, IUser } from '@types';
+
+// Constants
+import { INFO_LIST } from '@constants';
 
 /**
  * Generates columns configuration for a user list.
@@ -42,7 +46,7 @@ const COLUMNS = (searchKeyword: string): IColumnProps<IUser>[] => {
       )
     },
     {
-      id: '0',
+      id: '1',
       key: 'fullName',
       title: 'Full Name',
       /**
@@ -58,7 +62,7 @@ const COLUMNS = (searchKeyword: string): IColumnProps<IUser>[] => {
       )
     },
     {
-      id: '0',
+      id: '2',
       key: 'isActive',
       title: 'Status',
       /**
@@ -68,7 +72,7 @@ const COLUMNS = (searchKeyword: string): IColumnProps<IUser>[] => {
       render: (_, item) => <Status isActive={item.isActive} />
     },
     {
-      id: '0',
+      id: '3',
       key: 'email',
       title: 'Email',
       /**
@@ -87,8 +91,6 @@ const COLUMNS = (searchKeyword: string): IColumnProps<IUser>[] => {
 };
 
 const HomePage = () => {
-  const [searchKeyword, setSearchKeyword] = useState('');
-  const [showSidebar, setShowSidebar] = useState(true);
   const [selectedRow, setSelectedRow] = useState<{
     index: number;
     data: IUser | null;
@@ -96,6 +98,20 @@ const HomePage = () => {
     index: 0,
     data: null
   });
+  const [showSidebar, setShowSidebar] = useState(true);
+  const [userInfoList, setUserInfoList] = useState<any[]>([]);
+  const [searchKeyword, setSearchKeyword] = useState('');
+
+  /**
+   * Triggers an effect when the selectedRow.data changes to update the userInfoList and fetches user data.
+   * If selectedRow.data exists, updates the userInfoList based on the selectedRow.data.
+   * Always fetches the latest user data by calling handleGetUsers().
+   */
+  useEffect(() => {
+    if (selectedRow.data) {
+      setUserInfoList(INFO_LIST(selectedRow.data));
+    }
+  }, [selectedRow.data]);
 
   /**
    * Fetches user data.
@@ -131,24 +147,45 @@ const HomePage = () => {
     }
   };
 
+  /**
+   * Handles toggling the information sidebar.
+   */
+  const handleTogglePanel = () => {
+    setShowSidebar(!showSidebar);
+  };
+
   const handleCloseSearchBar = () => {};
 
   const handleChangeSearch = () => {};
 
   return (
-    <div className='body-content'>
-      <Toolbar
-        onClose={handleCloseSearchBar}
-        onChange={handleChangeSearch}
-      />
+    <>
+      <div className='body-content'>
+        <Toolbar
+          onClose={handleCloseSearchBar}
+          onChange={handleChangeSearch}
+        />
 
-      <Table
-        rowData={filteredUsers}
-        columns={columns}
-        selectedRowIndex={selectedRow.index}
-        onRowClick={handleSelectedRow}
-      />
-    </div>
+        <Table
+          rowData={filteredUsers}
+          columns={columns}
+          selectedRowIndex={selectedRow.index}
+          onRowClick={handleSelectedRow}
+        />
+      </div>
+
+      {showSidebar && selectedRow.data !== null && (
+        <InformationSidebar
+          title='User information'
+          isActive={selectedRow.data.isActive}
+          src={selectedRow.data.avatar}
+          bgColor={selectedRow.data.bgColor}
+          fullName={selectedRow.data.fullName}
+          data={userInfoList}
+          onShowPanel={handleTogglePanel}
+        />
+      )}
+    </>
   );
 };
 
