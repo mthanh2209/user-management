@@ -14,7 +14,7 @@ import TextView from '@components/DataDisplay/EditorProfile/TextView';
 import ModalConfirm from '@components/DataDisplay/Modal/ModalConfirm';
 
 // Interfaces
-import { IUserProps } from '@types';
+import { IUser } from '@types';
 
 // Helpers
 import { formatDate } from '@helpers';
@@ -30,7 +30,7 @@ interface IEditorProfile {
   lastVisitedDate: string | null;
   details: string;
   bgColor: string;
-  onSaveUser: (itemData: IUserProps) => void;
+  onSaveUser: (itemData: IUser) => void;
   onDeleteUser: (id: number) => void;
   showToast: (show: boolean, isError: boolean) => void;
 }
@@ -95,7 +95,7 @@ const EditorProfile = ({
       details: formData.details,
       bgColor
     };
-    onSaveUser(updatedItem as IUserProps);
+    onSaveUser(updatedItem as IUser);
     showToast(true, false);
   };
 
