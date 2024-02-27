@@ -33,7 +33,7 @@ const SideBarInfo = ({ data }: SideBarInfoProps) => {
             return (
               <ListView
                 key={item.id}
-                items={item.items as ItemViewProps[]}
+                items={item.content as ItemViewProps[]}
               />
             );
           default:

@@ -16,7 +16,7 @@ const ItemView = ({
         {title}
       </div>
       <div className='info-list-link'>
-        {content.map((item) => (
+        {content?.map((item) => (
           <Link
             key={item.link}
             to={item.link}
