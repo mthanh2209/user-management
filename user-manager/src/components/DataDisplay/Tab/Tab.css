@@ -1,6 +1,6 @@
 .tab {
   border: none;
-  min-width: 144px;
+  min-width: 260px;
   padding: 12px 0;
   font-family: var(--primary-font);
   font-size: var(--font-md);
@@ -16,7 +16,8 @@
 }
 
 .tab.active {
-  border-bottom: 3px solid var(--primary-color);
+  color: #17839d;
+  border-bottom: 2px solid #17839d;
 }
 
 .tab.active:hover {
