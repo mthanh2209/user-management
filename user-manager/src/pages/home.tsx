@@ -11,7 +11,7 @@ import InformationSidebar from '@components/DataDisplay/SideBar';
 import { filterUsers, highlightKeyword } from '@helpers';
 
 // Services
-import { getUsers } from '@services';
+import { deleteUser, getUsers } from '@services';
 
 // Types
 import { IColumnProps, IUser } from '@types';
@@ -152,6 +152,21 @@ const HomePage = () => {
    */
   const handleTogglePanel = () => {
     setShowSidebar(!showSidebar);
+  };
+
+  /**
+   * Deletes the selected user and updates the user list.
+   */
+  const handleDeleteUsers = async () => {
+    if (selectedRow.data) {
+      const response = await deleteUser(selectedRow.data.id);
+      if (response.data) {
+        setSelectedRow({ index: 0, data: null });
+        handleShowToast(true, false);
+      } else {
+        handleShowToast(true, true);
+      }
+    }
   };
 
   const handleCloseSearchBar = () => {};

@@ -105,7 +105,7 @@ export const addUser = (userName: string): Promise<IResponse> =>
  * @param userId - The ID of the user to be deleted.
  * @returns A promise that resolves to the response object.
  */
-export const deleteUser = (userId: string): Promise<IResponse> =>
+export const deleteUser = (userId: number): Promise<IResponse> =>
   makeRequest(`${API.BASE}/${API.USERS}/${userId}`, {
     method: 'DELETE',
     headers: {
