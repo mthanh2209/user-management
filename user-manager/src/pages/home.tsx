@@ -6,6 +6,9 @@ import Status from '@components/DataDisplay/Status';
 import Table from '@components/DataDisplay/Table';
 import Toolbar from '@components/DataDisplay/Toolbar';
 import InformationSidebar from '@components/DataDisplay/SideBar';
+import Panel from '@components/DataDisplay/Panel';
+import EditorProfile from '@components/DataDisplay/EditorProfile';
+import AssignRule from '@components/DataDisplay/Assign/AssignRule';
 
 // Helpers
 import { filterUsers, highlightKeyword } from '@helpers';
@@ -14,10 +17,17 @@ import { filterUsers, highlightKeyword } from '@helpers';
 import { getUsers } from '@services';
 
 // Types
-import { IColumnProps, IUser } from '@types';
+import {
+  IColumnProps,
+  IUser,
+  ItemAssign
+} from '@types';
 
 // Constants
 import { INFO_LIST } from '@constants';
+
+// Mocks
+import { mockData } from '@mocks';
 
 /**
  * Generates columns configuration for a user list.
@@ -154,6 +164,12 @@ const HomePage = () => {
     setShowSidebar(!showSidebar);
   };
 
+  const handleUpdateUsers = () => {};
+
+  const handleDeleteUsers = () => {};
+
+  const handleShowToast = () => {};
+
   const handleCloseSearchBar = () => {};
 
   const handleChangeSearch = () => {};
@@ -165,7 +181,6 @@ const HomePage = () => {
           onClose={handleCloseSearchBar}
           onChange={handleChangeSearch}
         />
-
         <Table
           rowData={filteredUsers}
           columns={columns}
@@ -183,6 +198,42 @@ const HomePage = () => {
           fullName={selectedRow.data.fullName}
           data={userInfoList}
           onShowPanel={handleTogglePanel}
+        />
+      )}
+
+      {!showSidebar && selectedRow.data !== null && (
+        <Panel
+          tabs={[
+            {
+              content: (
+                <EditorProfile
+                  id={selectedRow.data.id}
+                  avatar={selectedRow.data.avatar}
+                  fullName={selectedRow.data.fullName}
+                  email={selectedRow.data.email}
+                  isActive={selectedRow.data.isActive}
+                  registeredDate={selectedRow.data.registeredDate}
+                  lastVisitedDate={selectedRow.data.lastVisitedDate}
+                  details={selectedRow.data.details}
+                  bgColor={selectedRow.data.bgColor}
+                  onSaveUser={handleUpdateUsers}
+                  onDeleteUser={handleDeleteUsers}
+                  showToast={handleShowToast}
+                />
+              ),
+              title: 'General'
+            },
+            {
+              content: (
+                <AssignRule
+                  title='Username'
+                  rules={mockData.rules as ItemAssign[]}
+                />
+              ),
+              title: 'Rules'
+            }
+          ]}
+          onReturnClick={handleTogglePanel}
         />
       )}
     </>
