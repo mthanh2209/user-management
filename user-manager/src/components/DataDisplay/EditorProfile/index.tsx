@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // CSS
 import '@components/DataDisplay/EditorProfile/EditorProfile.css';
@@ -107,6 +107,17 @@ const EditorProfile = ({
     setOpenModal(false);
     onDeleteUser(id);
   };
+
+  useEffect(() => {
+    setFormData((prevData) => ({
+      ...prevData,
+      fullName,
+      email,
+      isActive,
+      details,
+      avatar
+    }));
+  }, [fullName, email, isActive, details, avatar]);
 
   return (
     <>
