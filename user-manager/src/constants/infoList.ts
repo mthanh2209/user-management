@@ -12,6 +12,7 @@ import { INFO_TYPE } from './types';
  */
 export const INFO_LIST = (data: IUser | null) => {
   if (!data) return [];
+
   return [
     {
       type: INFO_TYPE.TEXT_VIEW,
