@@ -8,26 +8,29 @@ import Toolbar from '@components/DataDisplay/Toolbar';
 import InformationSidebar from '@components/DataDisplay/SideBar';
 import Panel from '@components/DataDisplay/Panel';
 import EditorProfile from '@components/DataDisplay/EditorProfile';
-import AssignRule from '@components/DataDisplay/Assign/AssignRule';
+import AssignRole from '@components/DataDisplay/Assign/AssignRole';
 
 // Helpers
-import { filterUsers, highlightKeyword } from '@helpers';
+import { filterUsers, formatDate, highlightKeyword } from '@helpers';
 
 // Services
-import { getUsers } from '@services';
+import { getUsers, getRoles, getUserRoles } from '@services';
 
 // Types
 import {
   IColumnProps,
+  IRole,
+  IRule,
   IUser,
+  IUserRole,
+  IUserRule,
   ItemAssign
 } from '@types';
 
 // Constants
-import { INFO_LIST } from '@constants';
+import { INFO_TYPE } from '@constants';
 
 // Mocks
-import { mockData } from '@mocks';
 
 /**
  * Generates columns configuration for a user list.
@@ -100,6 +103,22 @@ const COLUMNS = (searchKeyword: string): IColumnProps<IUser>[] => {
   ];
 };
 
+const getUserRolesAndRules = (
+  userId: number,
+  roles: IRole[],
+  userRoles: IUserRole[]
+) => {
+  // Get the userRoles for the specified user
+  const userRoleRelations = userRoles?.filter((item) => item.userId === userId);
+
+  // Get roles for user based on userRolesRelations
+  const userRolesItem = userRoleRelations?.map((item) =>
+    roles.find((role) => role.id === item.roleId)
+  );
+
+  return { userRolesItem };
+};
+
 const HomePage = () => {
   const [selectedRow, setSelectedRow] = useState<{
     index: number;
@@ -128,6 +147,51 @@ const HomePage = () => {
    * @type {IUser[]}
    */
   const { data: users } = getUsers();
+  const { data: rolesData } = getRoles();
+  const { data: userRolesData } = getUserRoles();
+
+  const { userRolesItem } = getUserRolesAndRules(
+    selectedRow.data?.id!,
+    rolesData!,
+    userRolesData!
+  );
+
+  const INFO_LIST = (data: IUser | null) => {
+    if (!data) return [];
+
+    return [
+      {
+        type: INFO_TYPE.TEXT_VIEW,
+        icon: 'icon-email',
+        title: 'Email:',
+        content: data.email
+      },
+      {
+        type: INFO_TYPE.TEXT_VIEW,
+        icon: 'icon-date',
+        title: 'Last visited:',
+        content:
+          data.lastVisitedDate !== null
+            ? formatDate(data.lastVisitedDate)
+            : 'Unknown'
+      },
+      {
+        type: INFO_TYPE.LIST_VIEW,
+        content: [
+          {
+            icon: 'icon-role',
+            title: `Roles (${Array.isArray(userRolesItem) ? userRolesItem.length : 0})`,
+            content: Array.isArray(userRolesItem)
+              ? userRolesItem.map((role) => ({
+                  text: role?.name,
+                  link: '/'
+                }))
+              : []
+          }
+        ]
+      }
+    ];
+  };
 
   /**
    * Filters users based on search keyword.
@@ -173,6 +237,24 @@ const HomePage = () => {
   const handleCloseSearchBar = () => {};
 
   const handleChangeSearch = () => {};
+
+  let userRoles: ItemAssign[] = [];
+
+  if (rolesData && userRolesData) {
+    userRoles = rolesData.map((role) => {
+      let isAssigned = userRolesData.some(
+        (userRole) =>
+          userRole.userId === selectedRow.data?.id &&
+          userRole.roleId === role.id
+      );
+
+      return {
+        ...role,
+        isAssigned: isAssigned
+      };
+    });
+    console.log(userRoles);
+  }
 
   return (
     <>
@@ -225,12 +307,13 @@ const HomePage = () => {
             },
             {
               content: (
-                <AssignRule
-                  title='Username'
-                  rules={mockData.rules as ItemAssign[]}
+                <AssignRole
+                  key={selectedRow.data.id}
+                  title={selectedRow.data.fullName}
+                  roles={userRoles}
                 />
               ),
-              title: 'Rules'
+              title: 'Roles'
             }
           ]}
           onReturnClick={handleTogglePanel}
