@@ -154,9 +154,20 @@ const HomePage = () => {
     setShowSidebar(!showSidebar);
   };
 
-  const handleCloseSearchBar = () => {};
+  /**
+   * Closes the search bar by resetting the search keyword.
+   */
+  const handleCloseSearchBar = () => {
+    setSearchKeyword('');
+  };
 
-  const handleChangeSearch = () => {};
+  /**
+   * Handles searching for users based on a keyword.
+   * @param {string} keyword - The keyword used for filtering users.
+   */
+  const handleChangeSearch = (keyword: string): void => {
+    setSearchKeyword(keyword);
+  };
 
   return (
     <>
