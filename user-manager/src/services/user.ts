@@ -118,7 +118,7 @@ export const deleteUser = (userId: string): Promise<IResponse> =>
  * @param userData - The updated user data.
  * @returns A promise that resolves to the response object.
  */
-export const editUser = async (userData: IUser): Promise<IResponse> =>
+export const editUser = (userData: IUser): Promise<IResponse> =>
   makeRequest(`${API.BASE}/${API.USERS}/${userData.id}`, {
     method: 'PUT',
     headers: {
