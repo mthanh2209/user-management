@@ -47,12 +47,16 @@ export const Default: Story = {
       },
       {
         type: INFO_TYPE.LIST_VIEW,
-        icon: 'icon-date',
-        title: 'Roles',
         content: [
           {
-            text: 'Admin',
-            link: '/'
+            icon: 'icon-role',
+            title: 'Roles',
+            content: [
+              {
+                text: 'Admin',
+                link: '/'
+              }
+            ]
           }
         ]
       }
