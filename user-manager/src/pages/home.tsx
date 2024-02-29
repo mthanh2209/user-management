@@ -24,7 +24,7 @@ import {
 import {
   IColumnProps,
   IUser,
-  ItemAssign 
+  ItemAssign
 } from '@types';
 
 // Constants
@@ -187,6 +187,21 @@ const HomePage = () => {
   };
 
   /**
+   * Closes the search bar by resetting the search keyword.
+   */
+  const handleCloseSearchBar = () => {
+    setSearchKeyword('');
+  };
+
+  /**
+   * Handles searching for users based on a keyword.
+   * @param {string} keyword - The keyword used for filtering users.
+   */
+  const handleChangeSearch = (keyword: string): void => {
+    setSearchKeyword(keyword);
+  };
+
+  /**
    * Deletes the selected user and updates the user list.
    */
   const handleDeleteUsers = async () => {
@@ -219,10 +234,6 @@ const HomePage = () => {
       handleShowToast(true, true);
     }
   };
-
-  const handleCloseSearchBar = () => {};
-
-  const handleChangeSearch = () => {};
 
   return (
     <>
