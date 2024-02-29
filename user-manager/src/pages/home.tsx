@@ -14,13 +14,17 @@ import AssignRule from '@components/DataDisplay/Assign/AssignRule';
 import { filterUsers, highlightKeyword } from '@helpers';
 
 // Services
-import { editUser, getUsers } from '@services';
+import {
+  getUsers,
+  editUser,
+  deleteUser
+} from '@services';
 
 // Types
 import {
   IColumnProps,
   IUser,
-  ItemAssign
+  ItemAssign 
 } from '@types';
 
 // Constants
@@ -183,6 +187,21 @@ const HomePage = () => {
   };
 
   /**
+   * Deletes the selected user and updates the user list.
+   */
+  const handleDeleteUsers = async () => {
+    if (selectedRow.data) {
+      const response = await deleteUser(selectedRow.data.id);
+      if (response.data) {
+        setSelectedRow({ index: 0, data: null });
+        handleShowToast(true, false);
+      } else {
+        handleShowToast(true, true);
+      }
+    }
+  };
+
+  /**
    * Updates user information based on the changes made and retrieves updated user data.
    * @param {IUser} itemData - Updated user data.
    */
@@ -200,8 +219,6 @@ const HomePage = () => {
       handleShowToast(true, true);
     }
   };
-
-  const handleDeleteUsers = () => {};
 
   const handleCloseSearchBar = () => {};
 
