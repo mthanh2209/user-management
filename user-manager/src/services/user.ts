@@ -105,7 +105,7 @@ export const addUser = (userName: string): Promise<IResponse> =>
  * @param userId - The ID of the user to be deleted.
  * @returns A promise that resolves to the response object.
  */
-export const deleteUser = (userId: string): Promise<IResponse> =>
+export const deleteUser = (userId: number): Promise<IResponse> =>
   makeRequest(`${API.BASE}/${API.USERS}/${userId}`, {
     method: 'DELETE',
     headers: {
@@ -115,12 +115,11 @@ export const deleteUser = (userId: string): Promise<IResponse> =>
 
 /**
  * Edits a user.
- * @param userId - The ID of the user to be edited.
  * @param userData - The updated user data.
  * @returns A promise that resolves to the response object.
  */
-export const editUser = (userId: string, userData: IUser): Promise<IResponse> =>
-  makeRequest(`${API.BASE}/${API.USERS}/${userId}`, {
+export const editUser = (userData: IUser): Promise<IResponse> =>
+  makeRequest(`${API.BASE}/${API.USERS}/${userData.id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'

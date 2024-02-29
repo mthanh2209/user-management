@@ -14,7 +14,11 @@ import AssignRule from '@components/DataDisplay/Assign/AssignRule';
 import { filterUsers, highlightKeyword } from '@helpers';
 
 // Services
-import { getUsers } from '@services';
+import {
+  getUsers,
+  editUser,
+  deleteUser
+} from '@services';
 
 // Types
 import {
@@ -111,6 +115,24 @@ const HomePage = () => {
   const [showSidebar, setShowSidebar] = useState(true);
   const [userInfoList, setUserInfoList] = useState<any[]>([]);
   const [searchKeyword, setSearchKeyword] = useState('');
+  const [showToast, setShowToast] = useState({
+    show: false,
+    isError: false,
+    key: 0
+  });
+
+  /**
+   * Function to handle displaying or hiding toast messages.
+   * @param {boolean} show - Determines whether to display the toast (default: true).
+   * @param {boolean} isError - Indicates if the toast is an error message (default: false).
+   */
+  const handleShowToast = (show = true, isError = false) => {
+    setShowToast({
+      show,
+      isError,
+      key: showToast.key + 1
+    });
+  };
 
   /**
    * Triggers an effect when the selectedRow.data changes to update the userInfoList and fetches user data.
@@ -171,18 +193,46 @@ const HomePage = () => {
     setSearchKeyword('');
   };
 
-  const handleUpdateUsers = () => {};
-
-  const handleDeleteUsers = () => {};
-
-  const handleShowToast = () => {};
-
   /**
    * Handles searching for users based on a keyword.
    * @param {string} keyword - The keyword used for filtering users.
    */
   const handleChangeSearch = (keyword: string): void => {
     setSearchKeyword(keyword);
+  };
+
+  /**
+   * Deletes the selected user and updates the user list.
+   */
+  const handleDeleteUsers = async () => {
+    if (selectedRow.data) {
+      const response = await deleteUser(selectedRow.data.id);
+      if (response.data) {
+        setSelectedRow({ index: 0, data: null });
+        handleShowToast(true, false);
+      } else {
+        handleShowToast(true, true);
+      }
+    }
+  };
+
+  /**
+   * Updates user information based on the changes made and retrieves updated user data.
+   * @param {IUser} itemData - Updated user data.
+   */
+  const handleUpdateUsers = async (itemData: IUser) => {
+    const response = await editUser(itemData);
+
+    if (response.data) {
+      setSelectedRow({
+        index: selectedRow.index,
+        data: response.data
+      });
+      setShowSidebar(true);
+      handleShowToast(true, false);
+    } else {
+      handleShowToast(true, true);
+    }
   };
 
   return (
