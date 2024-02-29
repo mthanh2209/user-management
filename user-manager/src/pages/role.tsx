@@ -1,18 +1,30 @@
-import { useMemo, useState } from 'react';
+import {
+  useEffect,
+  useMemo,
+  useState 
+} from 'react';
 
 // Components
 import Avatar from '@components/DataDisplay/Avatar';
 import Table from '@components/DataDisplay/Table';
 import Toolbar from '@components/DataDisplay/Toolbar';
+import InformationSidebar from '@components/DataDisplay/SideBar';
 
 // Helpers
 import { filterRoles, highlightKeyword } from '@helpers';
 
 // Services
-import { getRoles } from '@services';
+import {
+  getRoles,
+  getRules,
+  getUsers
+} from '@services';
 
 // Types
 import { IColumnProps, IRole } from '@types';
+
+// Constants
+import { INFO_LIST_VIEW_ROLE } from '@constants';
 
 /**
  * Column configuration for the roles table.
@@ -74,11 +86,29 @@ const RolePage = () => {
     data: null
   });
   const [searchKeyword, setSearchKeyword] = useState('');
+  const [showSidebar, setShowSidebar] = useState(true);
+  const [roleInfoList, setRoleInfoList] = useState<any[]>([]);
 
   /**
-   * Fetch roles data from the service.
+   * Fetch data from the service.
    */
   const { data: roles } = getRoles();
+  const { data: rules } = getRules();
+  const { data: users } = getUsers();
+
+  /**
+   * Effect to update role information list when selectedRow.data changes.
+   *
+   * @name useEffect
+   * @function
+   * @param {Function} callback - Callback function to execute.
+   * @param {Array} dependencies - Dependencies to watch for changes.
+   */
+  useEffect(() => {
+    if (selectedRow.data) {
+      setRoleInfoList(INFO_LIST_VIEW_ROLE(users, rules));
+    }
+  }, [selectedRow.data]);
 
   /**
    * Memoized filtered roles based on the search keyword.
@@ -100,6 +130,11 @@ const RolePage = () => {
    */
   const handleSelectedRow = (index: number, dataItem: IRole): void => {
     setSelectedRow({ index, data: dataItem });
+    if (showSidebar || showSidebar === null) {
+      setShowSidebar(true);
+    } else if (!showSidebar) {
+      setShowSidebar(false);
+    }
   };
 
   /**
@@ -111,6 +146,13 @@ const RolePage = () => {
    * Handles the change in the search input.
    */
   const handleChangeSearch = () => {};
+
+  /**
+   * Handles toggling the information sidebar.
+   */
+  const handleTogglePanel = () => {
+    setShowSidebar(!showSidebar);
+  };
 
   return (
     <>
@@ -128,6 +170,17 @@ const RolePage = () => {
           onRowClick={handleSelectedRow}
         />
       </div>
+
+      {showSidebar && selectedRow.data !== null && (
+        <InformationSidebar
+          title='Role information'
+          src={selectedRow.data.avatar}
+          bgColor={selectedRow.data.bgColor}
+          fullName={selectedRow.data.name}
+          data={roleInfoList}
+          onShowPanel={handleTogglePanel}
+        />
+      )}
     </>
   );
 };

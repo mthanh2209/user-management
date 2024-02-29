@@ -6,9 +6,9 @@ export { formatDate } from '@helpers/formatDate';
 export {
   isEmailValid,
   isFullNameValid,
-  isModalInputValid 
+  isModalInputValid
 } from '@helpers/validation';
 export { fetcher } from '@helpers/fetcher';
-export { filterUsers } from '@helpers/filterUsers';
+export { filterUsers, filterRoles } from '@helpers/filterData';
 export { highlightKeyword } from '@helpers/highlightKeyword';
 export { generateNewUser } from '@helpers/generateNewUser';
