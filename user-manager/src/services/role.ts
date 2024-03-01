@@ -5,7 +5,12 @@ import { API } from '@constants';
 import { IRole, IRoleRule } from '@types';
 
 // Services
-import { IResponse, makeRequest, useApi, useApiData } from '@services/user';
+import {
+  IResponse,
+  makeRequest,
+  useApi,
+  useApiData 
+} from '@services/user';
 
 export const getRoles = (): {
   data: IRole[];
