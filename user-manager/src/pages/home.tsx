@@ -28,7 +28,7 @@ import {
 } from '@types';
 
 // Constants
-import { INFO_LIST } from '@constants';
+import { INFO_TEXT_VIEW } from '@constants';
 
 // Mocks
 import { mockData } from '@mocks';
@@ -141,7 +141,7 @@ const HomePage = () => {
    */
   useEffect(() => {
     if (selectedRow.data) {
-      setUserInfoList(INFO_LIST(selectedRow.data));
+      setUserInfoList(INFO_TEXT_VIEW(selectedRow.data));
     }
   }, [selectedRow.data]);
 
@@ -239,6 +239,7 @@ const HomePage = () => {
     <>
       <div className='body-content'>
         <Toolbar
+          content='Users'
           onClose={handleCloseSearchBar}
           onChange={handleChangeSearch}
         />
