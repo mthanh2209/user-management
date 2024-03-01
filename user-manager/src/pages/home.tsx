@@ -14,7 +14,7 @@ import AssignRole from '@components/DataDisplay/Assign/AssignRole';
 import {
   filterUsers,
   formatDate,
-  highlightKeyword 
+  highlightKeyword
 } from '@helpers';
 
 // Services
@@ -37,8 +37,7 @@ import {
 
 // Constants
 import { INFO_TYPE } from '@constants';
-
-// Mocks
+import { INFO_TEXT_VIEW } from '@constants';
 
 /**
  * Generates columns configuration for a user list.
@@ -164,7 +163,7 @@ const HomePage = () => {
    */
   useEffect(() => {
     if (selectedRow.data) {
-      setUserInfoList(INFO_LIST(selectedRow.data));
+      setUserInfoList(INFO_TEXT_VIEW(selectedRow.data));
     }
   }, [selectedRow.data]);
 
@@ -325,6 +324,7 @@ const HomePage = () => {
     <>
       <div className='body-content'>
         <Toolbar
+          content='Users'
           onClose={handleCloseSearchBar}
           onChange={handleChangeSearch}
         />

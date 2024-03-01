@@ -83,6 +83,10 @@
   background: url('../../../assets/images/icon-rule.svg') no-repeat;
 }
 
+.icon-user::before {
+  background: url('../../../assets/images/icon-user.svg') no-repeat;
+}
+
 /* ListView */
 .info-list-link {
   display: flex;
