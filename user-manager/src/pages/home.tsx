@@ -1,4 +1,8 @@
-import { useEffect, useMemo, useState } from 'react';
+import {
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
 
 // Components
 import Avatar from '@components/DataDisplay/Avatar';
@@ -13,7 +17,7 @@ import AssignRole from '@components/DataDisplay/Assign/AssignRole';
 // Helpers
 import {
   filterUsers,
-  formatDate,
+  getUsersAndRoles,
   highlightKeyword
 } from '@helpers';
 
@@ -31,13 +35,11 @@ import {
   IColumnProps,
   IRole,
   IUser,
-  IUserRole,
   ItemAssign
 } from '@types';
 
 // Constants
-import { INFO_TYPE } from '@constants';
-import { INFO_TEXT_VIEW } from '@constants';
+import { INFO_LIST_VIEW_USER } from '@constants';
 
 /**
  * Generates columns configuration for a user list.
@@ -110,22 +112,6 @@ const COLUMNS = (searchKeyword: string): IColumnProps<IUser>[] => {
   ];
 };
 
-const getUserRolesAndRules = (
-  userId: number,
-  roles: IRole[],
-  userRoles: IUserRole[]
-) => {
-  // Get the userRoles for the specified user
-  const userRoleRelations = userRoles?.filter((item) => item.userId === userId);
-
-  // Get roles for user based on userRolesRelations
-  const userRolesItem = userRoleRelations?.map((item) =>
-    roles.find((role) => role.id === item.roleId)
-  );
-
-  return { userRolesItem };
-};
-
 const HomePage = () => {
   const [selectedRow, setSelectedRow] = useState<{
     index: number;
@@ -144,6 +130,13 @@ const HomePage = () => {
   });
 
   /**
+   * Fetches data.
+   */
+  const { data: users } = getUsers();
+  const { data: rolesData } = getRoles();
+  const { data: userRolesData } = getUserRoles();
+
+  /**
    * Function to handle displaying or hiding toast messages.
    * @param {boolean} show - Determines whether to display the toast (default: true).
    * @param {boolean} isError - Indicates if the toast is an error message (default: false).
@@ -157,66 +150,37 @@ const HomePage = () => {
   };
 
   /**
-   * Triggers an effect when the selectedRow.data changes to update the userInfoList and fetches user data.
-   * If selectedRow.data exists, updates the userInfoList based on the selectedRow.data.
-   * Always fetches the latest user data by calling handleGetUsers().
+   * Retrieves user roles and rules based on user data.
+   * @param userId - The ID of the user.
+   * @param rolesData - The data containing available roles.
+   * @param userRolesData - The data containing user roles.
+   * @returns An object containing user roles.
    */
-  useEffect(() => {
-    if (selectedRow.data) {
-      setUserInfoList(INFO_TEXT_VIEW(selectedRow.data));
-    }
-  }, [selectedRow.data]);
-
-  /**
-   * Fetches user data.
-   * @type {IUser[]}
-   */
-  const { data: users } = getUsers();
-  const { data: rolesData } = getRoles();
-  const { data: userRolesData } = getUserRoles();
-
-  const { userRolesItem } = getUserRolesAndRules(
+  const { userRolesItem } = getUsersAndRoles(
     selectedRow.data?.id!,
     rolesData!,
     userRolesData!
   );
 
-  const INFO_LIST = (data: IUser | null) => {
-    if (!data) return [];
+  /**
+   * useEffect hook to update user information list when selected user data changes.
+   */
+  useEffect(() => {
+    if (selectedRow.data) {
+      // Filter undefined roles
+      const filteredUserRolesItem: IRole[] = (userRolesItem || []).filter(
+        (role) => role !== undefined
+      ) as IRole[];
 
-    return [
-      {
-        type: INFO_TYPE.TEXT_VIEW,
-        icon: 'icon-email',
-        title: 'Email:',
-        content: data.email
-      },
-      {
-        type: INFO_TYPE.TEXT_VIEW,
-        icon: 'icon-date',
-        title: 'Last visited:',
-        content:
-          data.lastVisitedDate !== null
-            ? formatDate(data.lastVisitedDate)
-            : 'Unknown'
-      },
-      {
-        type: INFO_TYPE.LIST_VIEW,
-        content: [
-          {
-            icon: 'icon-role',
-            title: `Roles (${Array.isArray(userRolesItem) ? userRolesItem.length : 0})`,
-            content: Array.isArray(userRolesItem)
-              ? userRolesItem.map((role) => ({
-                  text: role?.name,
-                  link: '/'
-                }))
-              : []
-          }
-        ]
-      }
-    ];
-  };
+      // Set user information list
+      setUserInfoList(
+        INFO_LIST_VIEW_USER(
+          selectedRow.data,
+          filteredUserRolesItem
+        )
+      );
+    }
+  }, [selectedRow.data]);
 
   /**
    * Filters users based on search keyword.
@@ -302,10 +266,18 @@ const HomePage = () => {
     }
   };
 
+  /**
+   * Represents the roles assigned to the selected user.
+   * @type {ItemAssign[]}
+   */
   let userRoles: ItemAssign[] = [];
 
   if (rolesData && userRolesData) {
     userRoles = rolesData.map((role) => {
+      /**
+       * Checks if the role is assigned to the selected user.
+       * @type {boolean}
+       */
       let isAssigned = userRolesData.some(
         (userRole) =>
           userRole.userId === selectedRow.data?.id &&
@@ -317,7 +289,6 @@ const HomePage = () => {
         isAssigned: isAssigned
       };
     });
-    console.log(userRoles);
   }
 
   return (

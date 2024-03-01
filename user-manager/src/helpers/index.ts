@@ -12,3 +12,4 @@ export { fetcher } from '@helpers/fetcher';
 export { filterUsers, filterRoles } from '@helpers/filterData';
 export { highlightKeyword } from '@helpers/highlightKeyword';
 export { generateNewUser } from '@helpers/generateNewUser';
+export { getUsersAndRoles } from '@helpers/getUsersAndRoles';
