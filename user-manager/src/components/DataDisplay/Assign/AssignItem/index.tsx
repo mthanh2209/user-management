@@ -25,6 +25,7 @@ interface IAssignItem {
   title: string;
   optionName: string;
   singleOption?: SingleOptionTypes;
+  handleItemSelect: (id: number) => () => void;
 }
 
 const AssignItem = ({
@@ -32,9 +33,9 @@ const AssignItem = ({
   items,
   title,
   optionName,
-  singleOption
+  singleOption,
+  handleItemSelect
 }: IAssignItem) => {
-  const [itemState, setItemState] = useState<ItemAssign[]>(items);
   const [isModifying, setIsModifying] = useState<boolean>(false);
   const [selectedType, setSelectedType] = useState<AssignmentOptions>(
     AssignmentOptions.AssignDirectly
@@ -55,24 +56,6 @@ const AssignItem = ({
    * Handles the click event for modifying assignments.
    */
   const handleModifyClick = () => setIsModifying(!isModifying);
-
-  /**
-   * Handles the selection of an assignment item.
-   *
-   * @param {number} id - The ID of the assignment item.
-   * @returns {(event: React.ChangeEvent<HTMLInputElement>) => void} The event handler function.
-   */
-  const handleItemChecked =
-    (id: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      const itemsClone = [...itemState];
-      const index = itemsClone.findIndex((item) => item.id === id);
-
-      if (index >= 0) {
-        itemsClone[index].isAssigned = event.target.checked;
-      }
-
-      setItemState(itemsClone);
-    };
 
   /**
    * Handles the change event for the search field.
@@ -124,7 +107,7 @@ const AssignItem = ({
         items={filteredItems}
         isModifying={isModifying}
         selectedType={selectedType}
-        handleItemChecked={handleItemChecked}
+        handleItemSelect={handleItemSelect}
       />
     </>
   );

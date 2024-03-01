@@ -1,16 +1,16 @@
 export interface IAssignItemLink {
-  id: number;
-  name: string;
+  id?: number;
+  name?: string;
 }
 
 interface IAssignLink {
-  assignTo: IAssignItemLink[];
+  assignTo?: IAssignItemLink[];
 }
 
 const AssignLink = ({ assignTo }: IAssignLink) => {
   return (
     <>
-      {assignTo.map((role) => (
+      {assignTo?.map((role) => (
         <>
           <span className='icon-role'></span>
           <a
