@@ -22,6 +22,10 @@
   width: 100%;
 }
 
+.roles .table-header th:nth-child(2) {
+  width: min-content;
+}
+
 .table-head {
   position: sticky;
   top: 0;
