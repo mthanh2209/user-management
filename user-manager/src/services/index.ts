@@ -1,10 +1,17 @@
 export {
+  type IResponse,
+  makeRequest,
   getUsers,
   addUser,
   editUser,
   deleteUser,
   getUserRoles,
-  getUserRules,
+  getUserRules
 } from '@services/user';
-export { getRoles, getRoleRules } from '@services/role';
+export {
+  getRoles,
+  getRoleRules,
+  assignRoleToUser,
+  unAssignRoleFromUser
+} from '@services/role';
 export { getRules } from '@services/rule';
