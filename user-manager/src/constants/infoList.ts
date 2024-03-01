@@ -18,10 +18,11 @@ import { INFO_TYPE } from '@constants';
  * @param {IRole[]} roles - The roles associated with the user.
  * @returns {Array<Object>} An array of objects representing user information.
  */
-export const INFO_LIST_VIEW_USER = (
-  users: IUser,
-  roles: IRole[]
-) => {
+export const INFO_LIST_VIEW_USER = (users: IUser | null, roles: IRole[]) => {
+  if (!users) {
+    return [];
+  }
+
   return [
     {
       type: INFO_TYPE.TEXT_VIEW,
