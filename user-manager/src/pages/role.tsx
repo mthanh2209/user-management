@@ -1,8 +1,4 @@
-import {
-  useEffect,
-  useMemo,
-  useState 
-} from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 // Components
 import Avatar from '@components/DataDisplay/Avatar';
@@ -14,17 +10,14 @@ import InformationSidebar from '@components/DataDisplay/SideBar';
 import { filterRoles, highlightKeyword } from '@helpers';
 
 // Services
-import {
-  getRoles,
-  getRules,
-  getUsers
-} from '@services';
+import { getRoles, getRules, getUsers } from '@services';
 
 // Types
 import { IColumnProps, IRole } from '@types';
 
 // Constants
 import { INFO_LIST_VIEW_ROLE } from '@constants';
+import { Context } from '@stores';
 
 /**
  * Column configuration for the roles table.
@@ -78,15 +71,14 @@ const COLUMNS = (searchKeyword: string): IColumnProps<IRole>[] => {
 };
 
 const RolePage = () => {
-  const [selectedRow, setSelectedRow] = useState<{
-    index: number;
-    data: IRole | null;
-  }>({
-    index: 0,
-    data: null
-  });
-  const [searchKeyword, setSearchKeyword] = useState('');
-  const [showSidebar, setShowSidebar] = useState(true);
+  const {
+    selectedRow,
+    setSelectedRow,
+    searchKeyword,
+    showSidebar,
+    setShowSidebar
+  } = Context();
+
   const [roleInfoList, setRoleInfoList] = useState<any[]>([]);
 
   /**
