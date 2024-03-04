@@ -1,6 +1,9 @@
+// Types
 import {
   IRole,
-  IUserRole
+  IRule,
+  IUserRole,
+  IUserRule
 } from '@types';
 
 /**
@@ -10,11 +13,15 @@ import {
  * @param {IRole[]} roles - An array of all available roles.
  * @param {IUserRole[]} userRoles - An array of user-role relationships.
  */
-export const getUsersAndRoles = (
+export const getUserRolesAndRules = (
   userId: number,
   roles: IRole[],
-  userRoles: IUserRole[]
+  rules: IRule[],
+  userRoles: IUserRole[],
+  userRules: IUserRule[]
 ) => {
+  let userRuleRelations: IUserRule[] = [];
+
   // Get the userRoles for the specified user
   const userRoleRelations = userRoles?.filter((item) => item.userId === userId);
 
@@ -23,5 +30,17 @@ export const getUsersAndRoles = (
     roles.find((role) => role.id === item.roleId)
   );
 
-  return { userRolesItem };
+  // Get roleRules for roles of user
+  if (Array.isArray(userRules)) {
+    userRuleRelations = userRules?.filter((item) => item.userId === userId);
+  }
+
+  // Get rules for user based on userRoleRuleRelations
+  const userRulesItem =
+    Array.isArray(rules) &&
+    userRuleRelations?.map((item) =>
+      rules.find((rule) => rule.id === item.ruleId)
+    );
+
+  return { userRolesItem, userRulesItem };
 };
