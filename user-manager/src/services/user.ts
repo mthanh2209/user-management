@@ -9,7 +9,7 @@ import { API } from '@constants';
 // Helpers
 import { fetcher, generateNewUser } from '@helpers';
 
-type IResponse = {
+export type IResponse = {
   data: any;
   error: string | null;
 };
@@ -40,7 +40,7 @@ const handleError = (error?: any): IResponse => ({
  * @param options - The options to include in the request.
  * @returns A promise that resolves to the response object.
  */
-const makeRequest = async (
+export const makeRequest = async (
   url: string,
   options?: RequestInit
 ): Promise<IResponse> => {
