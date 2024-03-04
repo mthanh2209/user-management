@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 
 // Components
@@ -11,12 +10,11 @@ import { PATH, POPPER_OPTION } from '@constants';
 // Services
 import { addUser } from '@services';
 
+// Stores
+import { Context } from '@stores';
+
 const Layout = () => {
-  const [showToast, setShowToast] = useState({
-    show: false,
-    isError: false,
-    key: 0
-  });
+  const { showToast, setShowToast } = Context();
 
   /**
    * Function to handle displaying or hiding toast messages.
