@@ -1,4 +1,5 @@
 import { useEffect, useMemo } from 'react';
+import { mutate } from 'swr';
 
 // Components
 import Avatar from '@components/DataDisplay/Avatar';
@@ -14,21 +15,13 @@ import AssignRule from '@components/DataDisplay/Assign/AssignRule';
 import { filterUsers, highlightKeyword } from '@helpers';
 
 // Services
-import {
-  getUsers,
-  editUser,
-  deleteUser
-} from '@services';
+import { getUsers, editUser, deleteUser } from '@services';
 
 // Types
-import {
-  IColumnProps,
-  IUser,
-  ItemAssign
-} from '@types';
+import { IColumnProps, IUser, ItemAssign } from '@types';
 
 // Constants
-import { INFO_TEXT_VIEW } from '@constants';
+import { API, INFO_TEXT_VIEW } from '@constants';
 
 // Mocks
 import { mockData } from '@mocks';
@@ -207,8 +200,12 @@ const HomePage = () => {
   const handleDeleteUsers = async () => {
     if (selectedRow.data) {
       const response = await deleteUser(selectedRow.data.id);
+
       if (response.data) {
         setSelectedRow({ index: 0, data: null });
+
+        mutate(`${API.BASE}/${API.USERS}`);
+
         handleShowToast(true, false);
       } else {
         handleShowToast(true, true);
@@ -226,9 +223,13 @@ const HomePage = () => {
     if (response.data) {
       setSelectedRow({
         index: selectedRow.index,
-        data: response.data
+        data: itemData
       });
+
+      mutate(`${API.BASE}/${API.USERS}`);
+
       setShowSidebar(true);
+
       handleShowToast(true, false);
     } else {
       handleShowToast(true, true);

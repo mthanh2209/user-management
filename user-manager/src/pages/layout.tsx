@@ -1,11 +1,12 @@
 import { Outlet, useNavigate } from 'react-router-dom';
+import { mutate } from 'swr';
 
 // Components
 import Drawer from '@components/DataDisplay/Drawer';
 import Toast from '@components/DataDisplay/Toast';
 
 // Constants
-import { PATH, POPPER_OPTION } from '@constants';
+import { API, PATH, POPPER_OPTION } from '@constants';
 
 // Services
 import { addUser } from '@services';
@@ -14,7 +15,12 @@ import { addUser } from '@services';
 import { Context } from '@stores';
 
 const Layout = () => {
-  const { showToast, setShowToast } = Context();
+  const {
+    showToast,
+    setUsers,
+    setShowToast,
+    setSelectedRow
+  } = Context();
 
   /**
    * Function to handle displaying or hiding toast messages.
@@ -35,7 +41,18 @@ const Layout = () => {
    */
   const handleAddUser = async (userName: string) => {
     const response = await addUser(userName);
+
     if (response.data) {
+      const updatedUsers = await mutate(`${API.BASE}/${API.USERS}`);
+
+      // Set the updated user state
+      setUsers(updatedUsers);
+
+      setSelectedRow({
+        index: updatedUsers.length,
+        data: updatedUsers[updatedUsers.length - 1]
+      });
+
       handleShowToast(true, false);
     } else {
       handleShowToast(true, true);
