@@ -9,22 +9,34 @@ import Toolbar from '@components/DataDisplay/Toolbar';
 import InformationSidebar from '@components/DataDisplay/SideBar';
 import Panel from '@components/DataDisplay/Panel';
 import EditorProfile from '@components/DataDisplay/EditorProfile';
-import AssignRule from '@components/DataDisplay/Assign/AssignRule';
+import AssignRole from '@components/DataDisplay/Assign/AssignRole';
 
 // Helpers
-import { filterUsers, highlightKeyword } from '@helpers';
+import {
+  filterUsers,
+  getUsersAndRoles,
+  highlightKeyword
+} from '@helpers';
 
 // Services
-import { getUsers, editUser, deleteUser } from '@services';
+import {
+  getUsers,
+  editUser,
+  deleteUser,
+  getRoles,
+  getUserRoles
+} from '@services';
 
 // Types
-import { IColumnProps, IUser, ItemAssign } from '@types';
+import {
+  IColumnProps,
+  IRole,
+  IUser,
+  ItemAssign
+} from '@types';
 
 // Constants
-import { API, INFO_TEXT_VIEW } from '@constants';
-
-// Mocks
-import { mockData } from '@mocks';
+import { API, INFO_LIST_VIEW_USER } from '@constants';
 
 // Stores
 import { Context } from '@stores';
@@ -115,6 +127,13 @@ const HomePage = () => {
   } = Context();
 
   /**
+   * Fetches data.
+   */
+  const { data: users } = getUsers();
+  const { data: rolesData } = getRoles();
+  const { data: userRolesData } = getUserRoles();
+
+  /**
    * Function to handle displaying or hiding toast messages.
    * @param {boolean} show - Determines whether to display the toast (default: true).
    * @param {boolean} isError - Indicates if the toast is an error message (default: false).
@@ -128,21 +147,34 @@ const HomePage = () => {
   };
 
   /**
-   * Triggers an effect when the selectedRow.data changes to update the userInfoList and fetches user data.
-   * If selectedRow.data exists, updates the userInfoList based on the selectedRow.data.
-   * Always fetches the latest user data by calling handleGetUsers().
+   * Retrieves user roles and rules based on user data.
+   * @param userId - The ID of the user.
+   * @param rolesData - The data containing available roles.
+   * @param userRolesData - The data containing user roles.
+   * @returns An object containing user roles.
+   */
+  const { userRolesItem } = getUsersAndRoles(
+    selectedRow.data?.id!,
+    rolesData!,
+    userRolesData!
+  );
+
+  /**
+   * useEffect hook to update user information list when selected user data changes.
    */
   useEffect(() => {
     if (selectedRow.data) {
-      setUserInfoList(INFO_TEXT_VIEW(selectedRow.data));
+      // Filter undefined roles
+      const filteredUserRolesItem: IRole[] = (userRolesItem || []).filter(
+        (role) => role !== undefined
+      ) as IRole[];
+
+      // Set user information list
+      setUserInfoList(
+        INFO_LIST_VIEW_USER(selectedRow.data, filteredUserRolesItem)
+      );
     }
   }, [selectedRow.data]);
-
-  /**
-   * Fetches user data.
-   * @type {IUser[]}
-   */
-  const { data: users } = getUsers();
 
   /**
    * Filters users based on search keyword.
@@ -236,6 +268,31 @@ const HomePage = () => {
     }
   };
 
+  /**
+   * Represents the roles assigned to the selected user.
+   * @type {ItemAssign[]}
+   */
+  let userRoles: ItemAssign[] = [];
+
+  if (rolesData && userRolesData) {
+    userRoles = rolesData.map((role) => {
+      /**
+       * Checks if the role is assigned to the selected user.
+       * @type {boolean}
+       */
+      let isAssigned = userRolesData.some(
+        (userRole) =>
+          userRole.userId === selectedRow.data?.id &&
+          userRole.roleId === role.id
+      );
+
+      return {
+        ...role,
+        isAssigned: isAssigned
+      };
+    });
+  }
+
   return (
     <>
       <div className='body-content'>
@@ -288,12 +345,13 @@ const HomePage = () => {
             },
             {
               content: (
-                <AssignRule
-                  title='Username'
-                  rules={mockData.rules as ItemAssign[]}
+                <AssignRole
+                  key={selectedRow.data.id}
+                  title={selectedRow.data.fullName}
+                  roles={userRoles}
                 />
               ),
-              title: 'Rules'
+              title: 'Roles'
             }
           ]}
           onReturnClick={handleTogglePanel}
