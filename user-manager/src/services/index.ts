@@ -12,4 +12,8 @@ export {
   assignRoleToUser,
   unAssignRoleFromUser
 } from '@services/role';
-export { getRules } from '@services/rule';
+export {
+  getRules,
+  assignRuleToUser,
+  unAssignRuleFromUser
+} from '@services/rule';
