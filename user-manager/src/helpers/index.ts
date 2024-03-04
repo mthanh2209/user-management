@@ -9,6 +9,13 @@ export {
   isModalInputValid
 } from '@helpers/validation';
 export { fetcher } from '@helpers/fetcher';
-export { filterUsers, filterRoles } from '@helpers/filterData';
+export {
+  filterUsers,
+  filterRoles,
+  filterUserItemsByUserId
+} from '@helpers/filterData';
 export { highlightKeyword } from '@helpers/highlightKeyword';
 export { generateNewUser } from '@helpers/generateNewUser';
+export { getUsersAndRoles } from '@helpers/getUsersAndRoles';
+export { isItemAssignedToUser } from '@helpers/assign';
+export { findUserItemId } from '@helpers/findItem';
