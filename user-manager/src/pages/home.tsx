@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 
 // Components
 import Avatar from '@components/DataDisplay/Avatar';
@@ -32,6 +32,9 @@ import { INFO_TEXT_VIEW } from '@constants';
 
 // Mocks
 import { mockData } from '@mocks';
+
+// Stores
+import { Context } from '@stores';
 
 /**
  * Generates columns configuration for a user list.
@@ -105,21 +108,18 @@ const COLUMNS = (searchKeyword: string): IColumnProps<IUser>[] => {
 };
 
 const HomePage = () => {
-  const [selectedRow, setSelectedRow] = useState<{
-    index: number;
-    data: IUser | null;
-  }>({
-    index: 0,
-    data: null
-  });
-  const [showSidebar, setShowSidebar] = useState(true);
-  const [userInfoList, setUserInfoList] = useState<any[]>([]);
-  const [searchKeyword, setSearchKeyword] = useState('');
-  const [showToast, setShowToast] = useState({
-    show: false,
-    isError: false,
-    key: 0
-  });
+  const {
+    selectedRow,
+    setSelectedRow,
+    showSidebar,
+    setShowSidebar,
+    userInfoList,
+    setUserInfoList,
+    searchKeyword,
+    setSearchKeyword,
+    showToast,
+    setShowToast
+  } = Context();
 
   /**
    * Function to handle displaying or hiding toast messages.
