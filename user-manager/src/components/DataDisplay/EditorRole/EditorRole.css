@@ -1,0 +1,15 @@
+.color-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.color-field-wrapper {
+  position: absolute;
+  top: 4.5px;
+  right: 5px;
+  width: 24px;
+  height: 24px;
+  border-radius: 2px;
+}
