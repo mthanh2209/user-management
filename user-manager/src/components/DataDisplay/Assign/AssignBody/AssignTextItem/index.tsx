@@ -12,11 +12,9 @@ interface IAssignTextItem {
   description?: string;
   isAssigned: boolean;
   isModifying: boolean;
-  assignedTo: IAssignItemLink[];
+  assignedTo?: IAssignItemLink[];
   selectedType: AssignmentOptions;
-  handleItemChecked: (
-    id: number
-  ) => (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleItemSelect: (id: number) => () => void;
 }
 
 const AssignTextItem = ({
@@ -27,7 +25,7 @@ const AssignTextItem = ({
   isModifying,
   assignedTo,
   selectedType,
-  handleItemChecked
+  handleItemSelect
 }: IAssignTextItem) => {
   return (
     <>
@@ -54,7 +52,7 @@ const AssignTextItem = ({
             <input
               type='checkbox'
               checked={isAssigned}
-              onChange={handleItemChecked(id)}
+              onChange={handleItemSelect(id)}
               className='panel-assign-checkbox'
             />
           )}

@@ -40,3 +40,24 @@ export const filterRoles = (
     return role.name.toLowerCase().includes(searchKeyword.toLowerCase());
   });
 };
+
+/**
+ * Filters user items based on the user ID.
+ * @param userItems - The array of user items.
+ * @param itemData - The data of the items.
+ * @param userId - The ID of the user to filter by.
+ * @returns An array of filtered user items.
+ */
+export const filterUserItemsByUserId = (
+  userItems: any,
+  itemData: any,
+  userId: number
+) => {
+  return Array.isArray(userItems)
+    ? userItems
+        ?.filter((userItem) => userItem.userId === userId)
+        .map((userItem) =>
+          itemData?.find((item: any) => item.id === userItem.itemId)
+        )
+    : [];
+};
