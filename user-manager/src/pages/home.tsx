@@ -1,4 +1,5 @@
 import { useEffect, useMemo } from 'react';
+import { mutate } from 'swr';
 
 // Components
 import Avatar from '@components/DataDisplay/Avatar';
@@ -29,13 +30,13 @@ import {
 // Types
 import {
   IColumnProps,
-  IRole, 
+  IRole,
   IUser,
   ItemAssign
 } from '@types';
 
 // Constants
-import { INFO_LIST_VIEW_USER } from '@constants';
+import { API, INFO_LIST_VIEW_USER } from '@constants';
 
 // Stores
 import { Context } from '@stores';
@@ -231,8 +232,12 @@ const HomePage = () => {
   const handleDeleteUsers = async () => {
     if (selectedRow.data) {
       const response = await deleteUser(selectedRow.data.id);
+
       if (response.data) {
         setSelectedRow({ index: 0, data: null });
+
+        mutate(`${API.BASE}/${API.USERS}`);
+
         handleShowToast(true, false);
       } else {
         handleShowToast(true, true);
@@ -250,9 +255,13 @@ const HomePage = () => {
     if (response.data) {
       setSelectedRow({
         index: selectedRow.index,
-        data: response.data
+        data: itemData
       });
+
+      mutate(`${API.BASE}/${API.USERS}`);
+
       setShowSidebar(true);
+
       handleShowToast(true, false);
     } else {
       handleShowToast(true, true);
