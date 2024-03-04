@@ -10,11 +10,12 @@ import InformationSidebar from '@components/DataDisplay/SideBar';
 import Panel from '@components/DataDisplay/Panel';
 import EditorProfile from '@components/DataDisplay/EditorProfile';
 import AssignRole from '@components/DataDisplay/Assign/AssignRole';
+import AssignRule from '@components/DataDisplay/Assign/AssignRule';
 
 // Helpers
 import {
   filterUsers,
-  getUsersAndRoles,
+  getUserRolesAndRules,
   highlightKeyword
 } from '@helpers';
 
@@ -24,13 +25,16 @@ import {
   editUser,
   deleteUser,
   getRoles,
-  getUserRoles
+  getUserRoles,
+  getUserRules,
+  getRules
 } from '@services';
 
 // Types
 import {
   IColumnProps,
   IRole,
+  IRule,
   IUser,
   ItemAssign
 } from '@types';
@@ -131,7 +135,9 @@ const HomePage = () => {
    */
   const { data: users } = getUsers();
   const { data: rolesData } = getRoles();
+  const { data: rulesData } = getRules();
   const { data: userRolesData } = getUserRoles();
+  const { data: userRulesData } = getUserRules();
 
   /**
    * Function to handle displaying or hiding toast messages.
@@ -153,10 +159,12 @@ const HomePage = () => {
    * @param userRolesData - The data containing user roles.
    * @returns An object containing user roles.
    */
-  const { userRolesItem } = getUsersAndRoles(
+  const { userRolesItem, userRulesItem } = getUserRolesAndRules(
     selectedRow.data?.id!,
     rolesData!,
-    userRolesData!
+    rulesData!,
+    userRolesData!,
+    userRulesData!
   );
 
   /**
@@ -169,9 +177,18 @@ const HomePage = () => {
         (role) => role !== undefined
       ) as IRole[];
 
+      // Filter undefined rules
+      const filteredUserRulesItem: IRule[] = (userRulesItem || []).filter(
+        (rule) => rule !== undefined
+      ) as IRule[];
+
       // Set user information list
       setUserInfoList(
-        INFO_LIST_VIEW_USER(selectedRow.data, filteredUserRolesItem)
+        INFO_LIST_VIEW_USER(
+          selectedRow.data,
+          filteredUserRolesItem,
+          filteredUserRulesItem
+        )
       );
     }
   }, [selectedRow.data]);
@@ -293,6 +310,31 @@ const HomePage = () => {
     });
   }
 
+  /**
+   * Represents the rules assigned to the selected user.
+   * @type {ItemAssign[]}
+   */
+  let userRules: ItemAssign[] = [];
+
+  if (rulesData && userRulesData) {
+    userRules = rulesData.map((rule) => {
+      /**
+       * Checks if the rule is assigned to the selected user.
+       * @type {boolean}
+       */
+      let isAssigned = userRulesData.some(
+        (userRule) =>
+          userRule.userId === selectedRow.data?.id &&
+          userRule.ruleId === rule.id
+      );
+
+      return {
+        ...rule,
+        isAssigned: isAssigned
+      };
+    });
+  }
+
   return (
     <>
       <div className='body-content'>
@@ -352,6 +394,16 @@ const HomePage = () => {
                 />
               ),
               title: 'Roles'
+            },
+            {
+              content: (
+                <AssignRule
+                  key={selectedRow.data.id}
+                  title={selectedRow.data.fullName}
+                  rules={userRules}
+                />
+              ),
+              title: 'Rules'
             }
           ]}
           onReturnClick={handleTogglePanel}
