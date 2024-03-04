@@ -5,6 +5,8 @@ import Avatar from '@components/DataDisplay/Avatar';
 import Table from '@components/DataDisplay/Table';
 import Toolbar from '@components/DataDisplay/Toolbar';
 import InformationSidebar from '@components/DataDisplay/SideBar';
+import Panel from '@components/DataDisplay/Panel';
+import EditorRole from '@components/DataDisplay/EditorRole';
 
 // Helpers
 import { filterRoles, highlightKeyword } from '@helpers';
@@ -146,6 +148,10 @@ const RolePage = () => {
     setShowSidebar(!showSidebar);
   };
 
+  const handleUpdateRoles = () => {};
+  const handleDeleteRoles = () => {};
+  const handleShowToast = () => {};
+
   return (
     <>
       <div className='body-content'>
@@ -171,6 +177,27 @@ const RolePage = () => {
           fullName={selectedRow.data.name}
           data={roleInfoList}
           onShowPanel={handleTogglePanel}
+        />
+      )}
+
+      {!showSidebar && selectedRow.data !== null && (
+        <Panel
+          tabs={[
+            {
+              content: (
+                <EditorRole
+                  id={selectedRow.data.id}
+                  name={selectedRow.data.name}
+                  bgColor={selectedRow.data.bgColor}
+                  onSave={handleUpdateRoles}
+                  onDelete={handleDeleteRoles}
+                  showToast={handleShowToast}
+                />
+              ),
+              title: 'General'
+            }
+          ]}
+          onReturnClick={handleTogglePanel}
         />
       )}
     </>
