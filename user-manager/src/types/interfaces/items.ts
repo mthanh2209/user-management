@@ -21,10 +21,8 @@ export interface ItemAssign {
   description?: string;
   isAssigned: boolean;
   isAssignedDirectly?: boolean;
-  assignedTo: [
-    {
-      id: number;
-      name: string;
-    }
-  ];
+  assignedTo?: {
+    id?: number;
+    name?: string;
+  }[];
 }
