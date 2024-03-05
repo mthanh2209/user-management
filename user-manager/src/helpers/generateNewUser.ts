@@ -12,10 +12,8 @@ export const generateNewUser = (fullName: string) => {
     email: '',
     isActive: false,
     registeredDate: formatDate(new Date().toString()),
-    lastVisitedDate: formatDate(new Date().toString()),
+    lastVisitedDate: null,
     details: '',
     bgColor: getRandomColor(),
-    roles: [],
-    rules: []
   };
 };

@@ -1,15 +1,16 @@
 import { useEffect, useMemo } from 'react';
-import { mutate } from 'swr';
 
 // Components
-import Avatar from '@components/DataDisplay/Avatar';
-import Status from '@components/DataDisplay/Status';
-import Table from '@components/DataDisplay/Table';
-import Toolbar from '@components/DataDisplay/Toolbar';
-import InformationSidebar from '@components/DataDisplay/SideBar';
-import Panel from '@components/DataDisplay/Panel';
-import EditorProfile from '@components/DataDisplay/EditorProfile';
-import AssignRole from '@components/DataDisplay/Assign/AssignRole';
+import {
+  AssignRole,
+  Avatar,
+  EditorProfile,
+  Panel,
+  Status,
+  Table,
+  Toolbar,
+  InformationSidebar
+} from '@components';
 
 // Helpers
 import {
@@ -36,7 +37,7 @@ import {
 } from '@types';
 
 // Constants
-import { API, INFO_LIST_VIEW_USER } from '@constants';
+import { INFO_LIST_VIEW_USER } from '@constants';
 
 // Stores
 import { Context } from '@stores';
@@ -129,7 +130,7 @@ const HomePage = () => {
   /**
    * Fetches data.
    */
-  const { data: users } = getUsers();
+  const { data: users, mutate: mutateUsers } = getUsers();
   const { data: rolesData } = getRoles();
   const { data: userRolesData } = getUserRoles();
 
@@ -236,7 +237,7 @@ const HomePage = () => {
       if (response.data) {
         setSelectedRow({ index: 0, data: null });
 
-        mutate(`${API.BASE}/${API.USERS}`);
+        mutateUsers();
 
         handleShowToast(true, false);
       } else {
@@ -258,7 +259,7 @@ const HomePage = () => {
         data: itemData
       });
 
-      mutate(`${API.BASE}/${API.USERS}`);
+      mutateUsers();
 
       setShowSidebar(true);
 
