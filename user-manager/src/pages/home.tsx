@@ -1,14 +1,16 @@
 import { useEffect, useMemo } from 'react';
 
 // Components
-import Avatar from '@components/DataDisplay/Avatar';
-import Status from '@components/DataDisplay/Status';
-import Table from '@components/DataDisplay/Table';
-import Toolbar from '@components/DataDisplay/Toolbar';
-import InformationSidebar from '@components/DataDisplay/SideBar';
-import Panel from '@components/DataDisplay/Panel';
-import EditorProfile from '@components/DataDisplay/EditorProfile';
-import AssignRole from '@components/DataDisplay/Assign/AssignRole';
+import {
+  AssignRole,
+  Avatar,
+  EditorProfile,
+  Panel,
+  Status,
+  Table,
+  Toolbar,
+  InformationSidebar
+} from '@components';
 
 // Helpers
 import {
