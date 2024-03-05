@@ -2,8 +2,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import { mutate } from 'swr';
 
 // Components
-import Drawer from '@components/DataDisplay/Drawer';
-import Toast from '@components/DataDisplay/Toast';
+import { Drawer, Toast } from '@components';
 
 // Constants
 import { API, PATH, POPPER_OPTION } from '@constants';
