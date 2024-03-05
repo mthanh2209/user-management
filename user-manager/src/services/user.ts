@@ -62,9 +62,10 @@ export const useApi = (
 ): {
   data: any;
   error: string | null;
+  mutate: () => Promise<any>;
 } => {
-  const { data, error } = useSWR(url, fetcher);
-  return { data, error };
+  const { data, error, mutate } = useSWR(url, fetcher);
+  return { data, error, mutate };
 };
 
 /**
@@ -84,7 +85,11 @@ export const useApiData = (url: string): { data: any } => {
 export const getUsers = (): {
   data: IUser[];
   error: string | null;
-} => useApi(`${API.BASE}/${API.USERS}`);
+  mutate: () => Promise<any>;
+} => {
+  const { data, error, mutate } = useApi(`${API.BASE}/${API.USERS}`);
+  return { data, error, mutate };
+};
 
 /**
  * Adds a new user.
