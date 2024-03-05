@@ -18,7 +18,11 @@ import { INFO_TYPE } from '@constants';
  * @param {IRole[]} roles - The roles associated with the user.
  * @returns {Array<Object>} An array of objects representing user information.
  */
-export const INFO_LIST_VIEW_USER = (users: IUser | null, roles: IRole[]) => {
+export const INFO_LIST_VIEW_USER = (
+  users: IUser | null,
+  roles: IRole[],
+  rules: IRule[]
+) => {
   if (!users) {
     return [];
   }
@@ -49,6 +53,14 @@ export const INFO_LIST_VIEW_USER = (users: IUser | null, roles: IRole[]) => {
             text: role?.name,
             link: '/'
           }))
+        },
+        {
+          icon: 'icon-rule',
+          title: `Rules (${rules.length})`,
+          content: rules.map((rule) => ({
+            text: rule?.name,
+            link: '/'
+          }))
         }
       ]
     }
@@ -62,10 +74,7 @@ export const INFO_LIST_VIEW_USER = (users: IUser | null, roles: IRole[]) => {
  * @param {IRule[]} userRules - The rules assigned to the role.
  * @returns {Array<Object>} An array of objects representing role information.
  */
-export const INFO_LIST_VIEW_ROLE = (
-  users: IUser[],
-  userRules: IRule[]
-) => {
+export const INFO_LIST_VIEW_ROLE = (users: IUser[], userRules: IRule[]) => {
   return [
     {
       type: INFO_TYPE.LIST_VIEW,

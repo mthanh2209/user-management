@@ -15,7 +15,9 @@ import {
 import {
   assignRoleToUser,
   getRoles,
+  getRules,
   getUserRoles,
+  getUserRules,
   unAssignRoleFromUser
 } from '@services';
 
@@ -43,13 +45,21 @@ const AssignRole = ({ roles, title }: IAssignRole) => {
   const { selectedRow, setUserInfoList } = Context();
 
   const { data: roleData } = getRoles();
+  const { data: ruleData } = getRules();
   const { data: userRoles } = getUserRoles();
+  const { data: userRules } = getUserRules();
 
   const userId = selectedRow.data?.id || 0;
 
   const getCorrespondingUserRoles = filterUserItemsByUserId(
     userRoles,
     roleData,
+    userId
+  );
+
+  const getCorrespondingUserRules = filterUserItemsByUserId(
+    userRules,
+    ruleData,
     userId
   );
 
@@ -102,7 +112,11 @@ const AssignRole = ({ roles, title }: IAssignRole) => {
 
     // Update the display data list
     setUserInfoList([
-      ...INFO_LIST_VIEW_USER(selectedRow.data, getCorrespondingUserRoles)
+      ...INFO_LIST_VIEW_USER(
+        selectedRow.data,
+        getCorrespondingUserRoles,
+        getCorrespondingUserRules
+      )
     ]);
   };
 
