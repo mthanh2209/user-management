@@ -41,7 +41,7 @@
 }
 
 .edit-icon {
-  background: url('../../../assets/images/edit-icon.svg') no-repeat;
+  background: url('../../assets/images/edit-icon.svg') no-repeat;
   width: 20px;
   height: 20px;
   cursor: pointer;
@@ -68,23 +68,23 @@
 }
 
 .icon-email::before {
-  background: url('../../../assets/images/email-icon.svg') no-repeat;
+  background: url('../../assets/images/email-icon.svg') no-repeat;
 }
 
 .icon-date::before {
-  background: url('../../../assets/images/clock-icon.svg') no-repeat;
+  background: url('../../assets/images/clock-icon.svg') no-repeat;
 }
 
 .icon-role::before {
-  background: url('../../../assets/images/icon-role.svg') no-repeat;
+  background: url('../../assets/images/icon-role.svg') no-repeat;
 }
 
 .icon-rule::before {
-  background: url('../../../assets/images/icon-rule.svg') no-repeat;
+  background: url('../../assets/images/icon-rule.svg') no-repeat;
 }
 
 .icon-user::before {
-  background: url('../../../assets/images/icon-user.svg') no-repeat;
+  background: url('../../assets/images/icon-user.svg') no-repeat;
 }
 
 /* ListView */

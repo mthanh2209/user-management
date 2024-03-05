@@ -87,6 +87,6 @@
 .icon-role {
   width: 13px;
   height: 13px;
-  background: url('../../../../assets/images/shield-icon-selected.svg')
+  background: url('../../../assets/images/shield-icon-selected.svg')
     no-repeat;
 }

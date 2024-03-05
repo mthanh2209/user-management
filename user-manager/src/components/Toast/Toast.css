@@ -23,12 +23,12 @@
 }
 
 .toast-icon-error::before {
-  background: url('../../../assets/images/cross-icon.svg') no-repeat;
+  background: url('../../assets/images/cross-icon.svg') no-repeat;
   background-color: var(--not-active-color);
 }
 
 .toast-icon-success::before {
-  background: url('../../../assets/images/tick-icon.svg') no-repeat;
+  background: url('../../assets/images/tick-icon.svg') no-repeat;
   background-color: var(--active-color);
 }
 
@@ -41,7 +41,7 @@
 .loading-icon {
   width: 26px;
   height: 26px;
-  background: url('../../../assets/images/loading-icon.svg') no-repeat;
+  background: url('../../assets/images/loading-icon.svg') no-repeat;
   animation: rotate 1s linear infinite;
 }
 

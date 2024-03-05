@@ -23,7 +23,7 @@
 .back-icon::before {
   display: block;
   content: '';
-  background: url('../../../assets/images/back-icon.svg') no-repeat;
+  background: url('../../assets/images/back-icon.svg') no-repeat;
   width: 20px;
   height: 20px;
   cursor: pointer;
