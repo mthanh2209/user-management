@@ -1,0 +1,105 @@
+.sidebar {
+  margin: 8px;
+  min-width: 350px;
+  background-color: var(--white-color);
+  border: 1px solid var(--border-color);
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 10px;
+  font-weight: var(--fw-medium);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.sidebar-title {
+  color: var(--secondary-color);
+}
+
+.sidebar-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 0;
+}
+
+.info-name {
+  margin: 20px 0 0;
+  font-size: var(--font-sm);
+  font-weight: var(--fw-medium);
+  color: var(--dark-color);
+  letter-spacing: 0.2px;
+}
+
+.info-list {
+  padding: 0 16px;
+  font-size: var(--font-sm);
+  color: var(--dark-color);
+  letter-spacing: 0.2px;
+}
+
+.edit-icon {
+  background: url('../../assets/images/edit-icon.svg') no-repeat;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+/* TextView */
+.info-list-header {
+  margin: 0 0 0.6rem;
+  font-weight: var(--fw-medium);
+}
+
+.info-list-content {
+  margin: 0 0 24px;
+  font-weight: var(--fw-regular);
+}
+
+.info-list-icon::before {
+  display: block;
+  content: '';
+  width: 20px;
+  height: 40px;
+  float: left;
+  margin: -4px 8px 0 0;
+}
+
+.icon-email::before {
+  background: url('../../assets/images/email-icon.svg') no-repeat;
+}
+
+.icon-date::before {
+  background: url('../../assets/images/clock-icon.svg') no-repeat;
+}
+
+.icon-role::before {
+  background: url('../../assets/images/icon-role.svg') no-repeat;
+}
+
+.icon-rule::before {
+  background: url('../../assets/images/icon-rule.svg') no-repeat;
+}
+
+.icon-user::before {
+  background: url('../../assets/images/icon-user.svg') no-repeat;
+}
+
+/* ListView */
+.info-list-link {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 16px 0;
+}
+
+.text-link {
+  color: var(--primary-color);
+}
+
+.text-link:hover {
+  text-decoration: underline;
+  color: #17839d;
+}
