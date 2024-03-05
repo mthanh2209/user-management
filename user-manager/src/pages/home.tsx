@@ -1,5 +1,4 @@
 import { useEffect, useMemo } from 'react';
-import { mutate } from 'swr';
 
 // Components
 import Avatar from '@components/DataDisplay/Avatar';
@@ -36,7 +35,7 @@ import {
 } from '@types';
 
 // Constants
-import { API, INFO_LIST_VIEW_USER } from '@constants';
+import { INFO_LIST_VIEW_USER } from '@constants';
 
 // Stores
 import { Context } from '@stores';
@@ -129,7 +128,7 @@ const HomePage = () => {
   /**
    * Fetches data.
    */
-  const { data: users } = getUsers();
+  const { data: users, mutate: mutateUsers } = getUsers();
   const { data: rolesData } = getRoles();
   const { data: userRolesData } = getUserRoles();
 
@@ -236,7 +235,7 @@ const HomePage = () => {
       if (response.data) {
         setSelectedRow({ index: 0, data: null });
 
-        mutate(`${API.BASE}/${API.USERS}`);
+        mutateUsers();
 
         handleShowToast(true, false);
       } else {
@@ -258,7 +257,7 @@ const HomePage = () => {
         data: itemData
       });
 
-      mutate(`${API.BASE}/${API.USERS}`);
+      mutateUsers();
 
       setShowSidebar(true);
 
