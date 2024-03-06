@@ -2,6 +2,7 @@
  * Enum representing different types of toast types.
  */
 export const TOAST_TYPE = {
+  IDLE: 'idle',
   ERROR: 'error',
   SUCCESS: 'success'
 };

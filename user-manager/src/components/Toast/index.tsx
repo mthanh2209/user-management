@@ -1,63 +1,54 @@
 import { useEffect, useState } from 'react';
 
-// Components
+// CSS
 import '@components/Toast/Toast.css';
 
 // Constants
 import { LOADING, TOAST_TYPE } from '@constants';
 
-interface IToastProps {
-  isError?: boolean;
-  failMessage?: string;
-  successMessage?: string;
+export interface IToastContainer {
+  position?: string;
+  type: 'success' | 'error';
 }
 
-const Toast = ({
-  isError,
-  failMessage = 'Fail',
-  successMessage = 'Done'
-}: IToastProps) => {
+const Toast = ({ type, position = 'top-right' }: IToastContainer) => {
   const [showToast, setShowToast] = useState(false);
-  const [showLoading, setShowLoading] = useState(true);
+
+  const toastMessage =
+    type === TOAST_TYPE.SUCCESS ? 'Done' : 'Failed';
+
+  const iconClass =
+    type === TOAST_TYPE.SUCCESS ? 'success-icon' : 'error-icon';
 
   useEffect(() => {
-    const loadingTimer = setTimeout(() => {
-      setShowLoading(false);
-      setShowToast(true);
-    }, LOADING.TIMER_LOADING);
+    let timer: NodeJS.Timeout;
 
-    const hideToastTimer = setTimeout(() => {
+    if (type === TOAST_TYPE.SUCCESS || type === TOAST_TYPE.ERROR) {
+      setShowToast(true);
+
+      timer = setTimeout(() => {
+        setShowToast(false);
+      }, LOADING.TIMER_HIDE_LOADING);
+    } else {
       setShowToast(false);
-    }, LOADING.TIMER_HIDE_LOADING);
+    }
 
     return () => {
-      clearTimeout(loadingTimer);
-      clearTimeout(hideToastTimer);
+      clearTimeout(timer);
     };
-  }, []);
+  }, [type]);
 
   return (
     <>
-      {showLoading && (
-        <div className='loading-wrapper'>
-          <span className='loading-icon'></span>
-        </div>
-      )}
-
-      {showToast && (
-        <div className='toast-wrapper'>
-          <p className='toast-message'>
-            {isError ? failMessage : successMessage}
-          </p>
-          <span
-            className={`toast-icon toast-icon-${
-              isError
-                ? TOAST_TYPE.ERROR
-                : TOAST_TYPE.SUCCESS
-            }`}
-          ></span>
-        </div>
-      )}
+      {showToast &&
+        (type === TOAST_TYPE.SUCCESS || type === TOAST_TYPE.ERROR) && (
+          <div className={`toast-wrapper ${position}`}>
+            <div className='toast'>
+              <p className='toast-message'>{toastMessage}</p>
+              <span className={`toast-icon ${iconClass}`} />
+            </div>
+          </div>
+        )}
     </>
   );
 };

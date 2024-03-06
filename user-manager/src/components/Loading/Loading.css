@@ -1,0 +1,12 @@
+.loading-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.loading-icon {
+  width: 26px;
+  height: 26px;
+  background: url('../../assets/images/loading-icon.svg') no-repeat;
+  animation: rotate 1s linear infinite;
+}
