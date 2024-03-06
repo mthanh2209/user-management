@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 
 // Components
 import {
@@ -75,15 +75,11 @@ const COLUMNS = (searchKeyword: string): IColumnProps<IRole>[] => {
 };
 
 const RolePage = () => {
-  const {
-    selectedRow,
-    setSelectedRow,
-    searchKeyword,
-    showSidebar,
-    setShowSidebar
-  } = Context();
+  const { selectedRow, setSelectedRow } = useContext(Context);
 
   const [roleInfoList, setRoleInfoList] = useState<any[]>([]);
+  const [showSidebar, setShowSidebar] = useState(true);
+  const [searchKeyword, setSearchKeyword] = useState('');
 
   /**
    * Fetch data from the service.
