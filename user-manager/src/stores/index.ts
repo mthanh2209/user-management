@@ -1,1 +1,1 @@
-export { default as Context } from '@stores/context';
+export { default as AppProvider } from '@stores/provider';
