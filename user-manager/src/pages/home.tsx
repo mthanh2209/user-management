@@ -1,4 +1,9 @@
-import { useEffect, useMemo } from 'react';
+import {
+  useContext,
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
 
 // Components
 import {
@@ -119,17 +124,15 @@ const COLUMNS = (searchKeyword: string): IColumnProps<IUser>[] => {
 
 const HomePage = () => {
   const {
+    setToast,
     selectedRow,
     setSelectedRow,
-    showSidebar,
-    setShowSidebar,
     userInfoList,
-    setUserInfoList,
-    searchKeyword,
-    setSearchKeyword,
-    showToast,
-    setShowToast
-  } = Context();
+    setUserInfoList
+  } = useContext(Context);
+
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const [showSidebar, setShowSidebar] = useState(true);
 
   /**
    * Fetches data.
@@ -139,19 +142,6 @@ const HomePage = () => {
   const { data: rulesData } = getRules();
   const { data: userRolesData } = getUserRoles();
   const { data: userRulesData } = getUserRules();
-
-  /**
-   * Function to handle displaying or hiding toast messages.
-   * @param {boolean} show - Determines whether to display the toast (default: true).
-   * @param {boolean} isError - Indicates if the toast is an error message (default: false).
-   */
-  const handleShowToast = (show = true, isError = false) => {
-    setShowToast({
-      show,
-      isError,
-      key: showToast.key + 1
-    });
-  };
 
   /**
    * Retrieves user roles and rules based on user data.
@@ -248,6 +238,8 @@ const HomePage = () => {
    * Deletes the selected user and updates the user list.
    */
   const handleDeleteUsers = async () => {
+    setToast('processing');
+
     if (selectedRow.data) {
       const response = await deleteUser(selectedRow.data.id);
 
@@ -256,9 +248,9 @@ const HomePage = () => {
 
         mutateUsers();
 
-        handleShowToast(true, false);
+        setToast('success');
       } else {
-        handleShowToast(true, true);
+        setToast('error');
       }
     }
   };
@@ -268,6 +260,8 @@ const HomePage = () => {
    * @param {IUser} itemData - Updated user data.
    */
   const handleUpdateUsers = async (itemData: IUser) => {
+    setToast('processing');
+
     const response = await editUser(itemData);
 
     if (response.data) {
@@ -280,9 +274,9 @@ const HomePage = () => {
 
       setShowSidebar(true);
 
-      handleShowToast(true, false);
+      setToast('success');
     } else {
-      handleShowToast(true, true);
+      setToast('error');
     }
   };
 
@@ -381,7 +375,6 @@ const HomePage = () => {
                   bgColor={selectedRow.data.bgColor}
                   onSaveUser={handleUpdateUsers}
                   onDeleteUser={handleDeleteUsers}
-                  showToast={handleShowToast}
                 />
               ),
               title: 'General'

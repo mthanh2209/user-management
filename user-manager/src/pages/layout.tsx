@@ -1,7 +1,12 @@
+import { useContext } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 
 // Components
-import { Drawer, Toast } from '@components';
+import {
+  Drawer,
+  Loading,
+  Toast
+} from '@components';
 
 // Constants
 import { PATH, POPPER_OPTION } from '@constants';
@@ -14,47 +19,33 @@ import { Context } from '@stores';
 
 const Layout = () => {
   const {
-    showToast,
-    setUsers,
-    setShowToast, 
+    toast,
+    setToast,
     setSelectedRow
-  } = Context();
+  } = useContext(Context);
 
   const { mutate: mutateUser } = getUsers();
-
-  /**
-   * Function to handle displaying or hiding toast messages.
-   * @param {boolean} show - Determines whether to display the toast (default: true).
-   * @param {boolean} isError - Indicates if the toast is an error message (default: false).
-   */
-  const handleShowToast = (show = true, isError = false) => {
-    setShowToast((prevToast) => ({
-      show,
-      isError,
-      key: prevToast.key + 1
-    }));
-  };
 
   /**
    * Adds a new user.
    * @param userName - The name of the user to add.
    */
   const handleAddUser = async (userName: string) => {
+    setToast('processing');
+
     const response = await addUser(userName);
 
     if (response.data) {
       const data = await mutateUser();
-
-      setUsers(data);
 
       setSelectedRow({
         index: data.length,
         data: data[data.length - 1]
       });
 
-      handleShowToast(true, false);
+      setToast('success' );
     } else {
-      handleShowToast(true, true);
+      setToast('error');
     }
   };
 
@@ -92,8 +83,10 @@ const Layout = () => {
     <>
       <header className='main-header'>
         User Manager
-        {showToast.show && (
-          <Toast isError={showToast.isError} key={showToast.key} />
+        {toast === 'processing' ? (
+          <Loading isProcessing={true} />
+        ) : (
+          <Toast type={toast} />
         )}
       </header>
       <main className='main-body'>
