@@ -14,9 +14,11 @@ export interface IToastContainer {
 const Toast = ({ type, position = 'top-right' }: IToastContainer) => {
   const [showToast, setShowToast] = useState(false);
 
-  const toastMessage = type === TOAST_TYPE.SUCCESS ? 'Done' : 'Failed';
+  const toastMessage =
+    type === TOAST_TYPE.SUCCESS ? 'Done' : 'Failed';
 
-  const iconClass = type === TOAST_TYPE.SUCCESS ? 'success-icon' : 'error-icon';
+  const iconClass =
+    type === TOAST_TYPE.SUCCESS ? 'success-icon' : 'error-icon';
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -43,7 +45,7 @@ const Toast = ({ type, position = 'top-right' }: IToastContainer) => {
           <div className={`toast-wrapper ${position}`}>
             <div className='toast'>
               <p className='toast-message'>{toastMessage}</p>
-              <span className={`toast-icon ${iconClass}`}></span>
+              <span className={`toast-icon ${iconClass}`} />
             </div>
           </div>
         )}
