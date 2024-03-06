@@ -1,6 +1,6 @@
 import React, { createContext } from 'react';
 
-import { ToastAction, ToastState } from '@stores/toast/reducer';
+import { ToastState } from '@stores/toast/reducer';
 
 interface ContextProps {
   selectedRow: { index: number; data: any | null };
@@ -8,7 +8,7 @@ interface ContextProps {
   userInfoList: any[];
   setUserInfoList: React.Dispatch<React.SetStateAction<any>>;
   toast: ToastState;
-  setToast: React.Dispatch<ToastAction>;
+  setToast: React.Dispatch<ToastState>;
 }
 
 const Context = createContext<ContextProps>({
