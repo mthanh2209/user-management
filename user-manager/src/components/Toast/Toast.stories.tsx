@@ -8,9 +8,8 @@ export default {
   component: Toast,
   tags: ['autodocs'],
   argTypes: {
-    isError: { description: 'One boolean to test for error or success.' },
-    failMessage: { description: 'Content of the fail message.' },
-    successMessage: { description: 'Content of the success message.' }
+    type: { description: 'Type of the toasts.' },
+    position: { description: 'Position of the toasts on the screen.' }
   }
 } as Meta;
 
@@ -18,12 +17,12 @@ type Story = StoryObj<typeof Toast>;
 
 export const SuccessToast: Story = {
   args: {
-    isError: false
+    type: 'success'
   }
 };
 
 export const FailToast: Story = {
   args: {
-    isError: true
+    type: 'error'
   }
 };
