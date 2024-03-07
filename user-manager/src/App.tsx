@@ -5,16 +5,16 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import AppRoutes from '@routes';
 
 // Stores
-import { AppProvider } from '@stores/context';
+import { AppProvider } from '@stores';
 
 const App = () => {
   return (
     <>
-      <Router>
-        <AppProvider>
+      <AppProvider>
+        <Router>
           <AppRoutes />
-        </AppProvider>
-      </Router>
+        </Router>
+      </AppProvider>
     </>
   );
 };

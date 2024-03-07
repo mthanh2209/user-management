@@ -3,6 +3,7 @@
  */
 export const TOAST_TYPE = {
   IDLE: 'idle',
+  PROCESSING: 'processing',
   ERROR: 'error',
   SUCCESS: 'success'
 };

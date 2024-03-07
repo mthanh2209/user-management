@@ -34,7 +34,6 @@ interface IEditorProfile {
   bgColor: string;
   onSaveUser: (itemData: IUser) => void;
   onDeleteUser: (id: number) => void;
-  showToast: (show: boolean, isError: boolean) => void;
 }
 
 const EditorProfile = ({
@@ -48,8 +47,7 @@ const EditorProfile = ({
   details,
   bgColor,
   onSaveUser,
-  onDeleteUser,
-  showToast
+  onDeleteUser
 }: IEditorProfile) => {
   const [formData, setFormData] = useState({
     fullName,
@@ -81,7 +79,6 @@ const EditorProfile = ({
     const fullNameError = isFullNameValid(formData.fullName);
 
     if (emailError || fullNameError) {
-      showToast(true, true);
       return;
     }
 
@@ -98,7 +95,6 @@ const EditorProfile = ({
       bgColor
     };
     onSaveUser(updatedItem as IUser);
-    showToast(true, false);
   };
 
   const handleToggleModal = () => {

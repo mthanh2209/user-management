@@ -18,7 +18,6 @@ const Loading = ({ isProcessing }: ILoadingProp) => {
 
     if (!isProcessing) {
       setShowLoading(false);
-      return;
     }
 
     setShowLoading(true);

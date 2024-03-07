@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { mutate } from 'swr';
 
 // Components
@@ -42,7 +42,7 @@ interface IAssignRole {
 const AssignRole = ({ roles, title }: IAssignRole) => {
   const [roleState, setRoleState] = useState<ItemAssign[]>(roles);
 
-  const { selectedRow, setUserInfoList } = Context();
+  const { selectedRow, setUserInfoList } = useContext(Context);
 
   const { data: roleData } = getRoles();
   const { data: ruleData } = getRules();

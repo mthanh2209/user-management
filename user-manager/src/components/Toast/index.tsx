@@ -8,7 +8,7 @@ import { LOADING, TOAST_TYPE } from '@constants';
 
 export interface IToastContainer {
   position?: string;
-  type: 'success' | 'error';
+  type: 'idle' | 'processing' | 'success' | 'error';
 }
 
 const Toast = ({ type, position = 'top-right' }: IToastContainer) => {
