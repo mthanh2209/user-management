@@ -22,3 +22,4 @@ export { default as TextArea } from '@components/TextArea';
 export { default as TextField } from '@components/TextField';
 export { default as Toast } from '@components/Toast';
 export { default as Toolbar } from '@components/Toolbar';
+export { default as Loading } from '@components/Loading';

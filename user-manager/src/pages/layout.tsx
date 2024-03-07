@@ -1,10 +1,11 @@
+import { useContext } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 
 // Components
-import { Drawer, Toast } from '@components';
+import { Drawer, Loading, Toast } from '@components';
 
 // Constants
-import { PATH, POPPER_OPTION } from '@constants';
+import { PATH, POPPER_OPTION, TOAST_TYPE } from '@constants';
 
 // Services
 import { addUser, getUsers } from '@services';
@@ -13,48 +14,31 @@ import { addUser, getUsers } from '@services';
 import { Context } from '@stores';
 
 const Layout = () => {
-  const {
-    showToast,
-    setUsers,
-    setShowToast, 
-    setSelectedRow
-  } = Context();
+  const { state, dispatch, setSelectedRow } = useContext(Context);
+  const { toast } = state;
 
   const { mutate: mutateUser } = getUsers();
-
-  /**
-   * Function to handle displaying or hiding toast messages.
-   * @param {boolean} show - Determines whether to display the toast (default: true).
-   * @param {boolean} isError - Indicates if the toast is an error message (default: false).
-   */
-  const handleShowToast = (show = true, isError = false) => {
-    setShowToast((prevToast) => ({
-      show,
-      isError,
-      key: prevToast.key + 1
-    }));
-  };
 
   /**
    * Adds a new user.
    * @param userName - The name of the user to add.
    */
   const handleAddUser = async (userName: string) => {
+    dispatch({ type: TOAST_TYPE.PROCESSING });
+
     const response = await addUser(userName);
 
     if (response.data) {
       const data = await mutateUser();
-
-      setUsers(data);
 
       setSelectedRow({
         index: data.length,
         data: data[data.length - 1]
       });
 
-      handleShowToast(true, false);
+      dispatch({ type: TOAST_TYPE.SUCCESS });
     } else {
-      handleShowToast(true, true);
+      dispatch({ type: TOAST_TYPE.ERROR });
     }
   };
 
@@ -92,8 +76,10 @@ const Layout = () => {
     <>
       <header className='main-header'>
         User Manager
-        {showToast.show && (
-          <Toast isError={showToast.isError} key={showToast.key} />
+        {toast === 'processing' ? (
+          <Loading isProcessing={true} />
+        ) : (
+          <Toast type={toast} />
         )}
       </header>
       <main className='main-body'>

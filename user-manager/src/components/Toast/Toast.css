@@ -1,7 +1,47 @@
 .toast-wrapper {
+  position: fixed;
   display: flex;
   align-items: center;
   justify-content: end;
+}
+
+.top-right {
+  top: 16px;
+  right: 16px;
+}
+
+.top-left {
+  top: 16px;
+  left: 16px;
+}
+
+.top-center {
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.bottom-left {
+  bottom: 16px;
+  left: 16px;
+}
+
+.bottom-center {
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.bottom-right {
+  bottom: 16px;
+  right: 16px;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
 }
 
 .toast-message {
@@ -22,31 +62,12 @@
   border-radius: 50%;
 }
 
-.toast-icon-error::before {
+.error-icon::before {
   background: url('../../assets/images/cross-icon.svg') no-repeat;
   background-color: var(--not-active-color);
 }
 
-.toast-icon-success::before {
+.success-icon::before {
   background: url('../../assets/images/tick-icon.svg') no-repeat;
   background-color: var(--active-color);
-}
-
-.loading-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-.loading-icon {
-  width: 26px;
-  height: 26px;
-  background: url('../../assets/images/loading-icon.svg') no-repeat;
-  animation: rotate 1s linear infinite;
-}
-
-@keyframes rotate {
-  100% {
-    transform: rotate(360deg);
-  }
 }
