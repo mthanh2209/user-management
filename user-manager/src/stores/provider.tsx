@@ -1,6 +1,6 @@
 import { useReducer, useState } from 'react';
 
-import { toastReducer } from '@stores/toast/reducer';
+import { initialState, toastReducer } from '@stores/toast/reducer';
 import Context from '@stores/context';
 
 interface ProviderProps {
@@ -13,7 +13,7 @@ interface ProviderProps {
  * @param children - The children components to be wrapped by the provider.
  */
 const AppProvider = ({ children }: ProviderProps) => {
-  const [toast, setToast] = useReducer(toastReducer, 'idle');
+  const [state, dispatch] = useReducer(toastReducer, initialState);
 
   const [selectedRow, setSelectedRow] = useState<{
     index: number;
@@ -26,8 +26,8 @@ const AppProvider = ({ children }: ProviderProps) => {
    * The context value containing state and setters for the app.
    */
   const value = {
-    toast,
-    setToast,
+    state,
+    dispatch,
     selectedRow,
     setSelectedRow,
     userInfoList,

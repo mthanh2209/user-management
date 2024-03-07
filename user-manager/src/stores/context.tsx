@@ -1,23 +1,23 @@
 import React, { createContext } from 'react';
 
-import { ToastState } from '@stores/toast/reducer';
+import { StateProp, initialState } from '@stores/toast/reducer';
 
 interface ContextProps {
+  state: StateProp;
+  dispatch: React.Dispatch<any>;
   selectedRow: { index: number; data: any | null };
   setSelectedRow: (selectedRow: { index: number; data: any | null }) => void;
   userInfoList: any[];
   setUserInfoList: React.Dispatch<React.SetStateAction<any>>;
-  toast: ToastState;
-  setToast: React.Dispatch<ToastState>;
 }
 
 const Context = createContext<ContextProps>({
+  state: initialState,
+  dispatch: () => {},
   selectedRow: { index: 0, data: null },
   setSelectedRow: () => {},
   userInfoList: [],
-  setUserInfoList: () => {},
-  toast: 'idle',
-  setToast: () => {}
+  setUserInfoList: () => {}
 });
 
 export default Context;

@@ -1,8 +1,17 @@
 import { TOAST_TYPE } from '@constants';
 
-export type ToastState = 'idle' | 'processing' | 'success' | 'error';
+export interface StateProp {
+  toast: 'idle' | 'processing' | 'success' | 'error';
+}
 
-export const initialState: ToastState = 'idle';
+interface ActionProp {
+  type: keyof typeof TOAST_TYPE;
+  payload: any;
+}
+
+export const initialState: StateProp = {
+  toast: 'idle'
+};
 
 /**
  * Reducer function for managing the state of toasts.
@@ -13,19 +22,31 @@ export const initialState: ToastState = 'idle';
  * @throws An error if the action type is unhandled.
  */
 export const toastReducer = (
-  _state: ToastState,
-  action: ToastState
-): ToastState => {
-  switch (action) {
+  state: StateProp,
+  action: ActionProp
+): StateProp => {
+  switch (action.type) {
     case TOAST_TYPE.IDLE:
-      return 'idle';
+      return {
+        ...state,
+        toast: 'idle'
+      };
     case TOAST_TYPE.PROCESSING:
-      return 'processing';
+      return {
+        ...state,
+        toast: 'processing'
+      };
     case TOAST_TYPE.SUCCESS:
-      return 'success';
+      return {
+        ...state,
+        toast: 'success'
+      };
     case TOAST_TYPE.ERROR:
-      return 'error';
+      return {
+        ...state,
+        toast: 'error'
+      };
     default:
-      throw new Error(`Unhandled action type: ${action}`);
+      throw new Error(`Unhandled action type: ${action.type}`);
   }
 };

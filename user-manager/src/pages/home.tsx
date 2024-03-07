@@ -1,9 +1,4 @@
-import {
-  useContext,
-  useEffect,
-  useMemo,
-  useState
-} from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 
 // Components
 import {
@@ -19,11 +14,7 @@ import {
 } from '@components';
 
 // Helpers
-import {
-  filterUsers,
-  getUserRolesAndRules,
-  highlightKeyword
-} from '@helpers';
+import { filterUsers, getUserRolesAndRules, highlightKeyword } from '@helpers';
 
 // Services
 import {
@@ -37,16 +28,10 @@ import {
 } from '@services';
 
 // Types
-import {
-  IColumnProps,
-  IRole,
-  IRule,
-  IUser,
-  ItemAssign
-} from '@types';
+import { IColumnProps, IRole, IRule, IUser, ItemAssign } from '@types';
 
 // Constants
-import { INFO_LIST_VIEW_USER } from '@constants';
+import { INFO_LIST_VIEW_USER, TOAST_TYPE } from '@constants';
 
 // Stores
 import { Context } from '@stores';
@@ -124,7 +109,7 @@ const COLUMNS = (searchKeyword: string): IColumnProps<IUser>[] => {
 
 const HomePage = () => {
   const {
-    setToast,
+    dispatch,
     selectedRow,
     setSelectedRow,
     userInfoList,
@@ -238,7 +223,7 @@ const HomePage = () => {
    * Deletes the selected user and updates the user list.
    */
   const handleDeleteUsers = async () => {
-    setToast('processing');
+    dispatch({ type: TOAST_TYPE.PROCESSING });
 
     if (selectedRow.data) {
       const response = await deleteUser(selectedRow.data.id);
@@ -248,9 +233,9 @@ const HomePage = () => {
 
         mutateUsers();
 
-        setToast('success');
+        dispatch({ type: TOAST_TYPE.SUCCESS });
       } else {
-        setToast('error');
+        dispatch({ type: TOAST_TYPE.ERROR });
       }
     }
   };
@@ -260,7 +245,7 @@ const HomePage = () => {
    * @param {IUser} itemData - Updated user data.
    */
   const handleUpdateUsers = async (itemData: IUser) => {
-    setToast('processing');
+    dispatch({ toast: 'processing' });
 
     const response = await editUser(itemData);
 
@@ -274,9 +259,9 @@ const HomePage = () => {
 
       setShowSidebar(true);
 
-      setToast('success');
+      dispatch({ type: 'success' });
     } else {
-      setToast('error');
+      dispatch({ type: 'error' });
     }
   };
 

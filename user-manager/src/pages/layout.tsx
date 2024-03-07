@@ -2,14 +2,10 @@ import { useContext } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 
 // Components
-import {
-  Drawer,
-  Loading,
-  Toast
-} from '@components';
+import { Drawer, Loading, Toast } from '@components';
 
 // Constants
-import { PATH, POPPER_OPTION } from '@constants';
+import { PATH, POPPER_OPTION, TOAST_TYPE } from '@constants';
 
 // Services
 import { addUser, getUsers } from '@services';
@@ -18,11 +14,8 @@ import { addUser, getUsers } from '@services';
 import { Context } from '@stores';
 
 const Layout = () => {
-  const {
-    toast,
-    setToast,
-    setSelectedRow
-  } = useContext(Context);
+  const { state, dispatch, setSelectedRow } = useContext(Context);
+  const { toast } = state;
 
   const { mutate: mutateUser } = getUsers();
 
@@ -31,7 +24,7 @@ const Layout = () => {
    * @param userName - The name of the user to add.
    */
   const handleAddUser = async (userName: string) => {
-    setToast('processing');
+    dispatch({ type: TOAST_TYPE.PROCESSING });
 
     const response = await addUser(userName);
 
@@ -43,9 +36,9 @@ const Layout = () => {
         data: data[data.length - 1]
       });
 
-      setToast('success' );
+      dispatch({ type: TOAST_TYPE.SUCCESS });
     } else {
-      setToast('error');
+      dispatch({ type: TOAST_TYPE.ERROR });
     }
   };
 
