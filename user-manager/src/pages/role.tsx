@@ -21,6 +21,7 @@ import { filterRoles, highlightKeyword } from '@helpers';
 // Services
 import {
   deleteRole,
+  editRole,
   getRoles,
   getRules,
   getUsers
@@ -165,10 +166,8 @@ const RolePage = () => {
     setShowSidebar(!showSidebar);
   };
 
-  const handleUpdateRoles = () => {};
-
   /**
-   * Deletes the selected user and updates the user list.
+   * Deletes the selected role and updates the role list.
    */
   const handleDeleteRoles = async () => {
     dispatch({ type: TOAST_TYPE.PROCESSING });
@@ -185,6 +184,31 @@ const RolePage = () => {
       } else {
         dispatch({ type: TOAST_TYPE.ERROR });
       }
+    }
+  };
+
+  /**
+   * Updates role information based on the changes made and retrieves updated role data.
+   * @param {IRole} itemData - Updated role data.
+   */
+  const handleUpdateRoles = async (itemData: IRole) => {
+    dispatch({ type: TOAST_TYPE.PROCESSING });
+
+    const response = await editRole(itemData);
+
+    if (response.data) {
+      setSelectedRow({
+        index: selectedRow.index,
+        data: itemData
+      });
+
+      mutateRoles();
+
+      setShowSidebar(true);
+
+      dispatch({ type: TOAST_TYPE.SUCCESS });
+    } else {
+      dispatch({ type: TOAST_TYPE.ERROR });
     }
   };
 
