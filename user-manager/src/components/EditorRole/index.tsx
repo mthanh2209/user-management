@@ -19,7 +19,6 @@ interface IEditorRole {
   bgColor: string;
   onSave: (itemData: IRole) => void;
   onDelete: (id: number) => void;
-  showToast: (show: boolean, isError: boolean) => void;
 }
 
 const EditorRole = ({
@@ -28,7 +27,6 @@ const EditorRole = ({
   bgColor,
   onSave,
   onDelete,
-  showToast
 }: IEditorRole) => {
   const [isOpenModal, setOpenModal] = useState(false);
   const [formData, setFormData] = useState({
@@ -58,7 +56,6 @@ const EditorRole = ({
     const nameError = isFullNameValid(formData.name);
 
     if (nameError) {
-      showToast(true, true);
       return;
     }
 
@@ -68,7 +65,6 @@ const EditorRole = ({
       bgColor: formData.bgColor
     };
     onSave(updatedItem as IRole);
-    showToast(true, false);
   };
 
   useEffect(() => {
