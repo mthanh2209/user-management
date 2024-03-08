@@ -9,7 +9,7 @@ import {
   IResponse,
   makeRequest,
   useApi,
-  useApiData 
+  useApiData
 } from '@services/user';
 
 // Helpers
@@ -20,7 +20,7 @@ export const getRoles = (): {
   error: string | null;
   mutate: () => Promise<any>;
 } => {
-  const { data, error, mutate } = useApi(`${API.BASE}/${API.USERS}`);
+  const { data, error, mutate } = useApi(`${API.BASE}/${API.ROLES}`);
   return { data, error, mutate };
 };
 

@@ -1,4 +1,9 @@
-import { useContext, useEffect, useMemo, useState } from 'react';
+import {
+  useContext,
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
 
 // Components
 import {
@@ -14,13 +19,19 @@ import {
 import { filterRoles, highlightKeyword } from '@helpers';
 
 // Services
-import { getRoles, getRules, getUsers } from '@services';
+import {
+  getRoles,
+  getRules,
+  getUsers
+} from '@services';
 
 // Types
 import { IColumnProps, IRole } from '@types';
 
 // Constants
 import { INFO_LIST_VIEW_ROLE } from '@constants';
+
+// Stores
 import { Context } from '@stores';
 
 /**
@@ -184,6 +195,7 @@ const RolePage = () => {
             {
               content: (
                 <EditorRole
+                  key={selectedRow.data.id}
                   id={selectedRow.data.id}
                   name={selectedRow.data.name}
                   bgColor={selectedRow.data.bgColor}

@@ -2,22 +2,36 @@ import { useContext } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 
 // Components
-import { Drawer, Loading, Toast } from '@components';
+import {
+  Drawer,
+  Loading,
+  Toast
+} from '@components';
 
 // Constants
-import { PATH, POPPER_OPTION, TOAST_TYPE } from '@constants';
+import { PATH, TOAST_TYPE } from '@constants';
 
 // Services
-import { addUser, getUsers } from '@services';
+import {
+  addRole,
+  addUser,
+  getRoles,
+  getUsers
+} from '@services';
 
 // Stores
 import { Context } from '@stores';
 
 const Layout = () => {
-  const { state, dispatch, setSelectedRow } = useContext(Context);
+  const {
+    state,
+    dispatch,
+    setSelectedRow
+  } = useContext(Context);
   const { toast } = state;
 
   const { mutate: mutateUser } = getUsers();
+  const { mutate: mutateRole } = getRoles();
 
   /**
    * Adds a new user.
@@ -39,6 +53,45 @@ const Layout = () => {
       dispatch({ type: TOAST_TYPE.SUCCESS });
     } else {
       dispatch({ type: TOAST_TYPE.ERROR });
+    }
+  };
+
+  const handleAddRole = async (roleName: string) => {
+    dispatch({ type: TOAST_TYPE.PROCESSING });
+
+    const response = await addRole(roleName);
+
+    if (response.data) {
+      const data = await mutateRole();
+
+      setSelectedRow({
+        index: data.length,
+        data: data[data.length - 1]
+      });
+
+      dispatch({ type: TOAST_TYPE.SUCCESS });
+      navigate(PATH.ROLES_PATH);
+    } else {
+      dispatch({ type: TOAST_TYPE.ERROR });
+    }
+  };
+
+  const handleAdd = async ({
+    type,
+    value,
+  }: {
+    type: string;
+    value: string;
+  }): Promise<void> => {
+    switch (type) {
+      case 'user':
+        handleAddUser(value);
+        break;
+      case 'role':
+        handleAddRole(value);
+        break;
+      default:
+        throw new Error('Invalid type');
     }
   };
 
@@ -84,9 +137,8 @@ const Layout = () => {
       </header>
       <main className='main-body'>
         <Drawer
-          popoverOption={POPPER_OPTION}
           items={NAVIGATION_ITEMS}
-          onSubmit={handleAddUser}
+          onSubmit={handleAdd}
         />
         <Outlet />
       </main>
