@@ -17,6 +17,6 @@ export {
 } from '@helpers/filterData';
 export { highlightKeyword } from '@helpers/highlightKeyword';
 export { generateNewUser, generateNewRole } from '@helpers/generateNewObj';
-export { getUserRolesAndRules, getRoleAndRules } from '@helpers/getData';
+export { getUserRolesAndRules, getRoleRulesAndUsers } from '@helpers/getData';
 export { isItemAssignedToUser, isItemAssignedToRole } from '@helpers/assign';
 export { findUserItemId, findRoleItemId } from '@helpers/findItem';
