@@ -5,11 +5,7 @@ import { API } from '@constants';
 import { IRule } from '@types';
 
 // Services
-import {
-  IResponse,
-  makeRequest,
-  useApi 
-} from '@services/user';
+import { IResponse, makeRequest, useApi } from '@services/user';
 
 export const getRules = (): {
   data: IRule[];
@@ -46,6 +42,42 @@ export const unAssignRuleFromUser = (
   userRuleId: number | null
 ): Promise<IResponse> =>
   makeRequest(`${API.BASE}/${API.USER_RULES}/${userRuleId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+
+/**
+ * Assigns a rule to a role.
+ * @param {number} roleId - The ID of the role.
+ * @param {number} ruleId - The ID of the rule to be assigned.
+ * @returns {Promise<IResponse>} - A promise that resolves to the response from the server.
+ */
+export const assignRuleToRole = (
+  roleId: number,
+  ruleId: number
+): Promise<IResponse> =>
+  makeRequest(`${API.BASE}/${API.ROLE_RULES}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      roleId: roleId,
+      ruleId: ruleId
+    })
+  });
+
+/**
+ * Unassigns a rule from a role.
+ * @param {number | null} roleRuleId - The ID of the role rule to be unassigned.
+ * @returns {Promise<IResponse>} - A promise that resolves to the response from the server.
+ */
+export const unAssignRuleFromRole = (
+  roleRuleId: number | null
+): Promise<IResponse> =>
+  makeRequest(`${API.BASE}/${API.ROLE_RULES}/${roleRuleId}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json'

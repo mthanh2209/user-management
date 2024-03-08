@@ -7,6 +7,7 @@ import {
 
 // Components
 import {
+  AssignRoleRules,
   Avatar,
   EditorRole,
   InformationSidebar,
@@ -16,19 +17,29 @@ import {
 } from '@components';
 
 // Helpers
-import { filterRoles, highlightKeyword } from '@helpers';
+import {
+  filterRoles,
+  getRoleAndRules,
+  highlightKeyword
+} from '@helpers';
 
 // Services
 import {
   deleteRole,
   editRole,
+  getRoleRules,
   getRoles,
   getRules,
   getUsers
 } from '@services';
 
 // Types
-import { IColumnProps, IRole } from '@types';
+import {
+  IColumnProps,
+  IRole,
+  IRule,
+  ItemAssign
+} from '@types';
 
 // Constants
 import {
@@ -105,8 +116,15 @@ const RolePage = () => {
    * Fetch data from the service.
    */
   const { data: roles, mutate: mutateRoles } = getRoles();
-  const { data: rules } = getRules();
-  const { data: users } = getUsers();
+  const { data: rulesData } = getRules();
+  const { data: usersData } = getUsers();
+  const { data: roleRulesData } = getRoleRules();
+
+  const { roleRulesItem } = getRoleAndRules(
+    selectedRow.data?.id!,
+    rulesData!,
+    roleRulesData!
+  );
 
   /**
    * Effect to update role information list when selectedRow.data changes.
@@ -118,7 +136,12 @@ const RolePage = () => {
    */
   useEffect(() => {
     if (selectedRow.data) {
-      setRoleInfoList(INFO_LIST_VIEW_ROLE(users, rules));
+      // Filter undefined rules
+      const filteredRoleRulesItem: IRule[] = (roleRulesItem || []).filter(
+        (rule) => rule !== undefined
+      ) as IRule[];
+
+      setRoleInfoList(INFO_LIST_VIEW_ROLE(filteredRoleRulesItem, usersData));
     }
   }, [selectedRow.data]);
 
@@ -217,6 +240,31 @@ const RolePage = () => {
     }
   };
 
+  /**
+   * Represents the roles assigned to the selected user.
+   * @type {ItemAssign[]}
+   */
+  let roleRules: ItemAssign[] = [];
+
+  if (rulesData && roleRulesData) {
+    roleRules = rulesData.map((rule) => {
+      /**
+       * Checks if the role is assigned to the selected user.
+       * @type {boolean}
+       */
+      let isAssigned = roleRulesData.some(
+        (roleRule) =>
+          roleRule.roleId === selectedRow.data?.id &&
+          roleRule.ruleId === rule.id
+      );
+
+      return {
+        ...rule,
+        isAssigned: isAssigned
+      };
+    });
+  }
+
   return (
     <>
       <div className='body-content'>
@@ -260,6 +308,16 @@ const RolePage = () => {
                 />
               ),
               title: 'General'
+            },
+            {
+              content: (
+                <AssignRoleRules
+                  key={selectedRow.data.id}
+                  title={selectedRow.data.name}
+                  items={roleRules}
+                />
+              ),
+              title: 'Rules'
             }
           ]}
           onReturnClick={handleTogglePanel}

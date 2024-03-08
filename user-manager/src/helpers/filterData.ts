@@ -61,3 +61,23 @@ export const filterUserItemsByUserId = (
         )
     : [];
 };
+
+/**
+ * Filters an array of role objects based on a search keyword.
+ * @param {IRole[] | undefined} roles - The array of role objects to filter.
+ * @param {string} searchKeyword - The keyword used for filtering roles.
+ * @returns {IRole[]} - An array of role objects that match the search criteria.
+ */
+export const filterRoleItemsByRoleId = (
+  roleItems: any,
+  itemData: any,
+  roleId: number
+) => {
+  return Array.isArray(roleItems)
+    ? roleItems
+        ?.filter((roleItem) => roleItem.roleId === roleId)
+        .map((roleItem) =>
+          itemData?.find((item: any) => item.id === roleItem.itemId)
+        )
+    : [];
+};

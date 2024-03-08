@@ -74,15 +74,15 @@ export const INFO_LIST_VIEW_USER = (
  * @param {IRule[]} userRules - The rules assigned to the role.
  * @returns {Array<Object>} An array of objects representing role information.
  */
-export const INFO_LIST_VIEW_ROLE = (users: IUser[], userRules: IRule[]) => {
+export const INFO_LIST_VIEW_ROLE = (rules: IRule[], users: IUser[]) => {
   return [
     {
       type: INFO_TYPE.LIST_VIEW,
       content: [
         {
           icon: 'icon-rule',
-          title: `Rules assigned (${userRules.length})`,
-          content: userRules.map((rule) => ({
+          title: `Rules assigned (${rules.length})`,
+          content: rules.map((rule) => ({
             text: rule?.name,
             link: '/'
           }))
