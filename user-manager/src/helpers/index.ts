@@ -12,10 +12,11 @@ export { fetcher } from '@helpers/fetcher';
 export {
   filterUsers,
   filterRoles,
-  filterUserItemsByUserId
+  filterUserItemsByUserId,
+  filterRoleItemsByRoleId
 } from '@helpers/filterData';
 export { highlightKeyword } from '@helpers/highlightKeyword';
 export { generateNewUser, generateNewRole } from '@helpers/generateNewObj';
-export { getUserRolesAndRules } from '@helpers/getUsersRolesAndRules';
-export { isItemAssignedToUser } from '@helpers/assign';
-export { findUserItemId } from '@helpers/findItem';
+export { getUserRolesAndRules, getRoleAndRules } from '@helpers/getData';
+export { isItemAssignedToUser, isItemAssignedToRole } from '@helpers/assign';
+export { findUserItemId, findRoleItemId } from '@helpers/findItem';

@@ -3,7 +3,8 @@ import {
   IRole,
   IRule,
   IUserRole,
-  IUserRule
+  IUserRule,
+  IRoleRule
 } from '@types';
 
 /**
@@ -43,4 +44,32 @@ export const getUserRolesAndRules = (
     );
 
   return { userRolesItem, userRulesItem };
+};
+
+/**
+ * Retrieves role rules based on the provided role ID.
+ *
+ * @param {number} roleId - The ID of the role for which rules are to be retrieved.
+ * @param {IRule[]} rules - An array of all available rules.
+ * @param {IRoleRule[]} roleRules - An array of role-rule relationships.
+ * @returns {Object} - An object containing role rules.
+ */
+export const getRoleAndRules = (
+  roleId: number,
+  rules: IRule[],
+  roleRules: IRoleRule[]
+) => {
+  let roleRuleRelations: IRoleRule[] = [];
+
+  if (Array.isArray(roleRules)) {
+    roleRuleRelations = roleRules?.filter((item) => item.roleId === roleId);
+  }
+
+  const roleRulesItem =
+    Array.isArray(rules) &&
+    roleRuleRelations?.map((item) =>
+      rules.find((rule) => rule.id === item.ruleId)
+    );
+
+  return { roleRulesItem };
 };
