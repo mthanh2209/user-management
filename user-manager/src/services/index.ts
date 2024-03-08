@@ -8,6 +8,7 @@ export {
 } from '@services/user';
 export {
   getRoles,
+  addRole,
   getRoleRules,
   assignRoleToUser,
   unAssignRoleFromUser

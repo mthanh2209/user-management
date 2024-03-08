@@ -12,10 +12,31 @@ import {
   useApiData
 } from '@services/user';
 
+// Helpers
+import { generateNewRole } from '@helpers';
+
 export const getRoles = (): {
   data: IRole[];
   error: string | null;
-} => useApi(`${API.BASE}/${API.ROLES}`);
+  mutate: () => Promise<any>;
+} => {
+  const { data, error, mutate } = useApi(`${API.BASE}/${API.ROLES}`);
+  return { data, error, mutate };
+};
+
+/**
+ * Adds a new role.
+ * @param roleData - The role data to be added.
+ * @returns A promise that resolves to the response object.
+ */
+export const addRole = (roleName: string): Promise<IResponse> =>
+  makeRequest(`${API.BASE}/${API.ROLES}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(generateNewRole(roleName))
+  });
 
 /**
  * Fetches a list of role rules.

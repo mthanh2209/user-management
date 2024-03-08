@@ -1,5 +1,5 @@
 export interface IPopoverOption {
-  text: string;
-  label?: string;
-  onClick?: () => void;
+  id: number;
+  label: string;
+  onClick: () => void;
 }

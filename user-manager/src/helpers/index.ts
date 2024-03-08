@@ -15,7 +15,7 @@ export {
   filterUserItemsByUserId
 } from '@helpers/filterData';
 export { highlightKeyword } from '@helpers/highlightKeyword';
-export { generateNewUser } from '@helpers/generateNewUser';
+export { generateNewUser, generateNewRole } from '@helpers/generateNewObj';
 export { getUserRolesAndRules } from '@helpers/getUsersRolesAndRules';
 export { isItemAssignedToUser } from '@helpers/assign';
 export { findUserItemId } from '@helpers/findItem';

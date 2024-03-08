@@ -1,4 +1,9 @@
-import { useContext, useEffect, useMemo, useState } from 'react';
+import {
+  useContext,
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
 
 // Components
 import {
@@ -14,7 +19,11 @@ import {
 } from '@components';
 
 // Helpers
-import { filterUsers, getUserRolesAndRules, highlightKeyword } from '@helpers';
+import {
+  filterUsers,
+  getUserRolesAndRules,
+  highlightKeyword
+} from '@helpers';
 
 // Services
 import {
@@ -28,7 +37,13 @@ import {
 } from '@services';
 
 // Types
-import { IColumnProps, IRole, IRule, IUser, ItemAssign } from '@types';
+import {
+  IColumnProps,
+  IRole,
+  IRule,
+  IUser,
+  ItemAssign
+} from '@types';
 
 // Constants
 import { INFO_LIST_VIEW_USER, TOAST_TYPE } from '@constants';
@@ -245,7 +260,7 @@ const HomePage = () => {
    * @param {IUser} itemData - Updated user data.
    */
   const handleUpdateUsers = async (itemData: IUser) => {
-    dispatch({ toast: 'processing' });
+    dispatch({ type: TOAST_TYPE.PROCESSING });
 
     const response = await editUser(itemData);
 
@@ -259,9 +274,9 @@ const HomePage = () => {
 
       setShowSidebar(true);
 
-      dispatch({ type: 'success' });
+      dispatch({ type: TOAST_TYPE.SUCCESS });
     } else {
-      dispatch({ type: 'error' });
+      dispatch({ type: TOAST_TYPE.ERROR });
     }
   };
 
@@ -349,6 +364,7 @@ const HomePage = () => {
             {
               content: (
                 <EditorProfile
+                  key={selectedRow.data.id}
                   id={selectedRow.data.id}
                   avatar={selectedRow.data.avatar}
                   fullName={selectedRow.data.fullName}

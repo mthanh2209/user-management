@@ -7,7 +7,7 @@ import '@components/Drawer/Drawer.css';
 import {
   Popover,
   ListNav,
-  ModalFormInput 
+  ModalFormInput
 } from '@components';
 
 // Icons
@@ -22,19 +22,18 @@ interface IDrawerProps {
   anchor?: TAnchor;
   text?: string;
   icon?: string;
-  popoverOption: IPopoverOption[];
   items: IItemNav[];
-  onSubmit: (data: string) => void;
+  onSubmit: (data: { type: string; value: string }) => void;
 }
 
 const Drawer = ({
   anchor = 'left',
   text = 'New',
   icon = plusIcon,
-  popoverOption,
   items,
   onSubmit
 }: IDrawerProps) => {
+  const [type, setType] = useState('');
   const [isOpenModal, setOpenModal] = useState(false);
   const [textInput, setTextInput] = useState('');
   const [modalTitle, setModalTitle] = useState('');
@@ -43,19 +42,35 @@ const Drawer = ({
     setTextInput(value);
   };
 
-  const handleOpenModal = (option: IPopoverOption) => {
-    setModalTitle(option.label || '');
-    setOpenModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setOpenModal(false);
+  const handleToggleModal = () => {
+    setOpenModal(!isOpenModal);
   };
 
   const handleOnSubmit = () => {
-    onSubmit(textInput);
+    onSubmit({ type, value: textInput });
     setOpenModal(false);
   };
+
+  const popoverOption: IPopoverOption[] = [
+    {
+      id: 1,
+      label: 'Add new user',
+      onClick: () => {
+        setModalTitle('Enter user name');
+        setType('user');
+        handleToggleModal();
+      }
+    },
+    {
+      id: 2,
+      label: 'Add new role',
+      onClick: () => {
+        setModalTitle('Enter role name');
+        setType('role');
+        handleToggleModal();
+      }
+    }
+  ];
 
   return (
     <div className={`drawer-wrapper ${anchor}`}>
@@ -63,7 +78,6 @@ const Drawer = ({
         icon={icon}
         children={text}
         options={popoverOption}
-        onOpenModal={handleOpenModal}
       />
 
       <ListNav items={items} />
@@ -73,7 +87,7 @@ const Drawer = ({
           isOpen={isOpenModal}
           modalTitle={modalTitle}
           confirmText='Save'
-          onClose={handleCloseModal}
+          onClose={handleToggleModal}
           onConfirmText={handleOnSubmit}
           onChangeText={handleInputChange}
         />
