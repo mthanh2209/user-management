@@ -39,6 +39,33 @@ export const addRole = (roleName: string): Promise<IResponse> =>
   });
 
 /**
+ * Deletes a role.
+ * @param roleId - The ID of the role to be deleted.
+ * @returns A promise that resolves to the response object.
+ */
+export const deleteRole = (roleId: number): Promise<IResponse> =>
+  makeRequest(`${API.BASE}/${API.ROLES}/${roleId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+
+/**
+ * Edits a role.
+ * @param roleData - The updated role data.
+ * @returns A promise that resolves to the response object.
+ */
+export const editRole = (roleData: IRole): Promise<IResponse> =>
+  makeRequest(`${API.BASE}/${API.ROLES}/${roleData.id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(roleData)
+  });
+
+/**
  * Fetches a list of role rules.
  * @returns An object containing the list of role rules.
  */

@@ -9,6 +9,8 @@ export {
 export {
   getRoles,
   addRole,
+  deleteRole,
+  editRole,
   getRoleRules,
   assignRoleToUser,
   unAssignRoleFromUser
