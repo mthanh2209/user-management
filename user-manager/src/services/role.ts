@@ -5,12 +5,7 @@ import { API } from '@constants';
 import { IRole, IRoleRule } from '@types';
 
 // Services
-import {
-  IResponse,
-  makeRequest,
-  useApi,
-  useApiData
-} from '@services/user';
+import { IResponse, makeRequest, useApi, useApiData } from '@services/user';
 
 // Helpers
 import { generateNewRole } from '@helpers';
@@ -36,6 +31,20 @@ export const addRole = (roleName: string): Promise<IResponse> =>
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(generateNewRole(roleName))
+  });
+
+/**
+ * Edits a role.
+ * @param roleData - The updated role data.
+ * @returns A promise that resolves to the response object.
+ */
+export const editRole = (roleData: IRole): Promise<IResponse> =>
+  makeRequest(`${API.BASE}/${API.ROLES}/${roleData.id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(roleData)
   });
 
 /**

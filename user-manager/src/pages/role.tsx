@@ -20,6 +20,7 @@ import { filterRoles, highlightKeyword } from '@helpers';
 
 // Services
 import {
+  editRole,
   getRoles,
   getRules,
   getUsers
@@ -29,7 +30,10 @@ import {
 import { IColumnProps, IRole } from '@types';
 
 // Constants
-import { INFO_LIST_VIEW_ROLE } from '@constants';
+import {
+  INFO_LIST_VIEW_ROLE,
+  TOAST_TYPE
+} from '@constants';
 
 // Stores
 import { Context } from '@stores';
@@ -86,7 +90,11 @@ const COLUMNS = (searchKeyword: string): IColumnProps<IRole>[] => {
 };
 
 const RolePage = () => {
-  const { selectedRow, setSelectedRow } = useContext(Context);
+  const {
+    dispatch,
+    selectedRow,
+    setSelectedRow
+  } = useContext(Context);
 
   const [roleInfoList, setRoleInfoList] = useState<any[]>([]);
   const [showSidebar, setShowSidebar] = useState(true);
@@ -95,7 +103,7 @@ const RolePage = () => {
   /**
    * Fetch data from the service.
    */
-  const { data: roles } = getRoles();
+  const { data: roles, mutate: mutateRoles } = getRoles();
   const { data: rules } = getRules();
   const { data: users } = getUsers();
 
@@ -157,7 +165,31 @@ const RolePage = () => {
     setShowSidebar(!showSidebar);
   };
 
-  const handleUpdateRoles = () => {};
+  /**
+   * Updates role information based on the changes made and retrieves updated role data.
+   * @param {IRole} itemData - Updated role data.
+   */
+  const handleUpdateRoles = async (itemData: IRole) => {
+    dispatch({ type: TOAST_TYPE.PROCESSING });
+
+    const response = await editRole(itemData);
+
+    if (response.data) {
+      setSelectedRow({
+        index: selectedRow.index,
+        data: itemData
+      });
+
+      mutateRoles();
+
+      setShowSidebar(true);
+
+      dispatch({ type: TOAST_TYPE.SUCCESS });
+    } else {
+      dispatch({ type: TOAST_TYPE.ERROR });
+    }
+  };
+
   const handleDeleteRoles = () => {};
   const handleShowToast = () => {};
 
