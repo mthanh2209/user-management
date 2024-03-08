@@ -20,6 +20,7 @@ import { filterRoles, highlightKeyword } from '@helpers';
 
 // Services
 import {
+  deleteRole,
   editRole,
   getRoles,
   getRules,
@@ -166,6 +167,27 @@ const RolePage = () => {
   };
 
   /**
+   * Deletes the selected role and updates the role list.
+   */
+  const handleDeleteRoles = async () => {
+    dispatch({ type: TOAST_TYPE.PROCESSING });
+
+    if (selectedRow.data) {
+      const response = await deleteRole(selectedRow.data.id);
+
+      if (response.data) {
+        setSelectedRow({ index: 0, data: null });
+
+        mutateRoles();
+
+        dispatch({ type: TOAST_TYPE.SUCCESS });
+      } else {
+        dispatch({ type: TOAST_TYPE.ERROR });
+      }
+    }
+  };
+
+  /**
    * Updates role information based on the changes made and retrieves updated role data.
    * @param {IRole} itemData - Updated role data.
    */
@@ -190,7 +212,6 @@ const RolePage = () => {
     }
   };
 
-  const handleDeleteRoles = () => {};
   const handleShowToast = () => {};
 
   return (

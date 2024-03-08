@@ -5,7 +5,12 @@ import { API } from '@constants';
 import { IRole, IRoleRule } from '@types';
 
 // Services
-import { IResponse, makeRequest, useApi, useApiData } from '@services/user';
+import {
+  IResponse,
+  makeRequest,
+  useApi,
+  useApiData
+} from '@services/user';
 
 // Helpers
 import { generateNewRole } from '@helpers';
@@ -31,6 +36,19 @@ export const addRole = (roleName: string): Promise<IResponse> =>
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(generateNewRole(roleName))
+  });
+
+/**
+ * Deletes a role.
+ * @param roleId - The ID of the role to be deleted.
+ * @returns A promise that resolves to the response object.
+ */
+export const deleteRole = (roleId: number): Promise<IResponse> =>
+  makeRequest(`${API.BASE}/${API.ROLES}/${roleId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    }
   });
 
 /**
