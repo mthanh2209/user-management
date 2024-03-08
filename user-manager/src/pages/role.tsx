@@ -143,12 +143,17 @@ const RolePage = () => {
   /**
    * Handles closing the search bar.
    */
-  const handleCloseSearchBar = () => {};
+  const handleCloseSearchBar = () => {
+    setSearchKeyword('');
+  };
 
   /**
-   * Handles the change in the search input.
+   * Handles searching for roles based on a keyword.
+   * @param {string} keyword - The keyword used for filtering roles.
    */
-  const handleChangeSearch = () => {};
+  const handleChangeSearch = (keyword: string): void => {
+    setSearchKeyword(keyword);
+  };
 
   /**
    * Handles toggling the information sidebar.
@@ -159,7 +164,6 @@ const RolePage = () => {
 
   const handleUpdateRoles = () => {};
   const handleDeleteRoles = () => {};
-  const handleShowToast = () => {};
 
   return (
     <>
@@ -201,7 +205,6 @@ const RolePage = () => {
                   bgColor={selectedRow.data.bgColor}
                   onSave={handleUpdateRoles}
                   onDelete={handleDeleteRoles}
-                  showToast={handleShowToast}
                 />
               ),
               title: 'General'
