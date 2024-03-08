@@ -21,15 +21,13 @@ interface IPopoverProps {
   icon: string;
   children: string;
   options: IPopoverOption[];
-  onOpenModal: (option: IPopoverOption) => void;
 }
 
 const Popover = ({
   isOpen = false,
   icon,
   children = 'New',
-  options,
-  onOpenModal
+  options
 }: IPopoverProps) => {
   const optionRef = useRef<HTMLDivElement | null>(null);
   const [isShowOption, setShowOption] = useState(false);
@@ -51,10 +49,6 @@ const Popover = ({
     setShowOption(isOpen);
   }, [isOpen]);
 
-  const handleOptionClick = (option: IPopoverOption) => () => {
-    onOpenModal(option);
-  };
-
   return (
     <div className='popover' ref={optionRef}>
       <Button
@@ -68,14 +62,14 @@ const Popover = ({
 
       {isShowOption && (
         <div className='popover-option'>
-          {options.map((option, index) => (
+          {options.map((option) => (
             <button
-              key={index}
+              key={option.id}
               className='btn-option'
               type='button'
-              onClick={handleOptionClick(option)}
+              onClick={option.onClick}
             >
-              {option.text}
+              {option.label}
             </button>
           ))}
         </div>
