@@ -1,9 +1,4 @@
-import {
-  useContext,
-  useEffect,
-  useMemo,
-  useState
-} from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 
 // Components
 import {
@@ -19,17 +14,13 @@ import {
 import { filterRoles, highlightKeyword } from '@helpers';
 
 // Services
-import {
-  getRoles,
-  getRules,
-  getUsers
-} from '@services';
+import { deleteRole, getRoles, getRules, getUsers } from '@services';
 
 // Types
 import { IColumnProps, IRole } from '@types';
 
 // Constants
-import { INFO_LIST_VIEW_ROLE } from '@constants';
+import { INFO_LIST_VIEW_ROLE, TOAST_TYPE } from '@constants';
 
 // Stores
 import { Context } from '@stores';
@@ -86,7 +77,7 @@ const COLUMNS = (searchKeyword: string): IColumnProps<IRole>[] => {
 };
 
 const RolePage = () => {
-  const { selectedRow, setSelectedRow } = useContext(Context);
+  const { dispatch, selectedRow, setSelectedRow } = useContext(Context);
 
   const [roleInfoList, setRoleInfoList] = useState<any[]>([]);
   const [showSidebar, setShowSidebar] = useState(true);
@@ -95,7 +86,7 @@ const RolePage = () => {
   /**
    * Fetch data from the service.
    */
-  const { data: roles } = getRoles();
+  const { data: roles, mutate: mutateRoles } = getRoles();
   const { data: rules } = getRules();
   const { data: users } = getUsers();
 
@@ -158,7 +149,28 @@ const RolePage = () => {
   };
 
   const handleUpdateRoles = () => {};
-  const handleDeleteRoles = () => {};
+
+  /**
+   * Deletes the selected user and updates the user list.
+   */
+  const handleDeleteRoles = async () => {
+    dispatch({ type: TOAST_TYPE.PROCESSING });
+
+    if (selectedRow.data) {
+      const response = await deleteRole(selectedRow.data.id);
+
+      if (response.data) {
+        setSelectedRow({ index: 0, data: null });
+
+        mutateRoles();
+
+        dispatch({ type: TOAST_TYPE.SUCCESS });
+      } else {
+        dispatch({ type: TOAST_TYPE.ERROR });
+      }
+    }
+  };
+
   const handleShowToast = () => {};
 
   return (
