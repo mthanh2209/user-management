@@ -1,4 +1,9 @@
-import { useContext, useEffect, useMemo, useState } from 'react';
+import {
+  useContext,
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
 
 // Components
 import {
@@ -14,13 +19,21 @@ import {
 import { filterRoles, highlightKeyword } from '@helpers';
 
 // Services
-import { deleteRole, getRoles, getRules, getUsers } from '@services';
+import {
+  deleteRole,
+  getRoles,
+  getRules,
+  getUsers
+} from '@services';
 
 // Types
 import { IColumnProps, IRole } from '@types';
 
 // Constants
-import { INFO_LIST_VIEW_ROLE, TOAST_TYPE } from '@constants';
+import {
+  INFO_LIST_VIEW_ROLE,
+  TOAST_TYPE
+} from '@constants';
 
 // Stores
 import { Context } from '@stores';
@@ -77,7 +90,11 @@ const COLUMNS = (searchKeyword: string): IColumnProps<IRole>[] => {
 };
 
 const RolePage = () => {
-  const { dispatch, selectedRow, setSelectedRow } = useContext(Context);
+  const {
+    dispatch,
+    selectedRow,
+    setSelectedRow
+  } = useContext(Context);
 
   const [roleInfoList, setRoleInfoList] = useState<any[]>([]);
   const [showSidebar, setShowSidebar] = useState(true);
