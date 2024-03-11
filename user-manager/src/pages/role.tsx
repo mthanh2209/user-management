@@ -7,7 +7,7 @@ import {
 
 // Components
 import {
-  AssignRole,
+  AssignRoleMember,
   AssignRoleRules,
   Avatar,
   EditorRole,
@@ -359,7 +359,7 @@ const RolePage = () => {
             },
             {
               content: (
-                <AssignRole
+                <AssignRoleMember
                   key={selectedRow.data.id}
                   title={selectedRow.data.name}
                   items={roleUsers}
