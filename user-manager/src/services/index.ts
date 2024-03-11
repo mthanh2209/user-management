@@ -4,7 +4,9 @@ export {
   editUser,
   deleteUser,
   getUserRoles,
-  getUserRules
+  getUserRules,
+  assignUserToRole,
+  unAssignUserFromRole
 } from '@services/user';
 export {
   getRoles,
