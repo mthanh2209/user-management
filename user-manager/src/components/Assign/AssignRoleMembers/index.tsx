@@ -13,9 +13,11 @@ import {
 // Services
 import {
   getRoleRules,
-  getRoles,
   getRules,
-  getUserRoles
+  getUserRoles,
+  assignUserToRole,
+  getUsers,
+  unAssignUserFromRole
 } from '@services';
 
 // Stores
@@ -27,11 +29,9 @@ import { ItemAssign } from '@types';
 // Helpers
 import {
   filterRoleItemsByRoleId,
-  filterUserItemsByUserId,
   findRoleItemId,
   isItemAssignedToRole
 } from '@helpers';
-import { assignUserToRole, unAssignUserFromRole } from '@services/user';
 
 interface IAssignRoleMember {
   items: ItemAssign[];
@@ -43,7 +43,7 @@ const AssignRoleMember = ({ items, title }: IAssignRoleMember) => {
 
   const { selectedRow, setUserInfoList } = useContext(Context);
 
-  const { data: roleData } = getRoles();
+  const { data: userData } = getUsers();
   const { data: ruleData } = getRules();
   const { data: roleUsers } = getUserRoles();
   const { data: roleRules } = getRoleRules();
@@ -51,12 +51,12 @@ const AssignRoleMember = ({ items, title }: IAssignRoleMember) => {
   // Filters role users based on the user ID.
   const getCorrespondingUserRoles = filterRoleItemsByRoleId(
     roleUsers,
-    roleData,
+    userData,
     selectedRow.data.id
   );
 
   // Filters role rules based on the user ID.
-  const getCorrespondingRoleRules = filterUserItemsByUserId(
+  const getCorrespondingRoleRules = filterRoleItemsByRoleId(
     roleRules,
     ruleData,
     selectedRow.data.id
@@ -85,7 +85,7 @@ const AssignRoleMember = ({ items, title }: IAssignRoleMember) => {
     // Choose the appropriate action based on the current state of the item (assign or unassign user)
     const action = isCurrentlyAssigned
       ? () => unAssignUserFromRole(userRoleId)
-      : () => assignUserToRole(id, selectedRow.data.id);
+      : () => assignUserToRole(selectedRow.data.id, id);
 
     // Perform the action and retrieve the response
     const res = await action();
