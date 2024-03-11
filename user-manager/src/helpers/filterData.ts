@@ -1,4 +1,4 @@
-import { IRole, IUser } from '@types';
+import { IRole, IRule, IUser } from '@types';
 
 /**
  * Filters an array of user objects based on a search keyword.
@@ -38,6 +38,28 @@ export const filterRoles = (
 
   return roles.filter((role: IRole) => {
     return role.name.toLowerCase().includes(searchKeyword.toLowerCase());
+  });
+};
+
+/**
+ * Filters an array of rule objects based on a search keyword.
+ * @param rules - The array of rule objects to filter.
+ * @param searchKeyword - The keyword used for filtering rules.
+ * @returns An array of rule objects that match the search criteria.
+ */
+export const filterRules = (
+  rules: IRule[] | undefined, // Add a type for the rules parameter
+  searchKeyword: string
+): IRule[] => {
+  if (!rules) {
+    return []; // Return an empty array if rules is undefined
+  }
+
+  return rules.filter((rule: IRule) => {
+    return (
+      rule.name.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+      rule.description.toLowerCase().includes(searchKeyword.toLowerCase())
+    );
   });
 };
 
