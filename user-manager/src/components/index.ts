@@ -1,6 +1,7 @@
 export { default as AssignRole } from '@components/Assign/AssignRole';
 export { default as AssignRule } from '@components/Assign/AssignRule';
 export { default as AssignRoleRules } from '@components/Assign/AssignRoleRules';
+export { default as AssignRoleMember } from '@components/Assign/AssignRoleMembers';
 export { default as Avatar } from '@components/Avatar';
 export { default as Button } from '@components/Button';
 export { default as Drawer } from '@components/Drawer';
