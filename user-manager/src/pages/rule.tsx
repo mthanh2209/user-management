@@ -1,7 +1,11 @@
 import { useContext, useEffect, useMemo, useState } from 'react';
 
 // Components
-import { Table, Toolbar } from '@components';
+import {
+  InformationSidebar,
+  Table,
+  Toolbar
+} from '@components';
 
 // Helpers
 import { filterRules, highlightKeyword } from '@helpers';
@@ -81,7 +85,9 @@ const RulePage = () => {
 
   useEffect(() => {
     if (selectedRow.data) {
-      setRuleInfoList(INFO_LIST_VIEW_RULE(rolesData, usersData));
+      setRuleInfoList(
+        INFO_LIST_VIEW_RULE(selectedRow.data, rolesData, usersData)
+      );
     }
   }, [selectedRow.data]);
 
@@ -131,6 +137,15 @@ const RulePage = () => {
           onRowClick={handleSelectedRow}
         />
       </div>
+
+      {showSidebar && selectedRow.data !== null && (
+        <InformationSidebar
+          title='Rule information'
+          isShowIcon={false}
+          additionalClass='rules'
+          data={ruleInfoList}
+        />
+      )}
     </>
   );
 };
