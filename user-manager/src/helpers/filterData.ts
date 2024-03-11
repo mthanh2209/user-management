@@ -1,10 +1,4 @@
-import {
-  IRole,
-  IRoleRule,
-  IRule,
-  IUser,
-  IUserRule 
-} from '@types';
+import { IRole, IRoleRule, IRule, IUser, IUserRole, IUserRule } from '@types';
 
 /**
  * Filters an array of user objects based on a search keyword.
@@ -156,4 +150,52 @@ export const filterRolesOfRule = (
     .filter((role) => role !== undefined);
 
   return rolesOfRule;
+};
+
+/**
+ * Filters users associated with a specific role.
+ *
+ * @param userRoles - The array of user-role relationships.
+ * @param users - The array of user objects.
+ * @param roleId - The ID of the role to filter by.
+ * @returns An array of users associated with the role.
+ */
+export const filterUsersOfRole = (
+  userRoles: IUserRole[],
+  users: IUser[],
+  roleId: number
+) => {
+  const userRoleRelations = userRoles.filter(
+    (userRole) => userRole.roleId === roleId
+  );
+
+  const userOfRole = userRoleRelations
+    .map((userRole) => users.find((user) => user.id === userRole.userId))
+    .filter((user) => user !== undefined);
+
+  return userOfRole;
+};
+
+/**
+ * Filters rules associated with a specific role.
+ *
+ * @param userRoles - The array of rule-role relationships.
+ * @param users - The array of rule objects.
+ * @param roleId - The ID of the role to filter by.
+ * @returns An array of rules associated with the role.
+ */
+export const filterRulesOfRole = (
+  ruleRoles: IRoleRule[],
+  rules: IRule[],
+  roleId: number
+) => {
+  const ruleRoleRelations = ruleRoles.filter(
+    (ruleRole) => ruleRole.roleId === roleId
+  );
+
+  const ruleOfRole = ruleRoleRelations
+    .map((ruleRole) => rules.find((rule) => rule.id === ruleRole.ruleId))
+    .filter((rule) => rule !== undefined);
+
+  return ruleOfRole;
 };
