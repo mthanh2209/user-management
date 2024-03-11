@@ -51,7 +51,7 @@ export const INFO_LIST_VIEW_USER = (
           title: `Roles (${roles.length})`,
           content: roles.map((role) => ({
             text: role?.name,
-            link: '/'
+            onClick: () => {}
           }))
         },
         {
@@ -59,7 +59,7 @@ export const INFO_LIST_VIEW_USER = (
           title: `Rules (${rules.length})`,
           content: rules.map((rule) => ({
             text: rule?.name,
-            link: '/'
+            onClick: () => {}
           }))
         }
       ]
@@ -84,7 +84,7 @@ export const INFO_LIST_VIEW_ROLE = (rules: IRule[], users: IUser[]) => {
           title: `Rules assigned (${rules.length})`,
           content: rules.map((rule) => ({
             text: rule?.name,
-            link: '/'
+            onClick: () => {}
           }))
         },
         {
@@ -92,7 +92,7 @@ export const INFO_LIST_VIEW_ROLE = (rules: IRule[], users: IUser[]) => {
           title: `Members assigned (${users.length})`,
           content: users.map((user) => ({
             text: user?.fullName,
-            link: '/'
+            onClick: () => {}
           }))
         }
       ]
@@ -100,45 +100,3 @@ export const INFO_LIST_VIEW_ROLE = (rules: IRule[], users: IUser[]) => {
   ];
 };
 
-/**
- * Generates a list of information for a rule.
- *
- * @param {IUser[]} users - The users associated with the rule.
- * @param {IRule[]} userRules - The users assigned to the rule.
- * @returns {Array<Object>} An array of objects representing rule information.
- */
-export const INFO_LIST_VIEW_RULE = (
-  rules: IRule,
-  roles: IRole[],
-  users: IUser[]
-) => {
-  return [
-    {
-      type: INFO_TYPE.TEXT_VIEW,
-      icon: '',
-      title: rules.name,
-      content: rules.description
-    },
-    {
-      type: INFO_TYPE.LIST_VIEW,
-      content: [
-        {
-          icon: 'icon-role',
-          title: `Roles (${roles.length})`,
-          content: roles.map((role) => ({
-            text: role?.name,
-            link: '/'
-          }))
-        },
-        {
-          icon: 'icon-user',
-          title: `Users (${users.length})`,
-          content: users.map((user) => ({
-            text: user?.fullName,
-            link: '/'
-          }))
-        }
-      ]
-    }
-  ];
-};
