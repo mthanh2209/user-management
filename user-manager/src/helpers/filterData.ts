@@ -1,4 +1,11 @@
-import { IRole, IRoleRule, IRule, IUser, IUserRole, IUserRule } from '@types';
+import {
+  IRole,
+  IRoleRule,
+  IRule,
+  IUser,
+  IUserRole,
+  IUserRule
+} from '@types';
 
 /**
  * Filters an array of user objects based on a search keyword.
