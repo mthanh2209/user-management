@@ -99,3 +99,36 @@ export const INFO_LIST_VIEW_ROLE = (rules: IRule[], users: IUser[]) => {
     }
   ];
 };
+
+/**
+ * Generates a list of information for a rule.
+ *
+ * @param {IUser[]} users - The users associated with the rule.
+ * @param {IRule[]} userRules - The users assigned to the rule.
+ * @returns {Array<Object>} An array of objects representing rule information.
+ */
+export const INFO_LIST_VIEW_RULE = (roles: IRole[], users: IUser[]) => {
+  return [
+    {
+      type: INFO_TYPE.LIST_VIEW,
+      content: [
+        {
+          icon: 'icon-role',
+          title: `Roles (${roles.length})`,
+          content: roles.map((role) => ({
+            text: role?.name,
+            link: '/'
+          }))
+        },
+        {
+          icon: 'icon-user',
+          title: `Users (${users.length})`,
+          content: users.map((user) => ({
+            text: user?.fullName,
+            link: '/'
+          }))
+        }
+      ]
+    }
+  ];
+};

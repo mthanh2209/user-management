@@ -12,6 +12,7 @@ export { fetcher } from '@helpers/fetcher';
 export {
   filterUsers,
   filterRoles,
+  filterRules,
   filterUserItemsByUserId,
   filterRoleItemsByRoleId
 } from '@helpers/filterData';

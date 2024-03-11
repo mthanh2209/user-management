@@ -26,6 +26,18 @@
   width: min-content;
 }
 
+.rules .table-row {
+  height: 50px;
+}
+
+.rules .table-header th:nth-child(1) {
+  padding: 10px;
+}
+
+.rules .table-row td:nth-child(1) {
+  padding: 8px 10px;
+}
+
 .table-head {
   position: sticky;
   top: 0;
@@ -59,7 +71,7 @@
 
 /* Table Row */
 .table-row {
-  border-bottom: 1px solid #edeff0
+  border-bottom: 1px solid #edeff0;
 }
 
 .table-row td:nth-child(1) {
