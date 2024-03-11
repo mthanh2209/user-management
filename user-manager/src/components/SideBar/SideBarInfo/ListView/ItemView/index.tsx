@@ -1,5 +1,3 @@
-import { Link } from 'react-router-dom';
-
 // Types
 import { ItemViewProps } from '@types';
 
@@ -17,13 +15,14 @@ const ItemView = ({
       </div>
       <div className='info-list-link'>
         {content?.map((item) => (
-          <Link
-            key={item.link}
-            to={item.link}
+          <div
+            key={item.id}
+            id={item.id}
+            onClick={item.onClick}
             className={`text-link ${additionalClass}`}
           >
             {item.text}
-          </Link>
+          </div>
         ))}
       </div>
     </>

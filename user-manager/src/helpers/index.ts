@@ -14,7 +14,9 @@ export {
   filterRoles,
   filterRules,
   filterUserItemsByUserId,
-  filterRoleItemsByRoleId
+  filterRoleItemsByRoleId,
+  filterUsersOfRule,
+  filterRolesOfRule
 } from '@helpers/filterData';
 export { highlightKeyword } from '@helpers/highlightKeyword';
 export { generateNewUser, generateNewRole } from '@helpers/generateNewObj';

@@ -9,8 +9,9 @@ export interface ItemViewProps {
   title: string;
   additionalClass?: string;
   content: Array<{
+    id: string;
     text: string;
-    link: string;
+    onClick: () => {};
   }>;
 }
 
