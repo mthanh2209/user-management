@@ -12,8 +12,15 @@ export { fetcher } from '@helpers/fetcher';
 export {
   filterUsers,
   filterRoles,
+  filterRules,
   filterUserItemsByUserId,
-  filterRoleItemsByRoleId
+  filterRoleItemsByRoleId,
+  filterUsersOfRule,
+  filterRolesOfRule,
+  filterUsersOfRole,
+  filterRulesOfRole,
+  filterRulesOfUser,
+  filterRolesOfUser
 } from '@helpers/filterData';
 export { highlightKeyword } from '@helpers/highlightKeyword';
 export { generateNewUser, generateNewRole } from '@helpers/generateNewObj';

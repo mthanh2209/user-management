@@ -17,7 +17,7 @@ export interface SideBarInfoProps {
 
 const SideBarInfo = ({ data }: SideBarInfoProps) => {
   return (
-    <div>
+    <>
       {data.map((item) => {
         switch (item.type) {
           case INFO_TYPE.TEXT_VIEW:
@@ -40,7 +40,7 @@ const SideBarInfo = ({ data }: SideBarInfoProps) => {
             return null;
         }
       })}
-    </div>
+    </>
   );
 };
 

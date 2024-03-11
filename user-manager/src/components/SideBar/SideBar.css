@@ -9,7 +9,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 5px 10px;
+  padding: 10px;
   font-weight: var(--fw-medium);
   border-bottom: 1px solid var(--border-color);
 }
@@ -38,6 +38,18 @@
   font-size: var(--font-sm);
   color: var(--dark-color);
   letter-spacing: 0.2px;
+}
+
+.rules .info-list .info-list-header:nth-child(1) .info-list-icon::before {
+  display: none;
+}
+
+.rules .info-list .info-list-header:nth-child(1) {
+  text-align: center;
+}
+
+.rules .info-list {
+  padding: 16px;
 }
 
 .edit-icon {
@@ -97,6 +109,7 @@
 
 .text-link {
   color: var(--primary-color);
+  cursor: pointer;
 }
 
 .text-link:hover {

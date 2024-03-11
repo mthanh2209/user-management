@@ -4,6 +4,7 @@ import {
   useMemo,
   useState
 } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // Components
 import {
@@ -20,8 +21,10 @@ import {
 
 // Helpers
 import {
+  filterRolesOfUser,
+  filterRulesOfUser,
   filterUsers,
-  getUserRolesAndRules,
+  formatDate,
   highlightKeyword
 } from '@helpers';
 
@@ -39,14 +42,16 @@ import {
 // Types
 import {
   IColumnProps,
-  IRole,
-  IRule,
   IUser,
   ItemAssign
 } from '@types';
 
 // Constants
-import { INFO_LIST_VIEW_USER, TOAST_TYPE } from '@constants';
+import {
+  INFO_TYPE,
+  PATH,
+  TOAST_TYPE
+} from '@constants';
 
 // Stores
 import { Context } from '@stores';
@@ -134,6 +139,8 @@ const HomePage = () => {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [showSidebar, setShowSidebar] = useState(true);
 
+  const navigate = useNavigate();
+
   /**
    * Fetches data.
    */
@@ -143,46 +150,89 @@ const HomePage = () => {
   const { data: userRolesData } = getUserRoles();
   const { data: userRulesData } = getUserRules();
 
-  /**
-   * Retrieves user roles and rules based on user data.
-   * @param userId - The ID of the user.
-   * @param rolesData - The data containing available roles.
-   * @param userRolesData - The data containing user roles.
-   * @returns An object containing user roles.
-   */
-  const { userRolesItem, userRulesItem } = getUserRolesAndRules(
-    selectedRow.data?.id!,
-    rolesData!,
-    rulesData!,
-    userRolesData!,
-    userRulesData!
+  useEffect(() => {
+    if (selectedRow.data) {
+      setUserInfoList(infoListViewUser);
+    }
+  }, [selectedRow.data]);
+
+  // Filter the data
+  const roles = filterRolesOfUser(
+    userRolesData || [],
+    rolesData || [],
+    selectedRow.data?.id
+  );
+
+  const rules = filterRulesOfUser(
+    userRulesData || [],
+    rulesData || [],
+    selectedRow.data?.id
   );
 
   /**
-   * useEffect hook to update user information list when selected user data changes.
+   * Handles the click event to navigate to the role
+   *
+   * @param roleId - The ID of the role.
    */
-  useEffect(() => {
-    if (selectedRow.data) {
-      // Filter undefined roles
-      const filteredUserRolesItem: IRole[] = (userRolesItem || []).filter(
-        (role) => role !== undefined
-      ) as IRole[];
+  const handleNavigateToRole = (roleId: number) => () => {
+    const role = rolesData?.find((role) => role.id === roleId);
+    const index = rolesData?.findIndex((role) => role.id === roleId) ?? 0;
 
-      // Filter undefined rules
-      const filteredUserRulesItem: IRule[] = (userRulesItem || []).filter(
-        (rule) => rule !== undefined
-      ) as IRule[];
+    setSelectedRow({ index, data: role });
+    navigate(PATH.ROLES_PATH);
+  };
 
-      // Set user information list
-      setUserInfoList(
-        INFO_LIST_VIEW_USER(
-          selectedRow.data,
-          filteredUserRolesItem,
-          filteredUserRulesItem
-        )
-      );
+  /**
+   * Handles the click event to navigate to the rule
+   *
+   * @param ruleId - The ID of the rule.
+   */
+  const handleNavigateToRule = (ruleId: number) => () => {
+    const rule = rulesData?.find((rule) => rule.id === ruleId);
+    const index = rulesData?.findIndex((rule) => rule.id === ruleId) ?? 0;
+
+    setSelectedRow({ index: index, data: rule });
+    navigate(PATH.RULES_PATH);
+  };
+
+  const infoListViewUser = [
+    {
+      type: INFO_TYPE.TEXT_VIEW,
+      icon: 'icon-email',
+      title: 'Email:',
+      content: selectedRow.data?.email
+    },
+    {
+      type: INFO_TYPE.TEXT_VIEW,
+      icon: 'icon-date',
+      title: 'Last visited:',
+      content:
+        selectedRow.data?.lastVisitedDate !== null
+          ? formatDate(selectedRow.data?.lastVisitedDate)
+          : 'Unknown'
+    },
+    {
+      type: INFO_TYPE.LIST_VIEW,
+      content: [
+        {
+          icon: 'icon-role',
+          title: `Roles (${roles.length})`,
+          content: roles.map((role) => ({
+            text: role?.name,
+            onClick: handleNavigateToRole(role?.id!)
+          }))
+        },
+        {
+          icon: 'icon-rule',
+          title: `Rules (${rules.length})`,
+          content: rules.map((rule) => ({
+            text: rule?.name,
+            onClick: handleNavigateToRule(rule?.id!)
+          }))
+        }
+      ]
     }
-  }, [selectedRow.data]);
+  ];
 
   /**
    * Filters users based on search keyword.
@@ -350,6 +400,7 @@ const HomePage = () => {
         <InformationSidebar
           title='User information'
           isActive={selectedRow.data.isActive}
+          isShowStatus={true}
           src={selectedRow.data.avatar}
           bgColor={selectedRow.data.bgColor}
           fullName={selectedRow.data.fullName}

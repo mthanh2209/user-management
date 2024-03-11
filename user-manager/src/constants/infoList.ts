@@ -51,7 +51,7 @@ export const INFO_LIST_VIEW_USER = (
           title: `Roles (${roles.length})`,
           content: roles.map((role) => ({
             text: role?.name,
-            link: '/'
+            onClick: () => {}
           }))
         },
         {
@@ -59,7 +59,7 @@ export const INFO_LIST_VIEW_USER = (
           title: `Rules (${rules.length})`,
           content: rules.map((rule) => ({
             text: rule?.name,
-            link: '/'
+            onClick: () => {}
           }))
         }
       ]
@@ -84,7 +84,7 @@ export const INFO_LIST_VIEW_ROLE = (rules: IRule[], users: IUser[]) => {
           title: `Rules assigned (${rules.length})`,
           content: rules.map((rule) => ({
             text: rule?.name,
-            link: '/'
+            onClick: () => {}
           }))
         },
         {
@@ -92,10 +92,11 @@ export const INFO_LIST_VIEW_ROLE = (rules: IRule[], users: IUser[]) => {
           title: `Members assigned (${users.length})`,
           content: users.map((user) => ({
             text: user?.fullName,
-            link: '/'
+            onClick: () => {}
           }))
         }
       ]
     }
   ];
 };
+

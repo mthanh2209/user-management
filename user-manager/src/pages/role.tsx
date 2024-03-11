@@ -4,6 +4,7 @@ import {
   useMemo,
   useState
 } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // Components
 import {
@@ -20,7 +21,8 @@ import {
 // Helpers
 import {
   filterRoles,
-  getRoleRulesAndUsers,
+  filterRulesOfRole,
+  filterUsersOfRole,
   highlightKeyword
 } from '@helpers';
 
@@ -39,14 +41,13 @@ import {
 import {
   IColumnProps,
   IRole,
-  IRule,
-  IUser,
   ItemAssign
 } from '@types';
 
 // Constants
 import {
-  INFO_LIST_VIEW_ROLE,
+  INFO_TYPE,
+  PATH,
   TOAST_TYPE
 } from '@constants';
 
@@ -115,21 +116,28 @@ const RolePage = () => {
   const [showSidebar, setShowSidebar] = useState(true);
   const [searchKeyword, setSearchKeyword] = useState('');
 
+  const navigate = useNavigate();
+
   /**
    * Fetch data from the service.
    */
-  const { data: roles, mutate: mutateRoles } = getRoles();
+  const { data: rolesData, mutate: mutateRoles } = getRoles();
   const { data: rulesData } = getRules();
   const { data: usersData } = getUsers();
   const { data: roleRulesData } = getRoleRules();
   const { data: roleUsersData } = getUserRoles();
 
-  const { roleRulesItem, roleUsersItem } = getRoleRulesAndUsers(
-    selectedRow.data?.id!,
-    rulesData!,
-    usersData!,
-    roleRulesData!,
-    roleUsersData!
+  // Filter the data
+  const rules = filterRulesOfRole(
+    roleRulesData || [],
+    rulesData || [],
+    selectedRow.data?.id
+  );
+
+  const users = filterUsersOfRole(
+    roleUsersData || [],
+    usersData || [],
+    selectedRow.data?.id
   );
 
   /**
@@ -142,28 +150,68 @@ const RolePage = () => {
    */
   useEffect(() => {
     if (selectedRow.data) {
-      // Filter undefined rules
-      const filteredRoleRulesItem: IRule[] = (roleRulesItem || []).filter(
-        (rule) => rule !== undefined
-      ) as IRule[];
-
-      // Filter undefined rules
-      const filteredRoleUsersItem: IUser[] = (roleUsersItem || []).filter(
-        (user) => user !== undefined
-      ) as IUser[];
-
-      setRoleInfoList(
-        INFO_LIST_VIEW_ROLE(filteredRoleRulesItem, filteredRoleUsersItem)
-      );
+      setRoleInfoList(infoListViewRole);
     }
   }, [selectedRow.data]);
+
+  /**
+   * Handles the click event to navigate to the rule
+   *
+   * @param ruleId - The ID of the rule.
+   */
+  const handleNavigateToRule = (ruleId: number) => () => {
+    const rule = rulesData?.find((rule) => rule.id === ruleId);
+    const index = rulesData?.findIndex((rule) => rule.id === ruleId) ?? 0;
+
+    setSelectedRow({ index, data: rule });
+    navigate(PATH.RULES_PATH);
+  };
+
+  /**
+   * Handles the click event to navigate to the user
+   *
+   * @param userId - The ID of the user.
+   */
+  const handleNavigateToUser = (userId: number) => () => {
+    const user = usersData?.find((user) => user.id === userId);
+    const index = usersData?.findIndex((user) => user.id === userId) ?? 0;
+
+    setSelectedRow({ index: index, data: user });
+    navigate(PATH.HOME_PATH);
+  };
+
+  const infoListViewRole = [
+    {
+      type: INFO_TYPE.LIST_VIEW,
+      content: [
+        {
+          icon: 'icon-rule',
+          title: `Rules assigned (${rules.length})`,
+          content: rules.map((rule) => ({
+            id: rule?.id,
+            text: rule?.name,
+            onClick: handleNavigateToRule(rule?.id!)
+          }))
+        },
+        {
+          icon: 'icon-user',
+          title: `Members assigned (${users.length})`,
+          content: users.map((user) => ({
+            id: user?.id,
+            text: user?.fullName,
+            onClick: handleNavigateToUser(user?.id!)
+          }))
+        }
+      ]
+    }
+  ];
 
   /**
    * Memoized filtered roles based on the search keyword.
    */
   const filteredRoles = useMemo(() => {
-    return filterRoles(roles, searchKeyword);
-  }, [roles, searchKeyword]);
+    return filterRoles(rolesData, searchKeyword);
+  }, [rolesData, searchKeyword]);
 
   /**
    * Column configuration for the roles table.
