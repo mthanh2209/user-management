@@ -350,6 +350,7 @@ const HomePage = () => {
         <InformationSidebar
           title='User information'
           isActive={selectedRow.data.isActive}
+          isShowStatus={true}
           src={selectedRow.data.avatar}
           bgColor={selectedRow.data.bgColor}
           fullName={selectedRow.data.fullName}

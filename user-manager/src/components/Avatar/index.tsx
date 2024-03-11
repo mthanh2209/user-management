@@ -1,14 +1,11 @@
 // CSS
 import '@components/Avatar/Avatar.css';
 
-// Helpers
-import { capitalizeLetter } from '@helpers';
-
 type TAvatarSize = 'sm' | 'md' | 'lg';
 
 interface IAvatar {
   src?: string;
-  alt: string;
+  alt?: string;
   bgColor?: string;
   size: TAvatarSize;
   additionalClass?: string;
@@ -21,7 +18,7 @@ const Avatar = ({
   size,
   additionalClass
 }: IAvatar) => {
-  const firstLetter = capitalizeLetter(alt.charAt(0));
+  const firstLetter = alt?.charAt(0).toUpperCase();
 
   return (
     <div
