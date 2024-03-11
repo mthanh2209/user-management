@@ -7,7 +7,7 @@ import AssignItem from '@components/Assign/AssignItem';
 // Constants
 import {
   API,
-  INFO_LIST_VIEW_ROLE,
+  INFO_LIST_VIEW_ROLE
 } from '@constants';
 
 // Services
@@ -15,7 +15,7 @@ import {
   getRoleRules,
   getRoles,
   getRules,
-  getUserRoles,
+  getUserRoles
 } from '@services';
 
 // Stores
@@ -28,40 +28,38 @@ import { ItemAssign } from '@types';
 import {
   filterRoleItemsByRoleId,
   filterUserItemsByUserId,
-  findUserItemId,
-  isItemAssignedToUser
+  findRoleItemId,
+  isItemAssignedToRole
 } from '@helpers';
 import { assignUserToRole, unAssignUserFromRole } from '@services/user';
 
-interface IAssignRole {
+interface IAssignRoleMember {
   items: ItemAssign[];
   title: string;
 }
 
-const AssignRoleMember = ({ items, title }: IAssignRole) => {
+const AssignRoleMember = ({ items, title }: IAssignRoleMember) => {
   const [userState, setUserState] = useState<ItemAssign[]>(items);
 
   const { selectedRow, setUserInfoList } = useContext(Context);
 
   const { data: roleData } = getRoles();
   const { data: ruleData } = getRules();
-  const { data: userRoles } = getUserRoles();
+  const { data: roleUsers } = getUserRoles();
   const { data: roleRules } = getRoleRules();
 
-  const userId = selectedRow.data?.id || 0;
-
   // Filters role users based on the user ID.
-  const getCorrespondingUserRoles = filterUserItemsByUserId(
-    userRoles,
+  const getCorrespondingUserRoles = filterRoleItemsByRoleId(
+    roleUsers,
     roleData,
-    userId
+    selectedRow.data.id
   );
 
   // Filters role rules based on the user ID.
-  const getCorrespondingRoleRules = filterRoleItemsByRoleId(
+  const getCorrespondingRoleRules = filterUserItemsByUserId(
     roleRules,
     ruleData,
-    userId
+    selectedRow.data.id
   );
 
   /**
@@ -69,25 +67,25 @@ const AssignRoleMember = ({ items, title }: IAssignRole) => {
    * @param id - The ID of the item.
    */
   const handleItemSelect = (id: number) => async () => {
-    const isCurrentlyAssigned = isItemAssignedToUser(
-      userId,
+    const isCurrentlyAssigned = isItemAssignedToRole(
+      selectedRow.data.id,
       id,
-      userRoles || [],
+      roleUsers || [],
       'userId'
     );
 
     // Find the userRoleId
-    const userRoleId = findUserItemId(
-      userId,
+    const userRoleId = findRoleItemId(
+      selectedRow.data.id,
       id,
-      userRoles || [],
+      roleUsers || [],
       'userId'
     );
 
     // Choose the appropriate action based on the current state of the item (assign or unassign user)
     const action = isCurrentlyAssigned
       ? () => unAssignUserFromRole(userRoleId)
-      : () => assignUserToRole(id, userId);
+      : () => assignUserToRole(id, selectedRow.data.id);
 
     // Perform the action and retrieve the response
     const res = await action();
