@@ -118,8 +118,20 @@ const RulePage = () => {
     }
   };
 
-  const handleCloseSearchBar = () => {};
-  const handleChangeSearch = () => {};
+  /**
+   * Handles closing the search bar.
+   */
+  const handleCloseSearchBar = () => {
+    setSearchKeyword('');
+  };
+
+  /**
+   * Handles searching for rules based on a keyword.
+   * @param {string} keyword - The keyword used for filtering rules.
+   */
+  const handleChangeSearch = (keyword: string): void => {
+    setSearchKeyword(keyword);
+  };
 
   return (
     <>
