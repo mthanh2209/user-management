@@ -45,33 +45,33 @@ const AssignRoleRules = ({ items, title }: IAssignRoleRules) => {
   const { data: roleRules } = getRoleRules();
   const { data: userRoles } = getUserRoles();
 
-  const roleId = selectedRow.data?.id || 0;
+  const ruleId = selectedRow.data?.id || 0;
 
-  // Filters role rules based on the role ID.
+  // Filters role rules based on the rule ID.
   const getCorrespondingRoleRules = filterRoleItemsByRoleId(
     roleRules,
     ruleData,
-    roleId
+    ruleId
   );
 
-  // Filters role users based on the role ID.
+  // Filters role users based on the rule ID.
   const getCorrespondingRoleUsers = filterRoleItemsByRoleId(
     userRoles,
     roleData,
-    roleId
+    ruleId
   );
 
   // Handles the selection of a rule for assignment to a role.
-  const handleRuleSelect = (id: number) => async () => {
+  const handleItemSelect = (id: number) => async () => {
     const isCurrentlyAssigned = isItemAssignedToRole(
-      roleId,
+      ruleId,
       id,
       roleRules || [],
       'ruleId'
     );
 
     const roleRuleId = findRoleItemId(
-      roleId,
+      ruleId,
       id,
       roleRules || [],
       'ruleId'
@@ -79,7 +79,7 @@ const AssignRoleRules = ({ items, title }: IAssignRoleRules) => {
 
     const action = isCurrentlyAssigned
       ? () => unAssignRuleFromRole(roleRuleId)
-      : () => assignRuleToRole(roleId, id);
+      : () => assignRuleToRole(ruleId, id);
 
     const res = await action();
 
@@ -111,8 +111,8 @@ const AssignRoleRules = ({ items, title }: IAssignRoleRules) => {
     <AssignItem
       items={items}
       title={title}
-      optionName='rule'
-      handleItemSelect={handleRuleSelect}
+      optionName='roleRules'
+      handleItemSelect={handleItemSelect}
     />
   );
 };
