@@ -1,4 +1,11 @@
-import { useContext, useEffect, useMemo, useState } from 'react';
+import {
+  useContext,
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
+
+import { useNavigate } from 'react-router-dom';
 
 // Components
 import {
@@ -8,17 +15,28 @@ import {
 } from '@components';
 
 // Helpers
-import { filterRules, highlightKeyword } from '@helpers';
+import {
+  filterRolesOfRule,
+  filterRules,
+  filterUsersOfRule,
+  highlightKeyword
+} from '@helpers';
 
 // Services
-import { getRoles, getRules, getUsers } from '@services';
+import {
+  getRoleRules,
+  getRoles,
+  getRules,
+  getUserRules,
+  getUsers
+} from '@services';
 
 // Types
 import { IColumnProps, IRule } from '@types';
 
 // Stores
 import { Context } from '@stores';
-import { INFO_LIST_VIEW_RULE } from '@constants';
+import { INFO_TYPE, PATH } from '@constants';
 
 /**
  * Column configuration for the rules table.
@@ -76,20 +94,93 @@ const RulePage = () => {
   const [showSidebar, setShowSidebar] = useState(true);
   const [searchKeyword, setSearchKeyword] = useState('');
 
+  const navigate = useNavigate();
+
   /**
    * Fetch data from the service.
    */
   const { data: rules } = getRules();
   const { data: rolesData } = getRoles();
   const { data: usersData } = getUsers();
+  const { data: roleRuleData } = getRoleRules();
+  const { data: userRuleData } = getUserRules();
+
+  // Filter the data
+  const roles = filterRolesOfRule(
+    roleRuleData || [],
+    rolesData || [],
+    selectedRow.data?.id
+  );
+
+  const users = filterUsersOfRule(
+    userRuleData || [],
+    usersData || [],
+    selectedRow.data?.id
+  );
 
   useEffect(() => {
     if (selectedRow.data) {
-      setRuleInfoList(
-        INFO_LIST_VIEW_RULE(selectedRow.data, rolesData, usersData)
-      );
+      setRuleInfoList(infoListViewRule);
     }
   }, [selectedRow.data]);
+
+  /**
+   * Handles the click event to navigate to the role
+   *
+   * @param roleId - The ID of the role.
+   */
+  const handleNavigateToRole = (roleId: number) => () => {
+    const role = rolesData?.find((role) => role.id === roleId);
+    const index = rolesData?.findIndex((role) => role.id === roleId) ?? 0;
+
+    setSelectedRow({ index, data: role });
+    navigate(PATH.ROLES_PATH);
+  };
+
+  /**
+   * Handles the click event to navigate to the user
+   *
+   * @param userId - The ID of the user.
+   */
+  const handleNavigateToUser = (userId: number) => () => {
+    const user = usersData?.find((user) => user.id === userId);
+    const index = usersData?.findIndex((user) => user.id === userId) ?? 0;
+
+    setSelectedRow({ index: index, data: user });
+    navigate(PATH.HOME_PATH);
+  };
+
+  const infoListViewRule = [
+    {
+      type: INFO_TYPE.TEXT_VIEW,
+      icon: '',
+      title: selectedRow.data?.name,
+      content: selectedRow.data?.description
+    },
+    {
+      type: INFO_TYPE.LIST_VIEW,
+      content: [
+        {
+          icon: 'icon-role',
+          title: `Roles (${roles.length})`,
+          content: roles.map((role) => ({
+            id: role?.id,
+            text: role?.name,
+            onClick: handleNavigateToRole(role?.id!)
+          }))
+        },
+        {
+          icon: 'icon-user',
+          title: `Users (${users.length})`,
+          content: users.map((user) => ({
+            id: user?.id,
+            text: user?.fullName,
+            onClick: handleNavigateToUser(user?.id!)
+          }))
+        }
+      ]
+    }
+  ];
 
   /**
    * Memoized filtered rules based on the search keyword.
