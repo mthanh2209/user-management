@@ -17,7 +17,7 @@ import { Context } from '@stores';
 import { INFO_LIST_VIEW_RULE } from '@constants';
 
 /**
- * Column configuration for the roles table.
+ * Column configuration for the rules table.
  *
  * @param searchKeyword - The keyword used for filtering.
  * @returns An array of column configurations.
@@ -86,14 +86,14 @@ const RulePage = () => {
   }, [selectedRow.data]);
 
   /**
-   * Memoized filtered roles based on the search keyword.
+   * Memoized filtered rules based on the search keyword.
    */
   const filteredRules = useMemo(() => {
     return filterRules(rules, searchKeyword);
   }, [rules, searchKeyword]);
 
   /**
-   * Column configuration for the roles table.
+   * Column configuration for the rules table.
    */
   const columns = COLUMNS(searchKeyword);
 
@@ -127,6 +127,7 @@ const RulePage = () => {
           rowData={filteredRules}
           columns={columns}
           selectedRowIndex={selectedRow.index}
+          additionalClass='rules'
           onRowClick={handleSelectedRow}
         />
       </div>
