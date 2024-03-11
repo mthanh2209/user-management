@@ -10,7 +10,11 @@ import { IResponse, makeRequest, useApi } from '@services/user';
 export const getRules = (): {
   data: IRule[];
   error: string | null;
-} => useApi(`${API.BASE}/${API.RULES}`);
+  mutate: () => Promise<any>;
+} => {
+  const { data, error, mutate } = useApi(`${API.BASE}/${API.RULES}`);
+  return { data, error, mutate };
+};
 
 /**
  * Assigns a rule to a user using the provided userId and ruleId.
