@@ -109,6 +109,7 @@
 
 .text-link {
   color: var(--primary-color);
+  cursor: pointer;
 }
 
 .text-link:hover {
