@@ -29,10 +29,14 @@ export const Default: Story = {
     children: 'New',
     options: [
       {
-        text: 'Add new user'
+        id: 0,
+        label: 'Add new user',
+        onClick: () => {}
       },
       {
-        text: 'Add new role'
+        id: 1,
+        label: 'Add new role',
+        onClick: () => {}
       }
     ]
   }
