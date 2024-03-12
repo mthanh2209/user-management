@@ -150,8 +150,13 @@ export const getUserRoles = (): {
  * Fetches a list of user rules.
  * @returns An object containing the list of user rules.
  */
-export const getUserRules = (): { data: IUserRule[] } =>
-  useApiData(`${API.BASE}/${API.USER_RULES}`);
+export const getUserRules = (): {
+  data: IUserRule[];
+  mutate: () => Promise<any>;
+} => {
+  const { data, mutate } = useApiData(`${API.BASE}/${API.USER_RULES}`);
+  return { data, mutate };
+};
 
 /**
  * Assigns a user to a role.

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 // Components
 import {
-  AssignRule,
+  AssignUserRules,
   AssignUserRoles,
   EditorProfile,
   Panel
@@ -54,9 +54,9 @@ export const Default: Story = {
       {
         title: 'Rules',
         content: (
-          <AssignRule
+          <AssignUserRules
             title='Username'
-            rules={mockData.rules as ItemAssign[]}
+            items={mockData.rules as ItemAssign[]}
           />
         )
       },

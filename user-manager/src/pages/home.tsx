@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 // Components
 import {
   AssignUserRoles,
-  AssignRule,
+  AssignUserRules,
   Avatar,
   EditorProfile,
   Panel,
@@ -443,10 +443,10 @@ const HomePage = () => {
             },
             {
               content: (
-                <AssignRule
+                <AssignUserRules
                   key={selectedRow.data.id}
                   title={selectedRow.data.fullName}
-                  rules={userRules}
+                  items={userRules}
                 />
               ),
               title: 'Rules'
