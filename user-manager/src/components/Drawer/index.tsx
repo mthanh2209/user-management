@@ -23,6 +23,7 @@ interface IDrawerProps {
   text?: string;
   icon?: string;
   items: IItemNav[];
+  itemSelected: number,
   onSubmit: (data: { type: string; value: string }) => void;
 }
 
@@ -31,6 +32,7 @@ const Drawer = ({
   text = 'New',
   icon = plusIcon,
   items,
+  itemSelected,
   onSubmit
 }: IDrawerProps) => {
   const [type, setType] = useState('');
@@ -80,7 +82,11 @@ const Drawer = ({
         options={popoverOption}
       />
 
-      <ListNav items={items} />
+      <ListNav
+        key={itemSelected}
+        items={items}
+        itemSelected={itemSelected}
+      />
 
       {isOpenModal && (
         <ModalFormInput

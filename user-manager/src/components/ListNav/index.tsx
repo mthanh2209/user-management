@@ -16,27 +16,26 @@ import { IItemNav } from '@types';
 
 interface IListNav {
   items: IItemNav[];
+  itemSelected: number;
 }
 
-const ListNav = ({ items }: IListNav) => {
-  const [itemSelected, setItemSelected] = useState<number | null>(
-    items.length > 0 ? items[0].id : null
-  );
+const ListNav = ({ items, itemSelected }: IListNav) => {
+  const [selected, setSelected] = useState<number>(itemSelected);
 
   const renderIcon = (type: string, index: number) => {
     if (type === 'users') {
-      return itemSelected === index ? userIconSelected : userIcon;
+      return selected === index ? userIconSelected : userIcon;
     }
     if (type === 'roles') {
-      return itemSelected === index ? shieldIconSelected : shieldIcon;
+      return selected === index ? shieldIconSelected : shieldIcon;
     }
     if (type === 'rules') {
-      return itemSelected === index ? fileCheckIconSelected : fileCheckIcon;
+      return selected === index ? fileCheckIconSelected : fileCheckIcon;
     }
   };
 
   const handleClickedItem = (item: IItemNav) => () => {
-    setItemSelected(item.id);
+    setSelected(item.id);
     item.onClick();
   };
 
@@ -45,7 +44,7 @@ const ListNav = ({ items }: IListNav) => {
       {items.map((item, index) => (
         <ItemNav
           key={item.id}
-          additionalClass={itemSelected === item.id ? 'selected' : ''}
+          additionalClass={selected === item.id ? 'selected' : ''}
           icon={renderIcon(item.label, index)}
           content={item.label}
           onClick={handleClickedItem(item)}
