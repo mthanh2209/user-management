@@ -37,7 +37,7 @@
 
 ## The relationship database diagram
 
-- [Database diagram](https://drive.google.com/file/d/1hrhZB7zKCqG8mCX16Vs3xCaxWHA-jiU1/view?usp=sharing)
+![database diagram](public/diagram.png)
 
 ## Deploy
 
