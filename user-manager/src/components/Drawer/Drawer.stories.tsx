@@ -22,18 +22,6 @@ type Story = StoryObj<typeof Drawer>;
 export const Default: Story = {
   args: {
     icon: plusIcon,
-    popoverOption: [
-      {
-        text: 'Add new user',
-        label: 'Enter user name',
-        onClick: () => {}
-      },
-      {
-        text: 'Add new role',
-        label: 'Enter role name',
-        onClick: () => {}
-      }
-    ],
     items: [
       {
         id: 0,
