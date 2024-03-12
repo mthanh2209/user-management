@@ -25,7 +25,7 @@
 
 - Technologies: **React + Vite**
 - Editor: **VSCode**
-- Timeline: **16 days** (Jan 31, 2024 - Mar 04, 2024)
+- Timeline: **22 days** (Jan 31, 2024 - Mar 12, 2024)
 - Team size: **1 developer**
 - Source code manager: **GitHub**
 - Estimation details plan: [Plan](https://docs.google.com/document/d/1XIBwj3kN9eNCUq9RS8sfHXvgVpcLdhP8gV-SDe6t16Y/edit?usp=sharing)
@@ -41,11 +41,7 @@
 
 ## Deploy
 
-...
-
-## StoryBook
-
-...
+- [Vercel](https://user-management-mthanh2209.vercel.app)
 
 ## Install repository
 
