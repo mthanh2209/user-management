@@ -1,5 +1,3 @@
-import { IRole, IRule } from '@types';
-
 export interface IUser {
   id: number;
   avatar: string;
@@ -10,6 +8,4 @@ export interface IUser {
   lastVisitedDate: string;
   details: string;
   bgColor: string;
-  roles: IRole[];
-  rules: IRule[];
 }

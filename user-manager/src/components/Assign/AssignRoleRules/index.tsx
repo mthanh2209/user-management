@@ -10,6 +10,7 @@ import { API, INFO_LIST_VIEW_ROLE } from '@constants';
 // Helpers
 import {
   filterRoleItemsByRoleId,
+  filterUserItemsByUserId,
   findRoleItemId,
   isItemAssignedToRole
 } from '@helpers';
@@ -43,35 +44,33 @@ const AssignRoleRules = ({ items, title }: IAssignRoleRules) => {
   const { data: ruleData } = getRules();
   const { data: roleData } = getRoles();
   const { data: roleRules } = getRoleRules();
-  const { data: userRoles } = getUserRoles();
+  const { data: roleUsers } = getUserRoles();
 
-  const roleId = selectedRow.data?.id || 0;
-
-  // Filters role rules based on the role ID.
+  // Filters role rules based on the rule ID.
   const getCorrespondingRoleRules = filterRoleItemsByRoleId(
     roleRules,
     ruleData,
-    roleId
+    selectedRow.data.id
   );
 
-  // Filters role users based on the role ID.
-  const getCorrespondingRoleUsers = filterRoleItemsByRoleId(
-    userRoles,
+  // Filters role users based on the rule ID.
+  const getCorrespondingRoleUsers = filterUserItemsByUserId(
+    roleUsers,
     roleData,
-    roleId
+    selectedRow.data.id
   );
 
   // Handles the selection of a rule for assignment to a role.
-  const handleRuleSelect = (id: number) => async () => {
+  const handleItemSelect = (id: number) => async () => {
     const isCurrentlyAssigned = isItemAssignedToRole(
-      roleId,
+      selectedRow.data.id,
       id,
       roleRules || [],
       'ruleId'
     );
 
     const roleRuleId = findRoleItemId(
-      roleId,
+      selectedRow.data.id,
       id,
       roleRules || [],
       'ruleId'
@@ -79,7 +78,7 @@ const AssignRoleRules = ({ items, title }: IAssignRoleRules) => {
 
     const action = isCurrentlyAssigned
       ? () => unAssignRuleFromRole(roleRuleId)
-      : () => assignRuleToRole(roleId, id);
+      : () => assignRuleToRole(selectedRow.data.id, id);
 
     const res = await action();
 
@@ -111,8 +110,8 @@ const AssignRoleRules = ({ items, title }: IAssignRoleRules) => {
     <AssignItem
       items={items}
       title={title}
-      optionName='rule'
-      handleItemSelect={handleRuleSelect}
+      optionName='roleRules'
+      handleItemSelect={handleItemSelect}
     />
   );
 };

@@ -145,3 +145,41 @@ export const getUserRoles = (): { data: IUserRole[] } =>
  */
 export const getUserRules = (): { data: IUserRule[] } =>
   useApiData(`${API.BASE}/${API.USER_RULES}`);
+
+/**
+ * Assigns a user to a role.
+ *
+ * @param {number} roleId - The ID of the role.
+ * @param {number} userId - The ID of the user.
+ * @returns {Promise<IResponse>} - A promise that resolves to the response object.
+ */
+export const assignUserToRole = (
+  roleId: number,
+  userId: number
+): Promise<IResponse> =>
+  makeRequest(`${API.BASE}/${API.USER_ROLES}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      roleId: roleId,
+      userId: userId
+    })
+  });
+
+/**
+ * Unassigns a user from a role.
+ *
+ * @param {number | null} roleUserId - The ID of the user-role relationship to be deleted.
+ * @returns {Promise<IResponse>} - A promise that resolves to the response object.
+ */
+export const unAssignUserFromRole = (
+  roleUserId: number | null
+): Promise<IResponse> =>
+  makeRequest(`${API.BASE}/${API.USER_ROLES}/${roleUserId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });

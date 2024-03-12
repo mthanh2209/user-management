@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 // Components
 import {
+  AssignRoleMember,
   AssignRoleRules,
   Avatar,
   EditorRole,
@@ -325,6 +326,32 @@ const RolePage = () => {
     });
   }
 
+  /**
+   * Represents the roles assigned to the selected user.
+   * @type {ItemAssign[]}
+   */
+  let roleUsers: ItemAssign[] = [];
+
+  if (usersData && roleUsersData) {
+    roleUsers = usersData.map((user) => {
+      /**
+       * Checks if the role is assigned to the selected user.
+       * @type {boolean}
+       */
+      let isAssigned = roleUsersData.some(
+        (roleUser) =>
+          roleUser.roleId === selectedRow.data?.id &&
+          roleUser.userId === user.id
+      );
+
+      return {
+        ...user,
+        name: user.fullName,
+        isAssigned: isAssigned
+      };
+    });
+  }
+
   return (
     <>
       <div className='body-content'>
@@ -378,6 +405,16 @@ const RolePage = () => {
                 />
               ),
               title: 'Rules'
+            },
+            {
+              content: (
+                <AssignRoleMember
+                  key={selectedRow.data.id}
+                  title={selectedRow.data.name}
+                  items={roleUsers}
+                />
+              ),
+              title: 'Members'
             }
           ]}
           onReturnClick={handleTogglePanel}

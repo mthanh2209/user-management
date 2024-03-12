@@ -4,5 +4,6 @@ export enum AssignmentOptions {
 }
 
 export enum SingleOptionTypes {
-  RolesAssigned = 'Roles assigned'
+  RolesAssigned = 'Roles assigned',
+  MembersAssigned = 'Members assigned',
 }
