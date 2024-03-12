@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 // Components
 import {
   AssignRule,
-  AssignRole,
+  AssignUserRoles,
   EditorProfile,
   Panel
 } from '@components';
@@ -48,7 +48,6 @@ export const Default: Story = {
             bgColor={getRandomColor()}
             onSaveUser={() => {}}
             onDeleteUser={() => {}}
-            showToast={() => {}}
           />
         )
       },
@@ -64,9 +63,9 @@ export const Default: Story = {
       {
         title: 'Roles',
         content: (
-          <AssignRole
+          <AssignUserRoles
             title='Username'
-            roles={mockData.roles as ItemAssign[]}
+            items={mockData.roles as ItemAssign[]}
           />
         )
       }

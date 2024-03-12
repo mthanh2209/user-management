@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 // Components
 import {
-  AssignRole,
+  AssignUserRoles,
   AssignRule,
   Avatar,
   EditorProfile,
@@ -433,10 +433,10 @@ const HomePage = () => {
             },
             {
               content: (
-                <AssignRole
+                <AssignUserRoles
                   key={selectedRow.data.id}
                   title={selectedRow.data.fullName}
-                  roles={userRoles}
+                  items={userRoles}
                 />
               ),
               title: 'Roles'

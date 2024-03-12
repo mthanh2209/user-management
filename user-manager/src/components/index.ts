@@ -1,4 +1,4 @@
-export { default as AssignRole } from '@components/Assign/AssignRole';
+export { default as AssignUserRoles } from '@components/Assign/AssignUserRoles';
 export { default as AssignRule } from '@components/Assign/AssignRule';
 export { default as AssignRoleRules } from '@components/Assign/AssignRoleRules';
 export { default as AssignRoleMember } from '@components/Assign/AssignRoleMembers';
