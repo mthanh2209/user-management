@@ -5,12 +5,7 @@ import { API } from '@constants';
 import { IRole, IRoleRule } from '@types';
 
 // Services
-import {
-  IResponse,
-  makeRequest,
-  useApi,
-  useApiData
-} from '@services/user';
+import { IResponse, makeRequest, useApi, useApiData } from '@services/user';
 
 // Helpers
 import { generateNewRole } from '@helpers';
@@ -69,8 +64,13 @@ export const editRole = (roleData: IRole): Promise<IResponse> =>
  * Fetches a list of role rules.
  * @returns An object containing the list of role rules.
  */
-export const getRoleRules = (): { data: IRoleRule[] } =>
-  useApiData(`${API.BASE}/${API.ROLE_RULES}`);
+export const getRoleRules = (): {
+  data: IRoleRule[];
+  mutate: () => Promise<any>;
+} => {
+  const { data, mutate } = useApiData(`${API.BASE}/${API.ROLE_RULES}`);
+  return { data, mutate };
+};
 
 /**
  * Assigns a role to a user using the provided userId and roleId.
