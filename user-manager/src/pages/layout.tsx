@@ -33,6 +33,10 @@ const Layout = () => {
   const { mutate: mutateUser } = getUsers();
   const { mutate: mutateRole } = getRoles();
 
+  const resetSelectedRow = () => {
+    setSelectedRow({ index: 0, data: null });
+  };
+
   /**
    * Adds a new user.
    * @param userName - The name of the user to add.
@@ -51,6 +55,7 @@ const Layout = () => {
       });
 
       dispatch({ type: TOAST_TYPE.SUCCESS });
+      navigate(PATH.HOME_PATH);
     } else {
       dispatch({ type: TOAST_TYPE.ERROR });
     }
@@ -78,7 +83,7 @@ const Layout = () => {
 
   const handleAdd = async ({
     type,
-    value,
+    value
   }: {
     type: string;
     value: string;
@@ -106,6 +111,7 @@ const Layout = () => {
       id: 0,
       label: 'users',
       onClick: () => {
+        resetSelectedRow();
         navigate(PATH.HOME_PATH);
       }
     },
@@ -113,6 +119,7 @@ const Layout = () => {
       id: 1,
       label: 'roles',
       onClick: () => {
+        resetSelectedRow();
         navigate(PATH.ROLES_PATH);
       }
     },
@@ -120,6 +127,7 @@ const Layout = () => {
       id: 2,
       label: 'rules',
       onClick: () => {
+        resetSelectedRow();
         navigate(PATH.RULES_PATH);
       }
     }
