@@ -1,5 +1,9 @@
 import { useContext } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import {
+  Outlet,
+  useNavigate,
+  useLocation
+} from 'react-router-dom';
 
 // Components
 import {
@@ -22,6 +26,9 @@ import {
 // Stores
 import { Context } from '@stores';
 
+// Helpers
+import { findSelectedIndex } from '@helpers';
+
 const Layout = () => {
   const {
     state,
@@ -33,9 +40,8 @@ const Layout = () => {
   const { mutate: mutateUser } = getUsers();
   const { mutate: mutateRole } = getRoles();
 
-  const resetSelectedRow = () => {
-    setSelectedRow({ index: 0, data: null });
-  };
+  const navigate = useNavigate();
+  const location = useLocation();
 
   /**
    * Adds a new user.
@@ -100,13 +106,16 @@ const Layout = () => {
     }
   };
 
-  const navigate = useNavigate();
+  // Helper function to reset the selected row in the table
+  const resetSelectedRow = () => {
+    setSelectedRow({ index: 0, data: null });
+  };
 
   /**
    * Navigational items for the application.
    * @type {Array<IItemNav>}
    */
-  const NAVIGATION_ITEMS = [
+  const navigateItems = [
     {
       id: 0,
       label: 'users',
@@ -133,6 +142,9 @@ const Layout = () => {
     }
   ];
 
+  // Index of the selected item in the navigation menu based on the current pathname.
+  const itemSelected = findSelectedIndex(navigateItems, location);
+
   return (
     <>
       <header className='main-header'>
@@ -145,7 +157,8 @@ const Layout = () => {
       </header>
       <main className='main-body'>
         <Drawer
-          items={NAVIGATION_ITEMS}
+          items={navigateItems}
+          itemSelected={itemSelected}
           onSubmit={handleAdd}
         />
         <Outlet />
