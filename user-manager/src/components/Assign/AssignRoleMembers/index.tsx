@@ -1,15 +1,10 @@
 import { useContext, useState } from 'react';
-import { mutate } from 'swr';
 
 // Components
 import AssignItem from '@components/Assign/AssignItem';
 
 // Constants
-import {
-API,
-SingleOptionTypes,
-TOAST_TYPE
-} from '@constants';
+import { SingleOptionTypes, TOAST_TYPE } from '@constants';
 
 // Services
 import {
@@ -37,7 +32,7 @@ const AssignRoleMember = ({ items, title }: IAssignRoleMember) => {
 
   const { dispatch, selectedRow } = useContext(Context);
 
-  const { data: roleUsers } = getUserRoles();
+  const { data: roleUsers, mutate: mutateRoleMembers } = getUserRoles();
 
   /**
    * Handles the selection of a item.
@@ -76,7 +71,7 @@ const AssignRoleMember = ({ items, title }: IAssignRoleMember) => {
     }
 
     // Update the data in the cache or on the server
-    mutate(`${API.BASE}/${API.USER_ROLES}`);
+    mutateRoleMembers();
 
     // Create a new array with the updated assigned state for the selected role
     const newUsers = userState.map((user) => {
@@ -88,6 +83,7 @@ const AssignRoleMember = ({ items, title }: IAssignRoleMember) => {
 
     // Update the state of the list user
     setUserState(newUsers);
+    
     dispatch({ type: TOAST_TYPE.SUCCESS });
   };
 

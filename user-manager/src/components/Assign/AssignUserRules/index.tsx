@@ -1,25 +1,17 @@
 import { useContext, useState } from 'react';
-import { mutate } from 'swr';
 
 // Component
 import AssignItem from '@components/Assign/AssignItem';
 
 // Constants
-import { API, INFO_LIST_VIEW_USER } from '@constants';
+import { TOAST_TYPE } from '@constants';
 
 // Helpers
-import {
-  filterUserItemsByUserId,
-  findUserItemId,
-  isItemAssignedToUser
-} from '@helpers';
+import { findUserItemId, isItemAssignedToUser } from '@helpers';
 
 // Services
 import {
   assignRuleToUser,
-  getRoles,
-  getRules,
-  getUserRoles,
   getUserRules,
   unAssignRuleFromUser
 } from '@services';
@@ -31,41 +23,26 @@ import { Context } from '@stores';
 import { ItemAssign } from '@types';
 
 interface IAssignRule {
-  rules: ItemAssign[];
+  items: ItemAssign[];
   title: string;
 }
 
-const AssignRule = ({ rules, title }: IAssignRule) => {
-  const [ruleState, setRuleState] = useState<ItemAssign[]>(rules);
+const AssignUserRules = ({ items, title }: IAssignRule) => {
+  const [ruleState, setRuleState] = useState<ItemAssign[]>(items);
 
-  const { selectedRow, setUserInfoList } = useContext(Context);
+  const { dispatch, selectedRow } = useContext(Context);
 
-  const { data: ruleData } = getRules();
-  const { data: roleData } = getRoles();
-  const { data: userRules } = getUserRules();
-  const { data: userRoles } = getUserRoles();
-
-  const userId = selectedRow.data?.id || 0;
-
-  const getCorrespondingUserRules = filterUserItemsByUserId(
-    userRules,
-    ruleData,
-    userId
-  );
-
-  const getCorrespondingUserRoles = filterUserItemsByUserId(
-    userRoles,
-    roleData,
-    userId
-  );
+  const { data: userRules, mutate: mutateUserRules } = getUserRules();
 
   /**
    * Handles the selection of a role.
    * @param id - The ID of the role.
    */
   const handleRuleSelect = (id: number) => async () => {
+    dispatch({ type: TOAST_TYPE.PROCESSING });
+    
     const isCurrentlyAssigned = isItemAssignedToUser(
-      selectedRow.data?.id || 0,
+      selectedRow.data.id,
       id,
       userRules || [],
       'ruleId'
@@ -73,7 +50,7 @@ const AssignRule = ({ rules, title }: IAssignRule) => {
 
     // Find the userRoleId
     const userRuleId = findUserItemId(
-      selectedRow.data?.id || 0,
+      selectedRow.data.id,
       id,
       userRules || [],
       'ruleId'
@@ -82,18 +59,19 @@ const AssignRule = ({ rules, title }: IAssignRule) => {
     // Choose the appropriate action based on the current state of the item (assign or unassign rule)
     const action = isCurrentlyAssigned
       ? () => unAssignRuleFromUser(userRuleId)
-      : () => assignRuleToUser(selectedRow.data?.id || 0, id);
+      : () => assignRuleToUser(selectedRow.data.id, id);
 
     // Perform the action and retrieve the response
     const res = await action();
 
     const data = res && res.data;
     if (!data) {
+      dispatch({ type: TOAST_TYPE.ERROR });
       return;
     }
 
     // Update the data in the cache or on the server
-    mutate(`${API.BASE}/${API.USER_RULES}`);
+    mutateUserRules();
 
     // Create a new array with the updated assigned state for the selected role
     const newRules = ruleState.map((rule) => {
@@ -106,19 +84,12 @@ const AssignRule = ({ rules, title }: IAssignRule) => {
     // Update the state of the list rule
     setRuleState(newRules);
 
-    // Update the display data list
-    setUserInfoList([
-      ...INFO_LIST_VIEW_USER(
-        selectedRow.data,
-        getCorrespondingUserRoles,
-        getCorrespondingUserRules
-      )
-    ]);
+    dispatch({ type: TOAST_TYPE.SUCCESS });
   };
 
   return (
     <AssignItem
-      items={rules}
+      items={items}
       title={title}
       optionName='rule'
       handleItemSelect={handleRuleSelect}
@@ -126,4 +97,4 @@ const AssignRule = ({ rules, title }: IAssignRule) => {
   );
 };
 
-export default AssignRule;
+export default AssignUserRules;

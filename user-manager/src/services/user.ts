@@ -73,9 +73,11 @@ export const useApi = (
  * @param url - The URL to fetch data from.
  * @returns An object containing the fetched data.
  */
-export const useApiData = (url: string): { data: any } => {
-  const { data } = useSWR(url, fetcher);
-  return { data };
+export const useApiData = (
+  url: string
+): { data: any; mutate: () => Promise<any> } => {
+  const { data, mutate } = useSWR(url, fetcher);
+  return { data, mutate };
 };
 
 /**
@@ -136,15 +138,25 @@ export const editUser = (userData: IUser): Promise<IResponse> =>
  * Fetches a list of user roles.
  * @returns An object containing the list of user roles.
  */
-export const getUserRoles = (): { data: IUserRole[] } =>
-  useApiData(`${API.BASE}/${API.USER_ROLES}`);
+export const getUserRoles = (): {
+  data: IUserRole[];
+  mutate: () => Promise<any>;
+} => {
+  const { data, mutate } = useApiData(`${API.BASE}/${API.USER_ROLES}`);
+  return { data, mutate };
+};
 
 /**
  * Fetches a list of user rules.
  * @returns An object containing the list of user rules.
  */
-export const getUserRules = (): { data: IUserRule[] } =>
-  useApiData(`${API.BASE}/${API.USER_RULES}`);
+export const getUserRules = (): {
+  data: IUserRule[];
+  mutate: () => Promise<any>;
+} => {
+  const { data, mutate } = useApiData(`${API.BASE}/${API.USER_RULES}`);
+  return { data, mutate };
+};
 
 /**
  * Assigns a user to a role.

@@ -1,23 +1,15 @@
 import { useContext, useState } from 'react';
-import { mutate } from 'swr';
 
 // Components
 import AssignItem from '@components/Assign/AssignItem';
 
 // Constants
-import {
-  API,
-  INFO_LIST_VIEW_USER,
-  SingleOptionTypes
-} from '@constants';
+import { SingleOptionTypes, TOAST_TYPE } from '@constants';
 
 // Services
 import {
   assignRoleToUser,
-  getRoles,
-  getRules,
   getUserRoles,
-  getUserRules,
   unAssignRoleFromUser
 } from '@services';
 
@@ -28,48 +20,29 @@ import { Context } from '@stores';
 import { ItemAssign } from '@types';
 
 // Helpers
-import {
-  filterUserItemsByUserId,
-  findUserItemId,
-  isItemAssignedToUser
-} from '@helpers';
+import { findUserItemId, isItemAssignedToUser } from '@helpers';
 
 interface IAssignRole {
-  roles: ItemAssign[];
+  items: ItemAssign[];
   title: string;
 }
 
-const AssignRole = ({ roles, title }: IAssignRole) => {
-  const [roleState, setRoleState] = useState<ItemAssign[]>(roles);
+const AssignUserRoles = ({ items, title }: IAssignRole) => {
+  const [roleState, setRoleState] = useState<ItemAssign[]>(items);
 
-  const { selectedRow, setUserInfoList } = useContext(Context);
+  const { dispatch, selectedRow } = useContext(Context);
 
-  const { data: roleData } = getRoles();
-  const { data: ruleData } = getRules();
-  const { data: userRoles } = getUserRoles();
-  const { data: userRules } = getUserRules();
-
-  const userId = selectedRow.data?.id || 0;
-
-  const getCorrespondingUserRoles = filterUserItemsByUserId(
-    userRoles,
-    roleData,
-    userId
-  );
-
-  const getCorrespondingUserRules = filterUserItemsByUserId(
-    userRules,
-    ruleData,
-    userId
-  );
+  const { data: userRoles, mutate: mutateUserRoles } = getUserRoles();
 
   /**
    * Handles the selection of a role.
    * @param id - The ID of the role.
    */
   const handleRoleSelect = (id: number) => async () => {
+    dispatch({ type: TOAST_TYPE.PROCESSING });
+
     const isCurrentlyAssigned = isItemAssignedToUser(
-      selectedRow.data?.id || 0,
+      selectedRow.data.id,
       id,
       userRoles || [],
       'roleId'
@@ -77,7 +50,7 @@ const AssignRole = ({ roles, title }: IAssignRole) => {
 
     // Find the userRoleId
     const userRoleId = findUserItemId(
-      selectedRow.data?.id || 0,
+      selectedRow.data.id,
       id,
       userRoles || [],
       'roleId'
@@ -86,18 +59,19 @@ const AssignRole = ({ roles, title }: IAssignRole) => {
     // Choose the appropriate action based on the current state of the item (assign or unassign rule)
     const action = isCurrentlyAssigned
       ? () => unAssignRoleFromUser(userRoleId)
-      : () => assignRoleToUser(selectedRow.data?.id || 0, id);
+      : () => assignRoleToUser(selectedRow.data.id, id);
 
     // Perform the action and retrieve the response
     const res = await action();
 
     const data = res && res.data;
     if (!data) {
+      dispatch({ type: TOAST_TYPE.ERROR });
       return;
     }
 
     // Update the data in the cache or on the server
-    mutate(`${API.BASE}/${API.USER_ROLES}`);
+    mutateUserRoles();
 
     // Create a new array with the updated assigned state for the selected role
     const newRoles = roleState.map((role) => {
@@ -110,19 +84,12 @@ const AssignRole = ({ roles, title }: IAssignRole) => {
     // Update the state of the list rule
     setRoleState(newRoles);
 
-    // Update the display data list
-    setUserInfoList([
-      ...INFO_LIST_VIEW_USER(
-        selectedRow.data,
-        getCorrespondingUserRoles,
-        getCorrespondingUserRules
-      )
-    ]);
+    dispatch({ type: TOAST_TYPE.SUCCESS });
   };
 
   return (
     <AssignItem
-      items={roles}
+      items={items}
       title={title}
       singleOption={SingleOptionTypes.RolesAssigned}
       optionName='role'
@@ -131,4 +98,4 @@ const AssignRole = ({ roles, title }: IAssignRole) => {
   );
 };
 
-export default AssignRole;
+export default AssignUserRoles;

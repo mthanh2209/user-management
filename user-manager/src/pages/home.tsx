@@ -8,8 +8,8 @@ import { useNavigate } from 'react-router-dom';
 
 // Components
 import {
-  AssignRole,
-  AssignRule,
+  AssignUserRoles,
+  AssignUserRules,
   Avatar,
   EditorProfile,
   Panel,
@@ -433,20 +433,20 @@ const HomePage = () => {
             },
             {
               content: (
-                <AssignRole
+                <AssignUserRoles
                   key={selectedRow.data.id}
                   title={selectedRow.data.fullName}
-                  roles={userRoles}
+                  items={userRoles}
                 />
               ),
               title: 'Roles'
             },
             {
               content: (
-                <AssignRule
+                <AssignUserRules
                   key={selectedRow.data.id}
                   title={selectedRow.data.fullName}
-                  rules={userRules}
+                  items={userRules}
                 />
               ),
               title: 'Rules'

@@ -1,16 +1,13 @@
 import { useContext, useState } from 'react';
-import { mutate } from 'swr';
 
 // Component
 import AssignItem from '@components/Assign/AssignItem';
 
 // Constants
-import { API, INFO_LIST_VIEW_ROLE } from '@constants';
+import { TOAST_TYPE } from '@constants';
 
 // Helpers
 import {
-  filterRoleItemsByRoleId,
-  filterUserItemsByUserId,
   findRoleItemId,
   isItemAssignedToRole
 } from '@helpers';
@@ -19,9 +16,6 @@ import {
 import {
   assignRuleToRole,
   getRoleRules,
-  getRoles,
-  getRules,
-  getUserRoles,
   unAssignRuleFromRole
 } from '@services';
 
@@ -39,29 +33,14 @@ interface IAssignRoleRules {
 const AssignRoleRules = ({ items, title }: IAssignRoleRules) => {
   const [ruleState, setRuleState] = useState<ItemAssign[]>(items);
 
-  const { selectedRow, setUserInfoList } = useContext(Context);
+  const { dispatch, selectedRow } = useContext(Context);
 
-  const { data: ruleData } = getRules();
-  const { data: roleData } = getRoles();
-  const { data: roleRules } = getRoleRules();
-  const { data: roleUsers } = getUserRoles();
-
-  // Filters role rules based on the rule ID.
-  const getCorrespondingRoleRules = filterRoleItemsByRoleId(
-    roleRules,
-    ruleData,
-    selectedRow.data.id
-  );
-
-  // Filters role users based on the rule ID.
-  const getCorrespondingRoleUsers = filterUserItemsByUserId(
-    roleUsers,
-    roleData,
-    selectedRow.data.id
-  );
+  const { data: roleRules, mutate: mutateRoleRules } = getRoleRules();
 
   // Handles the selection of a rule for assignment to a role.
   const handleItemSelect = (id: number) => async () => {
+    dispatch({ type: TOAST_TYPE.PROCESSING });
+
     const isCurrentlyAssigned = isItemAssignedToRole(
       selectedRow.data.id,
       id,
@@ -84,10 +63,11 @@ const AssignRoleRules = ({ items, title }: IAssignRoleRules) => {
 
     const data = res && res.data;
     if (!data) {
+      dispatch({ type: TOAST_TYPE.ERROR });
       return;
     }
 
-    mutate(`${API.BASE}/${API.ROLE_RULES}`);
+    mutateRoleRules();
 
     const newRules = ruleState.map((rule) => {
       if (rule.id === id) {
@@ -98,12 +78,7 @@ const AssignRoleRules = ({ items, title }: IAssignRoleRules) => {
 
     setRuleState(newRules);
 
-    setUserInfoList([
-      ...INFO_LIST_VIEW_ROLE(
-        getCorrespondingRoleRules,
-        getCorrespondingRoleUsers
-      )
-    ]);
+    dispatch({ type: TOAST_TYPE.SUCCESS });
   };
 
   return (
