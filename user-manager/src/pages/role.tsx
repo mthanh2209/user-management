@@ -346,6 +346,7 @@ const RolePage = () => {
 
       return {
         ...user,
+        name: user.fullName,
         isAssigned: isAssigned
       };
     });

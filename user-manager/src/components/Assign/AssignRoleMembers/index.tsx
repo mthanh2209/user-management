@@ -6,17 +6,15 @@ import AssignItem from '@components/Assign/AssignItem';
 
 // Constants
 import {
-  API,
-  INFO_LIST_VIEW_ROLE
+API,
+SingleOptionTypes,
+TOAST_TYPE
 } from '@constants';
 
 // Services
 import {
-  getRoleRules,
-  getRules,
   getUserRoles,
   assignUserToRole,
-  getUsers,
   unAssignUserFromRole
 } from '@services';
 
@@ -27,11 +25,7 @@ import { Context } from '@stores';
 import { ItemAssign } from '@types';
 
 // Helpers
-import {
-  filterRoleItemsByRoleId,
-  findRoleItemId,
-  isItemAssignedToRole
-} from '@helpers';
+import { findRoleItemId, isItemAssignedToRole } from '@helpers';
 
 interface IAssignRoleMember {
   items: ItemAssign[];
@@ -41,32 +35,17 @@ interface IAssignRoleMember {
 const AssignRoleMember = ({ items, title }: IAssignRoleMember) => {
   const [userState, setUserState] = useState<ItemAssign[]>(items);
 
-  const { selectedRow, setUserInfoList } = useContext(Context);
+  const { dispatch, selectedRow } = useContext(Context);
 
-  const { data: userData } = getUsers();
-  const { data: ruleData } = getRules();
   const { data: roleUsers } = getUserRoles();
-  const { data: roleRules } = getRoleRules();
-
-  // Filters role users based on the user ID.
-  const getCorrespondingUserRoles = filterRoleItemsByRoleId(
-    roleUsers,
-    userData,
-    selectedRow.data.id
-  );
-
-  // Filters role rules based on the user ID.
-  const getCorrespondingRoleRules = filterRoleItemsByRoleId(
-    roleRules,
-    ruleData,
-    selectedRow.data.id
-  );
 
   /**
    * Handles the selection of a item.
    * @param id - The ID of the item.
    */
   const handleItemSelect = (id: number) => async () => {
+    dispatch({ type: TOAST_TYPE.PROCESSING });
+
     const isCurrentlyAssigned = isItemAssignedToRole(
       selectedRow.data.id,
       id,
@@ -75,7 +54,7 @@ const AssignRoleMember = ({ items, title }: IAssignRoleMember) => {
     );
 
     // Find the userRoleId
-    const userRoleId = findRoleItemId(
+    const roleUserId = findRoleItemId(
       selectedRow.data.id,
       id,
       roleUsers || [],
@@ -84,7 +63,7 @@ const AssignRoleMember = ({ items, title }: IAssignRoleMember) => {
 
     // Choose the appropriate action based on the current state of the item (assign or unassign user)
     const action = isCurrentlyAssigned
-      ? () => unAssignUserFromRole(userRoleId)
+      ? () => unAssignUserFromRole(roleUserId)
       : () => assignUserToRole(selectedRow.data.id, id);
 
     // Perform the action and retrieve the response
@@ -92,6 +71,7 @@ const AssignRoleMember = ({ items, title }: IAssignRoleMember) => {
 
     const data = res && res.data;
     if (!data) {
+      dispatch({ type: TOAST_TYPE.ERROR });
       return;
     }
 
@@ -108,14 +88,7 @@ const AssignRoleMember = ({ items, title }: IAssignRoleMember) => {
 
     // Update the state of the list user
     setUserState(newUsers);
-
-    // Update the display data list
-    setUserInfoList([
-      ...INFO_LIST_VIEW_ROLE(
-        getCorrespondingRoleRules,
-        getCorrespondingUserRoles
-      )
-    ]);
+    dispatch({ type: TOAST_TYPE.SUCCESS });
   };
 
   return (
@@ -123,6 +96,7 @@ const AssignRoleMember = ({ items, title }: IAssignRoleMember) => {
       items={items}
       title={title}
       optionName='roleMembers'
+      singleOption={SingleOptionTypes.MembersAssigned}
       handleItemSelect={handleItemSelect}
     />
   );
