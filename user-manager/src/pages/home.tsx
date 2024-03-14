@@ -175,10 +175,10 @@ const HomePage = () => {
    * @param roleId - The ID of the role.
    */
   const handleNavigateToRole = (roleId: number) => () => {
-    const role = rolesData?.find((role) => role.id === roleId);
-    const index = rolesData?.findIndex((role) => role.id === roleId) ?? 0;
+    const roleIndex = rolesData?.findIndex((role) => role.id === roleId);
+    const index = roleIndex !== -1 ? roleIndex + 1 : 0;
 
-    setSelectedRow({ index, data: role });
+    setSelectedRow({ index, data: rolesData[roleIndex] });
     navigate(PATH.ROLES_PATH);
   };
 
@@ -188,10 +188,10 @@ const HomePage = () => {
    * @param ruleId - The ID of the rule.
    */
   const handleNavigateToRule = (ruleId: number) => () => {
-    const rule = rulesData?.find((rule) => rule.id === ruleId);
-    const index = rulesData?.findIndex((rule) => rule.id === ruleId) ?? 0;
+    const ruleIndex = rulesData?.findIndex((rule) => rule.id === ruleId);
+    const index = ruleIndex !== -1 ? ruleIndex + 1 : 0;
 
-    setSelectedRow({ index: index, data: rule });
+    setSelectedRow({ index, data: rulesData[ruleIndex] });
     navigate(PATH.RULES_PATH);
   };
 

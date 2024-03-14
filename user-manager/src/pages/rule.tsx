@@ -130,10 +130,10 @@ const RulePage = () => {
    * @param roleId - The ID of the role.
    */
   const handleNavigateToRole = (roleId: number) => () => {
-    const role = rolesData?.find((role) => role.id === roleId);
-    const index = rolesData?.findIndex((role) => role.id === roleId) ?? 0;
+    const roleIndex = rolesData?.findIndex((role) => role.id === roleId);
+    const index = roleIndex !== -1 ? roleIndex + 1 : 0;
 
-    setSelectedRow({ index, data: role });
+    setSelectedRow({ index, data: rolesData[roleIndex] });
     navigate(PATH.ROLES_PATH);
   };
 
@@ -143,10 +143,10 @@ const RulePage = () => {
    * @param userId - The ID of the user.
    */
   const handleNavigateToUser = (userId: number) => () => {
-    const user = usersData?.find((user) => user.id === userId);
-    const index = usersData?.findIndex((user) => user.id === userId) ?? 0;
+    const userIndex = usersData?.findIndex((user) => user.id === userId);
+    const index = userIndex !== -1 ? userIndex + 1 : 0;
 
-    setSelectedRow({ index: index, data: user });
+    setSelectedRow({ index: index, data: usersData[userIndex] });
     navigate(PATH.HOME_PATH);
   };
 
