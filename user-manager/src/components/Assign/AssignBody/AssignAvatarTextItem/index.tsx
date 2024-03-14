@@ -38,7 +38,6 @@ const AssignAvatarTextItem = ({
             alt={name}
             bgColor={bgColor}
             size='sm'
-            additionalClass='panel-assign-body-avatar'
           />
 
           <span className='panel-assign-avatar-title'>{name}</span>

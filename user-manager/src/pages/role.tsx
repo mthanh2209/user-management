@@ -79,7 +79,6 @@ const COLUMNS = (searchKeyword: string): IColumnProps<IRole>[] => {
           alt={item.name}
           bgColor={item.bgColor}
           size='sm'
-          additionalClass='panel-assign-body-avatar'
         />
       )
     },

@@ -28,32 +28,35 @@ const AssignBody = ({
 }: IAssignBody) => {
   return (
     <ul>
-      {items.map((item) => (
-        <li key={item.id} className='panel-assign-body-list'>
-          {src || item.bgColor ? (
-            <AssignAvatarTextItem
-              id={item.id}
-              name={item.name}
-              bgColor={item.bgColor}
-              isModifying={isModifying}
-              isAssigned={item.isAssigned}
-              handleItemSelect={handleItemSelect}
-              src={src}
-            />
-          ) : (
-            <AssignTextItem
-              id={item.id}
-              name={item.name}
-              description={item.description}
-              isAssigned={item.isAssigned}
-              isModifying={isModifying}
-              assignedTo={item.assignedTo}
-              selectedType={selectedType}
-              handleItemSelect={handleItemSelect}
-            />
-          )}
-        </li>
-      ))}
+      {items.map(
+        (item) =>
+          (isModifying || item.isAssigned) && (
+            <li key={item.id} className='panel-assign-body-list'>
+              {src || item.bgColor ? (
+                <AssignAvatarTextItem
+                  id={item.id}
+                  name={item.name}
+                  bgColor={item.bgColor}
+                  isModifying={isModifying}
+                  isAssigned={item.isAssigned}
+                  handleItemSelect={handleItemSelect}
+                  src={src}
+                />
+              ) : (
+                <AssignTextItem
+                  id={item.id}
+                  name={item.name}
+                  description={item.description}
+                  isAssigned={item.isAssigned}
+                  isModifying={isModifying}
+                  assignedTo={item.assignedTo}
+                  selectedType={selectedType}
+                  handleItemSelect={handleItemSelect}
+                />
+              )}
+            </li>
+          )
+      )}
     </ul>
   );
 };
