@@ -5,9 +5,6 @@ import { createPortal } from 'react-dom';
 import Modal from '@components/Modal';
 import { Button, TextField } from '@components';
 
-// Helpers
-import { isModalInputValid } from '@helpers';
-
 interface IModalFormInputProps {
   isOpen?: boolean;
   modalTitle?: string;
@@ -48,7 +45,6 @@ const ModalFormInput = ({
                 <TextField
                   additionalClass='input-submit'
                   value={textInput}
-                  validate={isModalInputValid}
                   onChange={handleInputChange}
                 />
                 <Button

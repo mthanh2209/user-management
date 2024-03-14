@@ -5,8 +5,7 @@ export { getObjValue } from '@helpers/getObjValue';
 export { formatDate } from '@helpers/formatDate';
 export {
   isEmailValid,
-  isFullNameValid,
-  isModalInputValid
+  isFullNameValid
 } from '@helpers/validation';
 export { fetcher } from '@helpers/fetcher';
 export {

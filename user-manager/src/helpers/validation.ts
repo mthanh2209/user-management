@@ -29,14 +29,3 @@ export const isFullNameValid = (value: string) => {
   }
   return '';
 };
-
-/**
- * Validates a modal input.
- * @param {string} value - The input value to validate.
- * @returns {string} An empty string if the input is not empty, an empty string otherwise.
- */
-export const isModalInputValid = (value: string) => {
-  if (!value.trim()) {
-    return '';
-  }
-};
