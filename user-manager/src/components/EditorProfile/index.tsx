@@ -1,4 +1,8 @@
-import { useEffect, useState } from 'react';
+import {
+  useContext,
+  useEffect,
+  useState
+} from 'react';
 
 // CSS
 import '@components/EditorProfile/EditorProfile.css';
@@ -21,6 +25,12 @@ import { IUser } from '@types';
 // Helpers
 import { formatDate } from '@helpers';
 import { isEmailValid, isFullNameValid } from '@helpers';
+
+// Stores
+import { Context } from '@stores';
+
+// Constants
+import { TOAST_TYPE } from '@constants';
 
 interface IEditorProfile {
   id: number;
@@ -49,6 +59,8 @@ const EditorProfile = ({
   onSaveUser,
   onDeleteUser
 }: IEditorProfile) => {
+  const { dispatch } = useContext(Context);
+
   const [formData, setFormData] = useState({
     fullName,
     email,
@@ -79,6 +91,7 @@ const EditorProfile = ({
     const fullNameError = isFullNameValid(formData.fullName);
 
     if (emailError || fullNameError) {
+      dispatch({ type: TOAST_TYPE.ERROR });
       return;
     }
 
