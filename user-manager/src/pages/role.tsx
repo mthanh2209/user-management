@@ -1,6 +1,5 @@
 import {
   useContext,
-  useEffect,
   useMemo,
   useState
 } from 'react';
@@ -111,7 +110,6 @@ const RolePage = () => {
     setSelectedRow
   } = useContext(Context);
 
-  const [roleInfoList, setRoleInfoList] = useState<any[]>([]);
   const [showSidebar, setShowSidebar] = useState(true);
   const [searchKeyword, setSearchKeyword] = useState('');
 
@@ -138,20 +136,6 @@ const RolePage = () => {
     usersData || [],
     selectedRow.data?.id
   );
-
-  /**
-   * Effect to update role information list when selectedRow.data changes.
-   *
-   * @name useEffect
-   * @function
-   * @param {Function} callback - Callback function to execute.
-   * @param {Array} dependencies - Dependencies to watch for changes.
-   */
-  useEffect(() => {
-    if (selectedRow.data) {
-      setRoleInfoList(infoListViewRole);
-    }
-  }, [selectedRow.data]);
 
   /**
    * Handles the click event to navigate to the rule
@@ -375,7 +359,7 @@ const RolePage = () => {
           src={selectedRow.data.avatar}
           bgColor={selectedRow.data.bgColor}
           fullName={selectedRow.data.name}
-          data={roleInfoList}
+          data={infoListViewRole}
           onShowPanel={handleTogglePanel}
         />
       )}

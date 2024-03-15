@@ -1,6 +1,5 @@
 import {
   useContext,
-  useEffect,
   useMemo,
   useState
 } from 'react';
@@ -90,7 +89,6 @@ const COLUMNS = (searchKeyword: string): IColumnProps<IRule>[] => {
 const RulePage = () => {
   const { selectedRow, setSelectedRow } = useContext(Context);
 
-  const [ruleInfoList, setRuleInfoList] = useState<any[]>([]);
   const [showSidebar, setShowSidebar] = useState(true);
   const [searchKeyword, setSearchKeyword] = useState('');
 
@@ -117,12 +115,6 @@ const RulePage = () => {
     usersData || [],
     selectedRow.data?.id
   );
-
-  useEffect(() => {
-    if (selectedRow.data) {
-      setRuleInfoList(infoListViewRule);
-    }
-  }, [selectedRow.data]);
 
   /**
    * Handles the click event to navigate to the role
@@ -246,7 +238,7 @@ const RulePage = () => {
           title='Rule information'
           isShowIcon={false}
           additionalClass='rules'
-          data={ruleInfoList}
+          data={infoListViewRule}
         />
       )}
     </>

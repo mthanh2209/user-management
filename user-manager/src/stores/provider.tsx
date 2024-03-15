@@ -20,8 +20,6 @@ const AppProvider = ({ children }: ProviderProps) => {
     data: any | null;
   }>({ index: 0, data: null });
 
-  const [userInfoList, setUserInfoList] = useState<any[]>([]);
-
   /**
    * The context value containing state and setters for the app.
    */
@@ -29,9 +27,7 @@ const AppProvider = ({ children }: ProviderProps) => {
     state,
     dispatch,
     selectedRow,
-    setSelectedRow,
-    userInfoList,
-    setUserInfoList
+    setSelectedRow
   };
 
   return <Context.Provider value={value}>{children}</Context.Provider>;

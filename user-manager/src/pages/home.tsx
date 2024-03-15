@@ -1,6 +1,5 @@
 import {
   useContext,
-  useEffect,
   useMemo,
   useState
 } from 'react';
@@ -132,8 +131,6 @@ const HomePage = () => {
     dispatch,
     selectedRow,
     setSelectedRow,
-    userInfoList,
-    setUserInfoList
   } = useContext(Context);
 
   const [searchKeyword, setSearchKeyword] = useState('');
@@ -149,12 +146,6 @@ const HomePage = () => {
   const { data: rulesData } = getRules();
   const { data: userRolesData } = getUserRoles();
   const { data: userRulesData } = getUserRules();
-
-  useEffect(() => {
-    if (selectedRow.data) {
-      setUserInfoList(infoListViewUser);
-    }
-  }, [selectedRow.data]);
 
   // Filter the data
   const roles = filterRolesOfUser(
@@ -404,7 +395,7 @@ const HomePage = () => {
           src={selectedRow.data.avatar}
           bgColor={selectedRow.data.bgColor}
           fullName={selectedRow.data.fullName}
-          data={userInfoList}
+          data={infoListViewUser}
           onShowPanel={handleTogglePanel}
         />
       )}
