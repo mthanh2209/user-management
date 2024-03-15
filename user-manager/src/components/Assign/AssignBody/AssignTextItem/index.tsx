@@ -57,12 +57,12 @@ const AssignTextItem = ({
             />
           )}
 
-          {!isModifying && !isAssigned ? null : (
+          {isModifying || isAssigned ? (
             <div className='panel-assign-body-details'>
               <span className='panel-assign-body-name'>{name}</span>
               <p className='panel-assign-body-desc'>{description}</p>
             </div>
-          )}
+          ) : null}
         </div>
       )}
     </>

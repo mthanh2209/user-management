@@ -31,7 +31,7 @@ const AssignAvatarTextItem = ({
         />
       )}
 
-      {!isModifying && !isAssigned ? null : (
+      {isModifying || isAssigned ? (
         <>
           <Avatar
             src={src}
@@ -42,7 +42,7 @@ const AssignAvatarTextItem = ({
 
           <span className='panel-assign-avatar-title'>{name}</span>
         </>
-      )}
+      ) : null}
     </div>
   );
 };

@@ -30,7 +30,9 @@ const AssignBody = ({
     <ul>
       {items.map(
         (item) =>
-          (isModifying || item.isAssigned) && (
+          (selectedType === AssignmentOptions.AllAssignment ||
+            isModifying ||
+            item.isAssigned) && (
             <li key={item.id} className='panel-assign-body-list'>
               {src || item.bgColor ? (
                 <AssignAvatarTextItem
