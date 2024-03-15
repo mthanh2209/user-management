@@ -31,19 +31,18 @@ const AssignAvatarTextItem = ({
         />
       )}
 
-      {!isModifying && !isAssigned ? null : (
+      {isModifying || isAssigned ? (
         <>
           <Avatar
             src={src}
             alt={name}
             bgColor={bgColor}
             size='sm'
-            additionalClass='panel-assign-body-avatar'
           />
 
           <span className='panel-assign-avatar-title'>{name}</span>
         </>
-      )}
+      ) : null}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 // CSS
 import '@components/Drawer/Drawer.css';
@@ -16,6 +16,12 @@ import plusIcon from '@assets/images/plus-icon.svg';
 // Types
 import { IItemNav, IPopoverOption } from '@types';
 
+// Stores
+import { Context } from '@stores';
+
+// Constants
+import { TOAST_TYPE } from '@constants';
+
 type TAnchor = 'top' | 'left' | 'bottom' | 'right';
 
 interface IDrawerProps {
@@ -23,7 +29,7 @@ interface IDrawerProps {
   text?: string;
   icon?: string;
   items: IItemNav[];
-  itemSelected: number,
+  itemSelected: number;
   onSubmit: (data: { type: string; value: string }) => void;
 }
 
@@ -35,6 +41,8 @@ const Drawer = ({
   itemSelected,
   onSubmit
 }: IDrawerProps) => {
+  const { dispatch } = useContext(Context);
+
   const [type, setType] = useState('');
   const [isOpenModal, setOpenModal] = useState(false);
   const [textInput, setTextInput] = useState('');
@@ -49,8 +57,12 @@ const Drawer = ({
   };
 
   const handleOnSubmit = () => {
-    onSubmit({ type, value: textInput });
-    setOpenModal(false);
+    if (!textInput.trim()) {
+      dispatch({ type: TOAST_TYPE.ERROR });
+    } else {
+      onSubmit({ type, value: textInput });
+      setOpenModal(false);
+    }
   };
 
   const popoverOption: IPopoverOption[] = [
