@@ -20,9 +20,9 @@ import {
 
 // Helpers
 import {
+  filterItem,
   filterRolesOfUser,
   filterRulesOfUser,
-  filterUsers,
   formatDate,
   highlightKeyword
 } from '@helpers';
@@ -230,7 +230,7 @@ const HomePage = () => {
    * @type {IUser[]}
    */
   const filteredUsers = useMemo(() => {
-    return filterUsers(users, searchKeyword);
+    return filterItem(users, searchKeyword);
   }, [users, searchKeyword]);
 
   /**

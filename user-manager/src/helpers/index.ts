@@ -9,9 +9,7 @@ export {
 } from '@helpers/validation';
 export { fetcher } from '@helpers/fetcher';
 export {
-  filterUsers,
-  filterRoles,
-  filterRules,
+  filterItem,
   filterUsersOfRule,
   filterRolesOfRule,
   filterUsersOfRole,

@@ -8,64 +8,36 @@ import {
 } from '@types';
 
 /**
- * Filters an array of user objects based on a search keyword.
- * @param users - The array of user objects to filter.
- * @param searchKeyword - The keyword used for filtering users.
- * @returns An array of user objects that match the search criteria.
+ * Filter items based on search keyword.
+ * @template T - The type of items being filtered.
+ * @param {T[] | undefined} items - The array of items to filter.
+ * @param {string} searchKeyword - The keyword to search for.
+ * @returns {T[]} - The filtered array of items.
  */
-export const filterUsers = (
-  users: IUser[] | undefined, // Add a type for the users parameter
+export const filterItem = <
+  T extends {
+    name?: string;
+    fullName?: string;
+    email?: string;
+    description?: string;
+  }
+>(
+  items: T[] | undefined,
   searchKeyword: string
-): IUser[] => {
-  if (!users) {
-    return []; // Return an empty array if users is undefined
+): T[] => {
+  if (!items) {
+    return []; // Return an empty array if items is undefined
   }
 
-  return users.filter((user: IUser) => {
+  return items.filter((item) => {
+    const lowercaseKeyword = searchKeyword.toLowerCase();
     return (
-      user.fullName.toLowerCase().includes(searchKeyword.toLowerCase()) ||
-      user.email.toLowerCase().includes(searchKeyword.toLowerCase())
-    );
-  });
-};
-
-/**
- * Filters an array of role objects based on a search keyword.
- * @param roles - The array of role objects to filter.
- * @param searchKeyword - The keyword used for filtering roles.
- * @returns An array of role objects that match the search criteria.
- */
-export const filterRoles = (
-  roles: IRole[] | undefined, // Add a type for the roles parameter
-  searchKeyword: string
-): IRole[] => {
-  if (!roles) {
-    return []; // Return an empty array if roles is undefined
-  }
-
-  return roles.filter((role: IRole) => {
-    return role.name.toLowerCase().includes(searchKeyword.toLowerCase());
-  });
-};
-
-/**
- * Filters an array of rule objects based on a search keyword.
- * @param rules - The array of rule objects to filter.
- * @param searchKeyword - The keyword used for filtering rules.
- * @returns An array of rule objects that match the search criteria.
- */
-export const filterRules = (
-  rules: IRule[] | undefined, // Add a type for the rules parameter
-  searchKeyword: string
-): IRule[] => {
-  if (!rules) {
-    return []; // Return an empty array if rules is undefined
-  }
-
-  return rules.filter((rule: IRule) => {
-    return (
-      rule.name.toLowerCase().includes(searchKeyword.toLowerCase()) ||
-      rule.description.toLowerCase().includes(searchKeyword.toLowerCase())
+      (item.fullName &&
+        item.fullName.toLowerCase().includes(lowercaseKeyword)) ||
+      (item.email && item.email.toLowerCase().includes(lowercaseKeyword)) ||
+      (item.name && item.name.toLowerCase().includes(lowercaseKeyword)) ||
+      (item.description &&
+        item.description.toLowerCase().includes(lowercaseKeyword))
     );
   });
 };

@@ -19,7 +19,7 @@ import {
 
 // Helpers
 import {
-  filterRoles,
+  filterItem,
   filterRulesOfRole,
   filterUsersOfRole,
   highlightKeyword
@@ -194,7 +194,7 @@ const RolePage = () => {
    * Memoized filtered roles based on the search keyword.
    */
   const filteredRoles = useMemo(() => {
-    return filterRoles(rolesData, searchKeyword);
+    return filterItem(rolesData, searchKeyword);
   }, [rolesData, searchKeyword]);
 
   /**
