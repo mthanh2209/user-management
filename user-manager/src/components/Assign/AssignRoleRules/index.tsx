@@ -10,7 +10,7 @@ import { TOAST_TYPE } from '@constants';
 import {
   findRoleItemId,
   isItemAssignedToRole
-} from '@helpers';
+} from '@helpers/array';
 
 // Services
 import {

@@ -9,7 +9,7 @@ import {
 } from '@components';
 
 // Helpers
-import { getRandomColor } from '@helpers';
+import { getRandomColor } from '@helpers/string';
 
 // Mocks
 import { mockData } from '@mocks';

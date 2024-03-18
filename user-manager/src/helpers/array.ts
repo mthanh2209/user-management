@@ -5,41 +5,81 @@ import {
   IUser,
   IUserRole,
   IUserRule
-} from '@types';
+} from "@types";
 
 /**
- * Filter items based on search keyword.
- * @template T - The type of items being filtered.
- * @param {T[] | undefined} items - The array of items to filter.
- * @param {string} searchKeyword - The keyword to search for.
- * @returns {T[]} - The filtered array of items.
+ * Checks if an item is assigned to a user.
+ * 
+ * @param userId - The ID of the user.
+ * @param itemId - The ID of the item.
+ * @param userItems - The array of user items.
+ * @param key - The key to match against the item ID.
+ * @returns True if the item is assigned to the user, otherwise false.
  */
-export const filterItem = <
-  T extends {
-    name?: string;
-    fullName?: string;
-    email?: string;
-    description?: string;
-  }
->(
-  items: T[] | undefined,
-  searchKeyword: string
-): T[] => {
-  if (!items) {
-    return []; // Return an empty array if items is undefined
-  }
+export const isItemAssignedToUser = (
+  userId: number,
+  itemId: number,
+  userItems: any[],
+  key: string
+) => userItems?.some((item) => item.userId === userId && item[key] === itemId);
 
-  return items.filter((item) => {
-    const lowercaseKeyword = searchKeyword.toLowerCase();
-    return (
-      (item.fullName &&
-        item.fullName.toLowerCase().includes(lowercaseKeyword)) ||
-      (item.email && item.email.toLowerCase().includes(lowercaseKeyword)) ||
-      (item.name && item.name.toLowerCase().includes(lowercaseKeyword)) ||
-      (item.description &&
-        item.description.toLowerCase().includes(lowercaseKeyword))
-    );
-  });
+/**
+ * Checks if an item is assigned to a role.
+ *
+ * @param {number} roleId - The ID of the role.
+ * @param {number} itemId - The ID of the item.
+ * @param {any[]} roleItems - The array of role items.
+ * @param {string} key - The key to match against the item ID.
+ * @returns {boolean} - True if the item is assigned to the role, otherwise false.
+ */
+export const isItemAssignedToRole = (
+  roleId: number,
+  itemId: number,
+  roleItems: any[],
+  key: string
+) => roleItems?.some((item) => item.roleId === roleId && item[key] === itemId);
+
+/**
+ * Finds the ID of a user item.
+ *
+ * @param userId - The ID of the user.
+ * @param itemId - The ID of the item.
+ * @param userItems - The array of user items.
+ * @returns The ID of the user item, or null if not found.
+ */
+export const findUserItemId = (
+  userId: number,
+  itemId: number,
+  userItems: any[],
+  key: string
+) => {
+  const userItem = userItems.find(
+    (item) => item.userId === userId && item[key] === itemId
+  );
+
+  return userItem ? userItem.id : null;
+};
+
+/**
+ * Finds the ID of a role item.
+ *
+ * @param {number} roleId - The ID of the role.
+ * @param {number} itemId - The ID of the item.
+ * @param {any[]} roleItems - The array of role items.
+ * @param {string} key - The key to match against the item ID.
+ * @returns {number | null} - The ID of the role item, or null if not found.
+ */
+export const findRoleItemId = (
+  roleId: number,
+  itemId: number,
+  roleItems: any[],
+  key: string
+) => {
+  const roleItem = roleItems.find(
+    (item) => item.roleId === roleId && item[key] === itemId
+  );
+
+  return roleItem ? roleItem.id : null;
 };
 
 /**

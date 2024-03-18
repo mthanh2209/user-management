@@ -18,12 +18,9 @@ import {
 } from '@components';
 
 // Helpers
-import {
-  filterItem,
-  filterRulesOfRole,
-  filterUsersOfRole,
-  highlightKeyword
-} from '@helpers';
+import { filterRulesOfRole, filterUsersOfRole } from '@helpers/array';
+import { highlightKeyword } from '@helpers/string';
+import { filterItem } from '@helpers/object';
 
 // Services
 import {

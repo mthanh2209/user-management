@@ -8,7 +8,7 @@ import { IRole, IRoleRule } from '@types';
 import { IResponse, makeRequest, useApi, useApiData } from '@services/user';
 
 // Helpers
-import { generateNewRole } from '@helpers';
+import { generateNewRole } from '@helpers/object';
 
 export const getRoles = (): {
   data: IRole[];

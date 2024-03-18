@@ -7,7 +7,7 @@ import '@components/ImageUploader/ImageUploader.css';
 import { Avatar } from '@components';
 
 // Helpers
-import { convertToDataURL } from '@helpers';
+import { convertToDataURL } from '@helpers/object';
 
 // Icons
 import uploadIcon from '@assets/images/upload-icon.svg';

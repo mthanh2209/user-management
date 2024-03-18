@@ -4,8 +4,8 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { InformationSidebar } from '@components';
 
 // Helpers
-import { getRandomColor } from '@helpers';
-import { formatDate } from '@helpers';
+import { getRandomColor } from '@helpers/string';
+import { formatDate } from '@helpers/object';
 
 // Constants
 import { INFO_TYPE } from '@constants';
