@@ -14,12 +14,9 @@ import {
 } from '@components';
 
 // Helpers
-import {
-  filterRolesOfRule,
-  filterRules,
-  filterUsersOfRule,
-  highlightKeyword
-} from '@helpers';
+import { filterRolesOfRule, filterUsersOfRule } from '@helpers/array';
+import { filterItem } from '@helpers/object';
+import { highlightKeyword } from '@helpers/string';
 
 // Services
 import {
@@ -178,7 +175,7 @@ const RulePage = () => {
    * Memoized filtered rules based on the search keyword.
    */
   const filteredRules = useMemo(() => {
-    return filterRules(rules, searchKeyword);
+    return filterItem(rules, searchKeyword);
   }, [rules, searchKeyword]);
 
   /**

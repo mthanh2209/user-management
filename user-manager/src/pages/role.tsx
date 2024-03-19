@@ -18,12 +18,9 @@ import {
 } from '@components';
 
 // Helpers
-import {
-  filterRoles,
-  filterRulesOfRole,
-  filterUsersOfRole,
-  highlightKeyword
-} from '@helpers';
+import { filterRulesOfRole, filterUsersOfRole } from '@helpers/array';
+import { highlightKeyword } from '@helpers/string';
+import { filterItem } from '@helpers/object';
 
 // Services
 import {
@@ -194,7 +191,7 @@ const RolePage = () => {
    * Memoized filtered roles based on the search keyword.
    */
   const filteredRoles = useMemo(() => {
-    return filterRoles(rolesData, searchKeyword);
+    return filterItem(rolesData, searchKeyword);
   }, [rolesData, searchKeyword]);
 
   /**

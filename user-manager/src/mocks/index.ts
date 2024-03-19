@@ -1,4 +1,4 @@
-import { getRandomColor } from "@helpers";
+import { getRandomColor } from "@helpers/string";
 
 export const mockData = {
   rules: [

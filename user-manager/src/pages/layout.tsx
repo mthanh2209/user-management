@@ -27,7 +27,7 @@ import {
 import { Context } from '@stores';
 
 // Helpers
-import { findSelectedIndex } from '@helpers';
+import { findSelectedIndex } from '@helpers/object';
 
 const Layout = () => {
   const {

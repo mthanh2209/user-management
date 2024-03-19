@@ -5,69 +5,81 @@ import {
   IUser,
   IUserRole,
   IUserRule
-} from '@types';
+} from "@types";
 
 /**
- * Filters an array of user objects based on a search keyword.
- * @param users - The array of user objects to filter.
- * @param searchKeyword - The keyword used for filtering users.
- * @returns An array of user objects that match the search criteria.
+ * Checks if an item is assigned to a user.
+ * 
+ * @param userId - The ID of the user.
+ * @param itemId - The ID of the item.
+ * @param userItems - The array of user items.
+ * @param key - The key to match against the item ID.
+ * @returns True if the item is assigned to the user, otherwise false.
  */
-export const filterUsers = (
-  users: IUser[] | undefined, // Add a type for the users parameter
-  searchKeyword: string
-): IUser[] => {
-  if (!users) {
-    return []; // Return an empty array if users is undefined
-  }
+export const isItemAssignedToUser = (
+  userId: number,
+  itemId: number,
+  userItems: any[],
+  key: string
+) => userItems?.some((item) => item.userId === userId && item[key] === itemId);
 
-  return users.filter((user: IUser) => {
-    return (
-      user.fullName.toLowerCase().includes(searchKeyword.toLowerCase()) ||
-      user.email.toLowerCase().includes(searchKeyword.toLowerCase())
-    );
-  });
+/**
+ * Checks if an item is assigned to a role.
+ *
+ * @param {number} roleId - The ID of the role.
+ * @param {number} itemId - The ID of the item.
+ * @param {any[]} roleItems - The array of role items.
+ * @param {string} key - The key to match against the item ID.
+ * @returns {boolean} - True if the item is assigned to the role, otherwise false.
+ */
+export const isItemAssignedToRole = (
+  roleId: number,
+  itemId: number,
+  roleItems: any[],
+  key: string
+) => roleItems?.some((item) => item.roleId === roleId && item[key] === itemId);
+
+/**
+ * Finds the ID of a user item.
+ *
+ * @param userId - The ID of the user.
+ * @param itemId - The ID of the item.
+ * @param userItems - The array of user items.
+ * @returns The ID of the user item, or null if not found.
+ */
+export const findUserItemId = (
+  userId: number,
+  itemId: number,
+  userItems: any[],
+  key: string
+) => {
+  const userItem = userItems.find(
+    (item) => item.userId === userId && item[key] === itemId
+  );
+
+  return userItem ? userItem.id : null;
 };
 
 /**
- * Filters an array of role objects based on a search keyword.
- * @param roles - The array of role objects to filter.
- * @param searchKeyword - The keyword used for filtering roles.
- * @returns An array of role objects that match the search criteria.
+ * Finds the ID of a role item.
+ *
+ * @param {number} roleId - The ID of the role.
+ * @param {number} itemId - The ID of the item.
+ * @param {any[]} roleItems - The array of role items.
+ * @param {string} key - The key to match against the item ID.
+ * @returns {number | null} - The ID of the role item, or null if not found.
  */
-export const filterRoles = (
-  roles: IRole[] | undefined, // Add a type for the roles parameter
-  searchKeyword: string
-): IRole[] => {
-  if (!roles) {
-    return []; // Return an empty array if roles is undefined
-  }
+export const findRoleItemId = (
+  roleId: number,
+  itemId: number,
+  roleItems: any[],
+  key: string
+) => {
+  const roleItem = roleItems.find(
+    (item) => item.roleId === roleId && item[key] === itemId
+  );
 
-  return roles.filter((role: IRole) => {
-    return role.name.toLowerCase().includes(searchKeyword.toLowerCase());
-  });
-};
-
-/**
- * Filters an array of rule objects based on a search keyword.
- * @param rules - The array of rule objects to filter.
- * @param searchKeyword - The keyword used for filtering rules.
- * @returns An array of rule objects that match the search criteria.
- */
-export const filterRules = (
-  rules: IRule[] | undefined, // Add a type for the rules parameter
-  searchKeyword: string
-): IRule[] => {
-  if (!rules) {
-    return []; // Return an empty array if rules is undefined
-  }
-
-  return rules.filter((rule: IRule) => {
-    return (
-      rule.name.toLowerCase().includes(searchKeyword.toLowerCase()) ||
-      rule.description.toLowerCase().includes(searchKeyword.toLowerCase())
-    );
-  });
+  return roleItem ? roleItem.id : null;
 };
 
 /**

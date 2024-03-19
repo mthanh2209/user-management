@@ -20,7 +20,7 @@ import { Context } from '@stores';
 import { ItemAssign } from '@types';
 
 // Helpers
-import { findUserItemId, isItemAssignedToUser } from '@helpers';
+import { findUserItemId, isItemAssignedToUser } from '@helpers/array';
 
 interface IAssignRole {
   items: ItemAssign[];

@@ -19,13 +19,9 @@ import {
 } from '@components';
 
 // Helpers
-import {
-  filterRolesOfUser,
-  filterRulesOfUser,
-  filterUsers,
-  formatDate,
-  highlightKeyword
-} from '@helpers';
+import { filterRolesOfUser, filterRulesOfUser } from '@helpers/array';
+import { highlightKeyword } from '@helpers/string';
+import { filterItem, formatDate } from '@helpers/object';
 
 // Services
 import {
@@ -230,7 +226,7 @@ const HomePage = () => {
    * @type {IUser[]}
    */
   const filteredUsers = useMemo(() => {
-    return filterUsers(users, searchKeyword);
+    return filterItem(users, searchKeyword);
   }, [users, searchKeyword]);
 
   /**

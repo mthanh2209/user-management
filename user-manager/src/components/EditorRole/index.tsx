@@ -8,7 +8,7 @@ import ColorField from '@components/EditorRole/ColorField';
 import { Button, TextField, ModalConfirm } from '@components';
 
 // Helpers
-import { isFullNameValid } from '@helpers';
+import { isFullNameValid } from '@helpers/string';
 
 // Types
 import { IRole } from '@types';

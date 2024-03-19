@@ -7,7 +7,8 @@ import { IUser, IUserRole, IUserRule } from '@types';
 import { API } from '@constants';
 
 // Helpers
-import { fetcher, generateNewUser } from '@helpers';
+import { generateNewUser } from '@helpers/object';
+import { fetcher } from '@helpers/object';
 
 export type IResponse = {
   data: any;

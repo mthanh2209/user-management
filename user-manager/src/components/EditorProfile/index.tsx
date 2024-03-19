@@ -23,8 +23,8 @@ import {
 import { IUser } from '@types';
 
 // Helpers
-import { formatDate } from '@helpers';
-import { isEmailValid, isFullNameValid } from '@helpers';
+import { formatDate } from '@helpers/object';
+import { isEmailValid, isFullNameValid } from '@helpers/string';
 
 // Stores
 import { Context } from '@stores';

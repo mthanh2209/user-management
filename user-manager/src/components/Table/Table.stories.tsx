@@ -3,12 +3,12 @@ import type { Meta, StoryObj } from '@storybook/react';
 // Components
 import {
   Table,
-  Avatar, 
+  Avatar,
   Status
 } from '@components';
 
 // Helpers
-import { getRandomColor } from '@helpers';
+import { getRandomColor } from '@helpers/string';
 
 // Interfaces
 import { IUser } from '@types';

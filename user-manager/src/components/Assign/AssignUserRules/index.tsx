@@ -7,7 +7,7 @@ import AssignItem from '@components/Assign/AssignItem';
 import { TOAST_TYPE } from '@constants';
 
 // Helpers
-import { findUserItemId, isItemAssignedToUser } from '@helpers';
+import { findUserItemId, isItemAssignedToUser } from '@helpers/array';
 
 // Services
 import {
@@ -40,7 +40,7 @@ const AssignUserRules = ({ items, title }: IAssignRule) => {
    */
   const handleRuleSelect = (id: number) => async () => {
     dispatch({ type: TOAST_TYPE.PROCESSING });
-    
+
     const isCurrentlyAssigned = isItemAssignedToUser(
       selectedRow.data.id,
       id,

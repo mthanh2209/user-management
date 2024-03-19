@@ -20,7 +20,7 @@ import { Context } from '@stores';
 import { ItemAssign } from '@types';
 
 // Helpers
-import { findRoleItemId, isItemAssignedToRole } from '@helpers';
+import { findRoleItemId, isItemAssignedToRole } from '@helpers/array';
 
 interface IAssignRoleMember {
   items: ItemAssign[];
@@ -83,7 +83,7 @@ const AssignRoleMember = ({ items, title }: IAssignRoleMember) => {
 
     // Update the state of the list user
     setUserState(newUsers);
-    
+
     dispatch({ type: TOAST_TYPE.SUCCESS });
   };
 
