@@ -31,3 +31,25 @@
   width: 210px;
   height: 100vh;
 }
+
+@media (max-width: 1200px) {
+  .drawer-wrapper {
+    display: none;
+  }
+
+  .drawer-tablet {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 210px;
+    padding: 20px 0;
+    background-color: #4a4e58;
+  }
+}
+
+@media (max-width: 320px) {
+  .drawer-wrapper.left {
+    width: 100vw;
+  }
+}

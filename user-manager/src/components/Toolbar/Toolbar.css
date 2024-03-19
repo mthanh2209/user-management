@@ -1,5 +1,4 @@
 .toolbar-wrapper {
-  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -13,6 +12,7 @@
 .toolbar-content {
   font-weight: var(--fw-medium);
   font-size: var(--font-md);
+  color: var(--secondary-color);
 }
 
 .search-icon {

@@ -60,3 +60,13 @@
   background-color: var(--white-color);
   z-index: 1;
 }
+
+@media (max-width: 320px) {
+  .confirm-buttons {
+    justify-content: space-between;
+  }
+
+  .form-edit-profile {
+    margin: 20px 0 0;
+  }
+}
