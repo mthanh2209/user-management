@@ -377,6 +377,7 @@ const HomePage = () => {
         />
         <Table
           rowData={filteredUsers}
+          additionalClass='users'
           columns={columns}
           selectedRowIndex={selectedRow.index}
           onRowClick={handleSelectedRow}

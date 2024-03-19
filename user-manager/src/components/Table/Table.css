@@ -112,19 +112,16 @@
 }
 
 @media (max-width: 320px) {
-  .table-header {
+  .users .table-header,
+  .users .table-row td:nth-child(3),
+  .users .table-row td:nth-child(4),
+  .rules .table-row td:nth-child(2),
+  .rules .table-header,
+  .roles .table-header {
     display: none;
   }
 
-  .table-row td:nth-child(1) {
+  .users .table-row td:nth-child(1) {
     width: 100px;
-  }
-
-  .table-row td:nth-child(3) {
-    display: none;
-  }
-
-  .table-row td:nth-child(4) {
-    display: none;
   }
 }
