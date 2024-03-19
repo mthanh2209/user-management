@@ -98,3 +98,33 @@
   vertical-align: middle;
   color: var(--secondary-color);
 }
+
+@media (max-width: 1200px) {
+  .table-header th:nth-child(2) {
+    width: 250px;
+  }
+}
+
+@media (max-width: 768px) {
+  .table-header th:nth-child(2) {
+    width: 180px;
+  }
+}
+
+@media (max-width: 320px) {
+  .table-header {
+    display: none;
+  }
+
+  .table-row td:nth-child(1) {
+    width: 100px;
+  }
+
+  .table-row td:nth-child(3) {
+    display: none;
+  }
+
+  .table-row td:nth-child(4) {
+    display: none;
+  }
+}
