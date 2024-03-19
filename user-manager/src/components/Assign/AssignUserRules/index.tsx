@@ -12,6 +12,8 @@ import { findUserItemId, isItemAssignedToUser } from '@helpers/array';
 // Services
 import {
   assignRuleToUser,
+  getRoleRules,
+  getUserRoles,
   getUserRules,
   unAssignRuleFromUser
 } from '@services';
@@ -33,6 +35,8 @@ const AssignUserRules = ({ items, title }: IAssignRule) => {
   const { dispatch, selectedRow } = useContext(Context);
 
   const { data: userRules, mutate: mutateUserRules } = getUserRules();
+  const { data: userRoles } = getUserRoles();
+  const { data: roleRules } = getRoleRules();
 
   /**
    * Handles the selection of a role.
@@ -92,6 +96,9 @@ const AssignUserRules = ({ items, title }: IAssignRule) => {
       items={items}
       title={title}
       optionName='rule'
+      userRoles={userRoles}
+      userRules={userRules}
+      roleRules={roleRules}
       handleItemSelect={handleRuleSelect}
     />
   );

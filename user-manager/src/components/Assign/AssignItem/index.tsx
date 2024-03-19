@@ -8,7 +8,12 @@ import AssignHeader from '@components/Assign/AssignHeader';
 import AssignBody from '@components/Assign/AssignBody';
 
 // Types
-import { ItemAssign } from '@types';
+import {
+  IRoleRule,
+  IUserRole,
+  IUserRule,
+  ItemAssign
+} from '@types';
 
 // Hooks
 import { useDelayedValue } from '@hooks';
@@ -24,6 +29,9 @@ interface IAssignItem {
   items: ItemAssign[];
   title: string;
   optionName: string;
+  userRules?: IUserRule[];
+  userRoles?: IUserRole[];
+  roleRules?: IRoleRule[];
   singleOption?: SingleOptionTypes;
   handleItemSelect: (id: number) => () => void;
 }
@@ -33,6 +41,9 @@ const AssignItem = ({
   items,
   title,
   optionName,
+  userRoles,
+  userRules,
+  roleRules,
   singleOption,
   handleItemSelect
 }: IAssignItem) => {
@@ -86,6 +97,9 @@ const AssignItem = ({
         title={title}
         optionName={optionName}
         isModifying={isModifying}
+        userRules={userRules}
+        userRoles={userRoles}
+        roleRules={roleRules}
         onModifyClick={handleModifyClick}
         selectedType={selectedType}
         singleOption={singleOption}
