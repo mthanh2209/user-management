@@ -1,6 +1,5 @@
 .main-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   height: 64px;
   font-weight: var(--fw-medium);
@@ -18,4 +17,16 @@
 .body-content {
   padding: 10px;
   width: 100%;
+}
+
+@media (max-width: 1200px) {
+  .icon-menu {
+    display: block;
+    content: '';
+    background: url('./assets/images/icon-menu.svg') no-repeat;
+    width: 23px;
+    height: 23px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
 }

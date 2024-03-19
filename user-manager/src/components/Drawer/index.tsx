@@ -30,6 +30,7 @@ interface IDrawerProps {
   icon?: string;
   items: IItemNav[];
   itemSelected: number;
+  additionalClass: string;
   onSubmit: (data: { type: string; value: string }) => void;
 }
 
@@ -39,6 +40,7 @@ const Drawer = ({
   icon = plusIcon,
   items,
   itemSelected,
+  additionalClass,
   onSubmit
 }: IDrawerProps) => {
   const { dispatch } = useContext(Context);
@@ -87,7 +89,7 @@ const Drawer = ({
   ];
 
   return (
-    <div className={`drawer-wrapper ${anchor}`}>
+    <div className={`drawer-wrapper ${anchor} ${additionalClass}`}>
       <Popover
         icon={icon}
         children={text}

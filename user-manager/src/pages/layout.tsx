@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import {
   Outlet,
   useNavigate,
@@ -37,11 +37,17 @@ const Layout = () => {
   } = useContext(Context);
   const { toast } = state;
 
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
   const { mutate: mutateUser } = getUsers();
   const { mutate: mutateRole } = getRoles();
 
   const navigate = useNavigate();
   const location = useLocation();
+
+  const toggleDrawer = () => {
+    setIsDrawerOpen(!isDrawerOpen);
+  };
 
   /**
    * Adds a new user.
@@ -122,6 +128,7 @@ const Layout = () => {
       onClick: () => {
         resetSelectedRow();
         navigate(PATH.HOME_PATH);
+        setIsDrawerOpen(false)
       }
     },
     {
@@ -130,6 +137,7 @@ const Layout = () => {
       onClick: () => {
         resetSelectedRow();
         navigate(PATH.ROLES_PATH);
+        setIsDrawerOpen(false)
       }
     },
     {
@@ -138,6 +146,7 @@ const Layout = () => {
       onClick: () => {
         resetSelectedRow();
         navigate(PATH.RULES_PATH);
+        setIsDrawerOpen(false)
       }
     }
   ];
@@ -148,6 +157,7 @@ const Layout = () => {
   return (
     <>
       <header className='main-header'>
+        <span className='icon-menu' onClick={toggleDrawer}></span>
         User Manager
         {toast === 'processing' ? (
           <Loading isProcessing={true} />
@@ -159,6 +169,7 @@ const Layout = () => {
         <Drawer
           items={navigateItems}
           itemSelected={itemSelected}
+          additionalClass={isDrawerOpen ? 'drawer-tablet' : ''}
           onSubmit={handleAdd}
         />
         <Outlet />

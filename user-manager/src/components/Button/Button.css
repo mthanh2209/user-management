@@ -63,3 +63,9 @@
 .disabled:hover{
   background-color: var(--white-color)
 }
+
+@media (max-width: 320px) {
+  .btn-lg {
+    padding: 6.5px 110px;
+  }
+}
