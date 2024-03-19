@@ -1,6 +1,7 @@
 .tab {
+  display: inline-block;
   border: none;
-  min-width: 260px;
+  width: 100%;
   padding: 12px 0;
   font-family: var(--primary-font);
   font-size: var(--font-md);
@@ -22,4 +23,10 @@
 
 .tab.active:hover {
   background-color: var(--white-color);
+}
+
+@media (max-width: 320px) {
+  .tab {
+    font-size: 15px;
+  }
 }

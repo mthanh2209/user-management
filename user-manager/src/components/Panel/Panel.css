@@ -29,3 +29,17 @@
   cursor: pointer;
   margin: 0 16px;
 }
+
+@media (max-width: 1024px) {
+  .panel-wrapper {
+    position: absolute;
+    margin: 0;
+    border-top: none;
+  }
+}
+
+@media (max-width: 320px) {
+  .back-icon::before {
+    margin: 0 10px;
+  }
+}
