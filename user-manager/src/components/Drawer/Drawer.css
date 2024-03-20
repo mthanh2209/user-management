@@ -45,6 +45,7 @@
     min-width: 210px;
     padding: 20px 0;
     background-color: #4a4e58;
+    z-index: 1;
   }
 }
 
