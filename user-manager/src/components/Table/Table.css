@@ -90,6 +90,14 @@
   color: var(--secondary-color);
 }
 
+.notification-message {
+  font-size: var(--font-md);
+  font-weight: var(--fw-medium);
+  color: var(--secondary-color);
+  padding: 10px;
+  width: max-content;
+}
+
 @media (max-width: 1200px) {
   .table-header th:nth-child(2) {
     width: 250px;

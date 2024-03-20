@@ -6,7 +6,7 @@ import TableRowCell from '@components/Table/TableRow/TableRowCell';
 import { IColumnProps } from '@types';
 
 interface ITableRow<T> {
-  rowData: T[];
+  rowData: T[] | undefined;
   columns: IColumnProps<T>[];
   selectedRowIndex: number;
   onRowClick: (
@@ -21,6 +21,10 @@ const TableRow = <T,>({
   selectedRowIndex,
   onRowClick
 }: ITableRow<T>) => {
+  if (!rowData || rowData.length === 0) {
+    return <div className='notification-message'>No data displayed</div>;
+  }
+
   return (
     <>
       {rowData.map((item, itemIndex) => (

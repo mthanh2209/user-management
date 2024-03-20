@@ -26,6 +26,12 @@ const AssignBody = ({
   selectedType,
   handleItemSelect
 }: IAssignBody) => {
+  if (!isModifying) {
+    return (
+      <div className='notification-message'>Click Modify button to assign.</div>
+    );
+  }
+
   return (
     <ul>
       {items.map(

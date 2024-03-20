@@ -9,7 +9,7 @@ import TableRow from "@components/Table/TableRow";
 import { IColumnProps } from '@types';
 
 interface ITableProps<T> {
-  rowData: T[];
+  rowData: T[] | undefined;
   columns: IColumnProps<T>[];
   additionalClass?: string;
   selectedRowIndex: number;
