@@ -60,12 +60,16 @@
   color: #94a1b3;
 }
 
-.disabled:hover{
-  background-color: var(--white-color)
+.disabled:hover {
+  background-color: var(--white-color);
 }
 
 @media (max-width: 320px) {
-  .btn-lg {
+  .popover .btn-lg {
     padding: 6.5px 110px;
+  }
+
+  .btn-lg {
+    padding: 6.5px 30px;
   }
 }

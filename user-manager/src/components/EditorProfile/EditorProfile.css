@@ -74,15 +74,13 @@
     margin-right: 0;
   }
 
-  .form-item-input {
-    margin-left: 10px;
-  }
-
   .form-item {
-    grid-template-columns: 64px 1fr;
+    grid-template-columns: 72px 1fr;
+    margin-left: 15px;
+    gap: 15px;
   }
 
   .form-item-status {
-    grid-template-columns: 64px 40px 1fr;
+    grid-template-columns: 72px 40px 1fr;
   }
 }

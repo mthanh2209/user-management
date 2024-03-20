@@ -21,3 +21,13 @@
   height: 32px;
   width: 156px;
 }
+
+@media (max-width: 320px) {
+  .panel-assign-header-item .form-item {
+    margin-left: 0;
+  }
+
+  .panel-assign-header-button {
+    width: 110px;
+  }
+}
