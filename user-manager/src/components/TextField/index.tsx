@@ -1,4 +1,4 @@
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
 
 // CSS
 import '@components/TextField/TextField.css';
@@ -25,11 +25,21 @@ const TextField = ({
   onChange,
   validate
 }: ITextFieldProps) => {
+  const [isFocused, setIsFocused] = useState(false);
+
   const handleChangeInput = (event: FormEvent<HTMLInputElement>) => {
     onChange?.(event.currentTarget.value);
   };
 
-  const error = validate ? validate(value || '') : undefined;
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+  };
+
+  const error = isFocused && validate ? validate(value || '') : undefined;
 
   return (
     <>
@@ -42,6 +52,8 @@ const TextField = ({
           value={value}
           placeholder={placeholder}
           onChange={handleChangeInput}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
         />
 
         {error && <span className='error-message'>{error}</span>}

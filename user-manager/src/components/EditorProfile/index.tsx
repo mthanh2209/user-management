@@ -87,10 +87,9 @@ const EditorProfile = ({
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const emailError = isEmailValid(formData.email);
     const fullNameError = isFullNameValid(formData.fullName);
 
-    if (emailError || fullNameError) {
+    if (fullNameError) {
       dispatch({ type: TOAST_TYPE.ERROR });
       return;
     }
