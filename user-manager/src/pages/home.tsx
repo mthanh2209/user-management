@@ -216,7 +216,7 @@ const HomePage = () => {
           icon: 'icon-rule',
           title: `Rules (${rules.length})`,
           content: rules.map((rule) => ({
-            text: rule?.name,
+            text: rule?.description,
             onClick: handleNavigateToRule(rule?.id!)
           }))
         }

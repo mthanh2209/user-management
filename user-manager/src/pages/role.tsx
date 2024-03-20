@@ -170,7 +170,7 @@ const RolePage = () => {
           title: `Rules assigned (${rules.length})`,
           content: rules.map((rule) => ({
             id: rule?.id,
-            text: rule?.name,
+            text: rule?.description,
             onClick: handleNavigateToRule(rule?.id!)
           }))
         },
