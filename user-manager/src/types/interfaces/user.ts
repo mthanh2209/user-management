@@ -5,7 +5,7 @@ export interface IUser {
   email: string;
   isActive: boolean;
   registeredDate: string | null;
-  lastVisitedDate: string;
+  lastModifiedDate: string;
   details: string;
   bgColor: string;
 }

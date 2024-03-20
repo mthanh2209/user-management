@@ -1,8 +1,8 @@
 // Types
-import { IItemNav } from "@types";
+import { IItemNav } from '@types';
 
 // Helpers
-import { getRandomColor } from "@helpers/string";
+import { getRandomColor } from '@helpers/string';
 
 /**
  * Converts a File object to a Data URL asynchronously.
@@ -116,7 +116,7 @@ export const generateNewUser = (fullName: string) => {
     email: '',
     isActive: false,
     registeredDate: formatDate(new Date().toString()),
-    lastVisitedDate: null,
+    lastModifiedDate: null,
     details: '',
     bgColor: getRandomColor()
   };

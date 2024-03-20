@@ -195,10 +195,10 @@ const HomePage = () => {
     {
       type: INFO_TYPE.TEXT_VIEW,
       icon: 'icon-date',
-      title: 'Last visited:',
+      title: 'Last Modified:',
       content:
-        selectedRow.data?.lastVisitedDate !== null
-          ? formatDate(selectedRow.data?.lastVisitedDate)
+        selectedRow.data?.lastModifiedDate !== null
+          ? formatDate(selectedRow.data?.lastModifiedDate)
           : 'Unknown'
     },
     {
@@ -438,7 +438,7 @@ const HomePage = () => {
                   email={selectedRow.data.email}
                   isActive={selectedRow.data.isActive}
                   registeredDate={selectedRow.data.registeredDate}
-                  lastVisitedDate={selectedRow.data.lastVisitedDate}
+                  lastModifiedDate={selectedRow.data.lastModifiedDate}
                   details={selectedRow.data.details}
                   bgColor={selectedRow.data.bgColor}
                   onSaveUser={handleUpdateUsers}
@@ -466,7 +466,7 @@ const HomePage = () => {
                 />
               ),
               title: 'Roles'
-            },
+            }
           ]}
           onReturnClick={handleTogglePanel}
         />

@@ -39,7 +39,7 @@ interface IEditorProfile {
   email: string;
   isActive: boolean;
   registeredDate: string | null;
-  lastVisitedDate: string | null;
+  lastModifiedDate: string | null;
   details: string;
   bgColor: string;
   onSaveUser: (itemData: IUser) => void;
@@ -53,7 +53,7 @@ const EditorProfile = ({
   email,
   isActive,
   registeredDate,
-  lastVisitedDate,
+  lastModifiedDate,
   details,
   bgColor,
   onSaveUser,
@@ -102,7 +102,7 @@ const EditorProfile = ({
       email: formData.email,
       isActive: formData.status,
       registeredDate: registeredDate,
-      lastVisitedDate: currentDate,
+      lastModifiedDate: currentDate,
       details: formData.details,
       bgColor
     };
@@ -213,8 +213,8 @@ const EditorProfile = ({
         />
 
         <TextView
-          label='Last visited'
-          content={lastVisitedDate ? formatDate(lastVisitedDate) : 'Unknown'}
+          label='Last Modified'
+          content={lastModifiedDate ? formatDate(lastModifiedDate) : 'Unknown'}
         />
 
         <div className='form-item form-item-details'>
