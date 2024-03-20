@@ -48,3 +48,13 @@
   margin: 5px;
   text-align: start;
 }
+
+@media (max-width: 320px) {
+  .input-text {
+    width: 12rem;
+  }
+
+  .label-input {
+    margin-right: 0;
+  }
+}
