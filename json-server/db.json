@@ -1,8 +1,47 @@
 {
-  "users": [],
-
-  "roles": [],
-
+  "users": [
+    {
+      "id": 1,
+      "fullName": "Berni Mayou",
+      "email": "bern.mayour@mail.com",
+      "details": "",
+      "lastVisitedDate": "2020-05-21T10:02:06Z",
+      "registeredDate": "2020-05-21T10:02:06Z",
+      "avatar": "https://docs.webix.com/usermanager-backend/users/87/avatar/503723673.jpg",
+      "isActive": true
+    },
+    {
+      "id": "0b8a",
+      "avatar": "",
+      "fullName": "user",
+      "email": "user@gmail.com",
+      "isActive": false,
+      "registeredDate": "Mar 20, 2024, 9:51:51 PM",
+      "lastVisitedDate": "Wed Mar 20 2024 21:52:08 GMT+0700 (Giờ Đông Dương)",
+      "details": "",
+      "bgColor": "#20B790"
+    }
+  ],
+  "roles": [
+    {
+      "id": 1,
+      "name": "Admin",
+      "avatar": "",
+      "bgColor": "#00a037"
+    },
+    {
+      "id": 2,
+      "name": "Manager",
+      "avatar": "",
+      "bgColor": "#e7a90b"
+    },
+    {
+      "id": 3,
+      "name": "Reporter",
+      "avatar": "",
+      "bgColor": "#038cd9"
+    }
+  ],
   "rules": [
     {
       "id": 1,
