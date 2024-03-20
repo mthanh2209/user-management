@@ -47,6 +47,9 @@ const Drawer = ({
   };
 
   const handleToggleModal = () => {
+    if (!isOpenModal) {
+      setTextInput('');
+    }
     setOpenModal(!isOpenModal);
   };
 
