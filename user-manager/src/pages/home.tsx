@@ -367,7 +367,7 @@ const HomePage = () => {
       let rolesAssigned =
         (roleRules?.length &&
           roleRules.filter((item) => {
-            return !!roles.find(
+            return roles.find(
               (role) => role.id === item.roleId && item.ruleId === rule.id
             );
           })) ||
@@ -381,8 +381,6 @@ const HomePage = () => {
           };
         }) as any;
       }
-
-      console.log(rolesAssigned)
 
       return {
         ...rule,
