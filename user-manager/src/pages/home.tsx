@@ -31,12 +31,14 @@ import {
   getRoles,
   getUserRoles,
   getUserRules,
-  getRules
+  getRules,
+  getRoleRules
 } from '@services';
 
 // Types
 import {
   IColumnProps,
+  IRoleRule,
   IUser,
   ItemAssign
 } from '@types';
@@ -142,6 +144,7 @@ const HomePage = () => {
   const { data: rulesData } = getRules();
   const { data: userRolesData } = getUserRoles();
   const { data: userRulesData } = getUserRules();
+  const { data: roleRules } = getRoleRules();
 
   // Filter the data
   const roles = filterRolesOfUser(
@@ -360,9 +363,31 @@ const HomePage = () => {
           userRule.ruleId === rule.id
       );
 
+      // Filter the role rules that match both role and rule of the current iteration
+      let rolesAssigned =
+        (roleRules?.length &&
+          roleRules.filter((item) => {
+            return !!roles.find(
+              (role) => role.id === item.roleId && item.ruleId === rule.id
+            );
+          })) ||
+        ([] as IRoleRule[]);
+
+      // If any roles are assigned, map them to include additional information
+      if (rolesAssigned.length) {
+        rolesAssigned = rolesAssigned.map((item) => {
+          return {
+            ...roles.find((role) => role.id === item.roleId)
+          };
+        }) as any;
+      }
+
+      console.log(rolesAssigned)
+
       return {
         ...rule,
-        isAssigned: isAssigned
+        isAssigned: isAssigned,
+        assignedTo: rolesAssigned
       };
     });
   }
@@ -420,6 +445,16 @@ const HomePage = () => {
             },
             {
               content: (
+                <AssignUserRules
+                  key={selectedRow.data.id}
+                  title={selectedRow.data.fullName}
+                  items={userRules}
+                />
+              ),
+              title: 'Rules'
+            },
+            {
+              content: (
                 <AssignUserRoles
                   key={selectedRow.data.id}
                   title={selectedRow.data.fullName}
@@ -428,16 +463,6 @@ const HomePage = () => {
               ),
               title: 'Roles'
             },
-            {
-              content: (
-                <AssignUserRules
-                  key={selectedRow.data.id}
-                  title={selectedRow.data.fullName}
-                  items={userRules}
-                />
-              ),
-              title: 'Rules'
-            }
           ]}
           onReturnClick={handleTogglePanel}
         />

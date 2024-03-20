@@ -80,7 +80,7 @@ const AssignHeader = ({
     roleRulesForRole?.forEach((roleRule) => ruleIds.add(roleRule.ruleId));
   });
 
-  const allAssignmentsCount = ruleIds.size;
+  const allAssignmentsCount = ruleIds.size + directlyAssignedCount;
 
   // Determine data for radio buttons or text view
   let data = [];

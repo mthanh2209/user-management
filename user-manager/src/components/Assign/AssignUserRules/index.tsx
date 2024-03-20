@@ -93,7 +93,7 @@ const AssignUserRules = ({ items, title }: IAssignRule) => {
 
   return (
     <AssignItem
-      items={items}
+      items={ruleState}
       title={title}
       optionName='rule'
       userRoles={userRoles}
