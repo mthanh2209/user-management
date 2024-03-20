@@ -12,7 +12,6 @@ import { ItemAssign } from '@types';
 import { AssignmentOptions } from '@constants';
 
 interface IAssignBody {
-  src?: string;
   items: ItemAssign[];
   isModifying: boolean;
   selectedType: AssignmentOptions;
@@ -20,7 +19,6 @@ interface IAssignBody {
 }
 
 const AssignBody = ({
-  src,
   items,
   isModifying,
   selectedType,
@@ -40,7 +38,7 @@ const AssignBody = ({
             item.isAssigned ||
             Boolean(item.assignedTo?.length)) && (
             <li key={item.id} className='panel-assign-body-list'>
-              {src || item.bgColor ? (
+              {item.avatar || item.bgColor ? (
                 <AssignAvatarTextItem
                   id={item.id}
                   name={item.name}
@@ -48,7 +46,7 @@ const AssignBody = ({
                   isModifying={isModifying}
                   isAssigned={item.isAssigned}
                   handleItemSelect={handleItemSelect}
-                  src={src}
+                  src={item.avatar}
                 />
               ) : (
                 <AssignTextItem

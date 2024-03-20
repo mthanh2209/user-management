@@ -25,7 +25,6 @@ import {
 } from '@constants';
 
 interface IAssignItem {
-  src?: string;
   items: ItemAssign[];
   title: string;
   optionName: string;
@@ -37,7 +36,6 @@ interface IAssignItem {
 }
 
 const AssignItem = ({
-  src,
   items,
   title,
   optionName,
@@ -117,7 +115,6 @@ const AssignItem = ({
       </div>
 
       <AssignBody
-        src={src}
         items={filteredItems}
         isModifying={isModifying}
         selectedType={selectedType}
