@@ -23,3 +23,14 @@
 .input-uploader {
   display: none;
 }
+
+@media (max-width: 320px) {
+  .uploader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .uploader-button {
+    font-size: var(--font-sm);
+  }
+}

@@ -47,7 +47,7 @@ const AssignTextItem = ({
           </div>
         </>
       ) : (
-        <div className='panel-assign-body-item'>
+        <div className='panel-assign-body-item item-checkbox'>
           {isModifying && (
             <input
               type='checkbox'

@@ -154,7 +154,8 @@ const RolePage = () => {
    * @param userId - The ID of the user.
    */
   const handleNavigateToUser = (userId: number) => () => {
-    const userIndex = roleUsers?.findIndex((roleUser) => roleUser.id === userId) ?? -1;
+    const userIndex =
+      roleUsers?.findIndex((roleUser) => roleUser.id === userId) ?? -1;
     const index = userIndex >= 0 ? userIndex + 1 : -1;
 
     setSelectedRow({ index, data: usersData[userIndex] });
@@ -210,6 +211,10 @@ const RolePage = () => {
     if (showSidebar || showSidebar === null) {
       setShowSidebar(true);
     } else if (!showSidebar) {
+      setShowSidebar(false);
+    }
+
+    if (window.innerWidth <= 768) {
       setShowSidebar(false);
     }
   };
@@ -356,6 +361,7 @@ const RolePage = () => {
           src={selectedRow.data.avatar}
           bgColor={selectedRow.data.bgColor}
           fullName={selectedRow.data.name}
+          additionalClass='roles'
           data={infoListViewRole}
           onShowPanel={handleTogglePanel}
         />

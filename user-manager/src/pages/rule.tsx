@@ -232,10 +232,12 @@ const RulePage = () => {
 
       {showSidebar && selectedRow.data !== null && (
         <InformationSidebar
+          ruleId={selectedRow.data.id}
           title='Rule information'
           isShowIcon={false}
           additionalClass='rules'
           data={infoListViewRule}
+          isBackIcon={true}
         />
       )}
     </>

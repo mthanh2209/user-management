@@ -32,3 +32,11 @@
   height: 100%;
   object-fit: cover;
 }
+
+@media (max-width: 320px) {
+  .avatar-lg {
+    width: 90px;
+    height: 90px;
+    font-size: 70px;
+  }
+}

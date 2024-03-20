@@ -84,5 +84,21 @@
   width: 13px;
   height: 13px;
   background: url('../../../assets/images/shield-icon-selected.svg')
-    no-repeat;
+  no-repeat;
+}
+
+@media (max-width: 320px) {
+  .panel-assign-body-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .panel-assign-body-directly {
+    padding: 0;
+  }
+
+  .item-checkbox {
+    flex-direction: row;
+    align-items: center;
+  }
 }

@@ -247,6 +247,10 @@ const HomePage = () => {
     } else if (!showSidebar) {
       setShowSidebar(false);
     }
+
+    if (window.innerWidth <= 768) {
+      setShowSidebar(false);
+    }
   };
 
   /**
@@ -392,6 +396,7 @@ const HomePage = () => {
           src={selectedRow.data.avatar}
           bgColor={selectedRow.data.bgColor}
           fullName={selectedRow.data.fullName}
+          additionalClass='users'
           data={infoListViewUser}
           onShowPanel={handleTogglePanel}
         />

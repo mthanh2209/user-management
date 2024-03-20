@@ -15,3 +15,9 @@
 .text-area:focus {
   border: 1px solid var(--primary-color);
 }
+
+@media (max-width: 320px) {
+  .text-area {
+    width: 170px;
+  }
+}
