@@ -1,11 +1,12 @@
 /**
  * Enum representing different types of toast types.
  */
-export const TOAST_TYPE = {
+export const TYPES = {
   IDLE: 'idle',
   PROCESSING: 'processing',
   ERROR: 'error',
-  SUCCESS: 'success'
+  SUCCESS: 'success',
+  SELECTED_ROW: 'selectedRow'
 };
 
 /**

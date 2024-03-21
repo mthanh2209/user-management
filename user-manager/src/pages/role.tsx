@@ -44,7 +44,7 @@ import {
 import {
   INFO_TYPE,
   PATH,
-  TOAST_TYPE
+  TYPES
 } from '@constants';
 
 // Stores
@@ -101,11 +101,8 @@ const COLUMNS = (searchKeyword: string): IColumnProps<IRole>[] => {
 };
 
 const RolePage = () => {
-  const {
-    dispatch,
-    selectedRow,
-    setSelectedRow
-  } = useContext(Context);
+  const { state, dispatch } = useContext(Context);
+  const { selectedRow } = state;
 
   const [showSidebar, setShowSidebar] = useState(true);
   const [searchKeyword, setSearchKeyword] = useState('');
@@ -144,7 +141,11 @@ const RolePage = () => {
       roleRules?.findIndex((roleRule) => roleRule.id === ruleId) ?? -1;
     const index = ruleIndex >= 0 ? ruleIndex + 1 : -1;
 
-    setSelectedRow({ index, data: rulesData[ruleIndex] });
+    dispatch({
+      type: TYPES.SELECTED_ROW,
+      payload: { index, data: rulesData[ruleIndex] }
+    });
+
     navigate(PATH.RULES_PATH);
   };
 
@@ -158,7 +159,11 @@ const RolePage = () => {
       roleUsers?.findIndex((roleUser) => roleUser.id === userId) ?? -1;
     const index = userIndex >= 0 ? userIndex + 1 : -1;
 
-    setSelectedRow({ index, data: usersData[userIndex] });
+    dispatch({
+      type: TYPES.SELECTED_ROW,
+      payload: { index, data: usersData[userIndex] }
+    });
+
     navigate(PATH.HOME_PATH);
   };
 
@@ -207,7 +212,11 @@ const RolePage = () => {
    * @param dataItem - Data of the selected row.
    */
   const handleSelectedRow = (index: number, dataItem: IRole): void => {
-    setSelectedRow({ index, data: dataItem });
+    dispatch({
+      type: TYPES.SELECTED_ROW,
+      payload: { index, data: dataItem }
+    });
+
     if (showSidebar || showSidebar === null) {
       setShowSidebar(true);
     } else if (!showSidebar) {
@@ -245,19 +254,22 @@ const RolePage = () => {
    * Deletes the selected role and updates the role list.
    */
   const handleDeleteRoles = async () => {
-    dispatch({ type: TOAST_TYPE.PROCESSING });
+    dispatch({ type: TYPES.PROCESSING });
 
     if (selectedRow.data) {
       const response = await deleteRole(selectedRow.data.id);
 
       if (response.data) {
-        setSelectedRow({ index: 0, data: null });
+        dispatch({
+          type: TYPES.SELECTED_ROW,
+          payload: { index: 0, data: null }
+        });
 
         mutateRoles();
 
-        dispatch({ type: TOAST_TYPE.SUCCESS });
+        dispatch({ type: TYPES.SUCCESS });
       } else {
-        dispatch({ type: TOAST_TYPE.ERROR });
+        dispatch({ type: TYPES.ERROR });
       }
     }
   };
@@ -267,23 +279,23 @@ const RolePage = () => {
    * @param {IRole} itemData - Updated role data.
    */
   const handleUpdateRoles = async (itemData: IRole) => {
-    dispatch({ type: TOAST_TYPE.PROCESSING });
+    dispatch({ type: TYPES.PROCESSING });
 
     const response = await editRole(itemData);
 
     if (response.data) {
-      setSelectedRow({
-        index: selectedRow.index,
-        data: itemData
+      dispatch({
+        type: TYPES.SELECTED_ROW,
+        payload: { index: selectedRow.index, data: itemData }
       });
 
       mutateRoles();
 
       setShowSidebar(true);
 
-      dispatch({ type: TOAST_TYPE.SUCCESS });
+      dispatch({ type: TYPES.SUCCESS });
     } else {
-      dispatch({ type: TOAST_TYPE.ERROR });
+      dispatch({ type: TYPES.ERROR });
     }
   };
 

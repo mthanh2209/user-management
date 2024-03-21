@@ -4,7 +4,7 @@ import { useContext, useState } from 'react';
 import AssignItem from '@components/Assign/AssignItem';
 
 // Constants
-import { TOAST_TYPE } from '@constants';
+import { TYPES } from '@constants';
 
 // Helpers
 import {
@@ -33,13 +33,14 @@ interface IAssignRoleRules {
 const AssignRoleRules = ({ items, title }: IAssignRoleRules) => {
   const [ruleState, setRuleState] = useState<ItemAssign[]>(items);
 
-  const { dispatch, selectedRow } = useContext(Context);
+  const { state, dispatch } = useContext(Context);
+  const { selectedRow } = state;
 
   const { data: roleRules, mutate: mutateRoleRules } = getRoleRules();
 
   // Handles the selection of a rule for assignment to a role.
   const handleItemSelect = (id: number) => async () => {
-    dispatch({ type: TOAST_TYPE.PROCESSING });
+    dispatch({ type: TYPES.PROCESSING });
 
     const isCurrentlyAssigned = isItemAssignedToRole(
       selectedRow.data.id,
@@ -63,7 +64,7 @@ const AssignRoleRules = ({ items, title }: IAssignRoleRules) => {
 
     const data = res && res.data;
     if (!data) {
-      dispatch({ type: TOAST_TYPE.ERROR });
+      dispatch({ type: TYPES.ERROR });
       return;
     }
 
@@ -78,7 +79,7 @@ const AssignRoleRules = ({ items, title }: IAssignRoleRules) => {
 
     setRuleState(newRules);
 
-    dispatch({ type: TOAST_TYPE.SUCCESS });
+    dispatch({ type: TYPES.SUCCESS });
   };
 
   return (

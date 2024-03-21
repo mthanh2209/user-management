@@ -59,7 +59,8 @@ const AssignHeader = ({
   singleOption,
   onTypeChange
 }: AssignHeaderProp) => {
-  const { selectedRow } = useContext(Context);
+  const { state } = useContext(Context);
+  const { selectedRow } = state;
 
   // Count directly assigned items
   const directlyAssignedCount =
