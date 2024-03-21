@@ -14,19 +14,13 @@ export interface IToastContainer {
 const Toast = ({ type, position = 'top-right' }: IToastContainer) => {
   const [showToast, setShowToast] = useState(false);
 
-  const toastMessage =
-    type === TOAST_TYPE.SUCCESS ? 'Done' : 'Failed';
-
-  const iconClass =
-    type === TOAST_TYPE.SUCCESS ? 'success-icon' : 'error-icon';
-
   useEffect(() => {
-    let timer: NodeJS.Timeout;
+    let timer: number;
 
     if (type === TOAST_TYPE.SUCCESS || type === TOAST_TYPE.ERROR) {
       setShowToast(true);
 
-      timer = setTimeout(() => {
+      timer = window.setTimeout(() => {
         setShowToast(false);
       }, LOADING.TIMER_HIDE_LOADING);
     } else {
@@ -34,21 +28,44 @@ const Toast = ({ type, position = 'top-right' }: IToastContainer) => {
     }
 
     return () => {
-      clearTimeout(timer);
+      if (timer) {
+        clearTimeout(timer);
+      }
     };
   }, [type]);
 
+  const getMessage = () => {
+    switch (type) {
+      case TOAST_TYPE.SUCCESS:
+        return 'Done';
+      case TOAST_TYPE.ERROR:
+        return 'Fail';
+      default:
+        return '';
+    }
+  };
+
+  const getIcon = () => {
+    switch (type) {
+      case TOAST_TYPE.SUCCESS:
+        return 'success-icon';
+      case TOAST_TYPE.ERROR:
+        return 'error-icon';
+      default:
+        return '';
+    }
+  };
+
   return (
     <>
-      {showToast &&
-        (type === TOAST_TYPE.SUCCESS || type === TOAST_TYPE.ERROR) && (
-          <div className={`toast-wrapper ${position}`}>
-            <div className='toast'>
-              <p className='toast-message'>{toastMessage}</p>
-              <span className={`toast-icon ${iconClass}`} />
-            </div>
+      {showToast && (
+        <div className={`toast-wrapper ${position}`}>
+          <div className='toast'>
+            <p className='toast-message'>{getMessage()}</p>
+            <span className={`toast-icon ${getIcon()}`} />
           </div>
-        )}
+        </div>
+      )}
     </>
   );
 };
