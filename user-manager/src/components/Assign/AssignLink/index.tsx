@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // Constants
-import { PATH } from '@constants';
+import { PATH, TYPES } from '@constants';
 
 // Services
 import { getRoles } from '@services';
@@ -20,7 +20,7 @@ interface IAssignLink {
 }
 
 const AssignLink = ({ assignTo }: IAssignLink) => {
-  const { setSelectedRow } = useContext(Context);
+  const { dispatch } = useContext(Context);
 
   const { data: roles } = getRoles();
 
@@ -35,7 +35,11 @@ const AssignLink = ({ assignTo }: IAssignLink) => {
     const roleIndex = roles?.findIndex((role) => role.id === roleId);
     const index = roleIndex !== -1 ? roleIndex + 1 : 0;
 
-    setSelectedRow({ index, data: roles[roleIndex] });
+    dispatch({
+      type: TYPES.SELECTED_ROW,
+      payload: { index, data: roles[roleIndex] }
+    });
+
     navigate(PATH.ROLES_PATH);
   };
 

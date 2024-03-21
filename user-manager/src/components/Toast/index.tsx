@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import '@components/Toast/Toast.css';
 
 // Constants
-import { LOADING, TOAST_TYPE } from '@constants';
+import { LOADING, TYPES } from '@constants';
 
 export interface IToastContainer {
   position?: string;
@@ -17,7 +17,7 @@ const Toast = ({ type, position = 'top-right' }: IToastContainer) => {
   useEffect(() => {
     let timer: number;
 
-    if (type === TOAST_TYPE.SUCCESS || type === TOAST_TYPE.ERROR) {
+    if (type === TYPES.SUCCESS || type === TYPES.ERROR) {
       setShowToast(true);
 
       timer = window.setTimeout(() => {
@@ -36,9 +36,9 @@ const Toast = ({ type, position = 'top-right' }: IToastContainer) => {
 
   const getMessage = () => {
     switch (type) {
-      case TOAST_TYPE.SUCCESS:
+      case TYPES.SUCCESS:
         return 'Done';
-      case TOAST_TYPE.ERROR:
+      case TYPES.ERROR:
         return 'Fail';
       default:
         return '';
@@ -47,9 +47,9 @@ const Toast = ({ type, position = 'top-right' }: IToastContainer) => {
 
   const getIcon = () => {
     switch (type) {
-      case TOAST_TYPE.SUCCESS:
+      case TYPES.SUCCESS:
         return 'success-icon';
-      case TOAST_TYPE.ERROR:
+      case TYPES.ERROR:
         return 'error-icon';
       default:
         return '';

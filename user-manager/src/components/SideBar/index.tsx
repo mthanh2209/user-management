@@ -5,13 +5,19 @@ import '@components/SideBar/SideBar.css';
 
 // Components
 import { Status, Avatar } from '@components';
-import SideBarInfo, { SideBarInfoProps } from '@components/SideBar/SideBarInfo';
+import
+  SideBarInfo, {
+  SideBarInfoProps
+  } from '@components/SideBar/SideBarInfo';
 
 // Services
 import { getRules } from '@services';
 
 // Stores
 import { Context } from '@stores';
+
+// Constants
+import { TYPES } from '@constants';
 
 interface ISideBarProps {
   ruleId?: number;
@@ -43,23 +49,27 @@ const InformationSidebar = ({
   onShowPanel
 }: ISideBarProps) => {
   const { data: rulesData } = getRules();
-  const { setSelectedRow } = useContext(Context);
+  const { dispatch } = useContext(Context);
 
   const handleBack = () => {
     const ruleIndex = rulesData?.findIndex((rule) => rule.id === ruleId) ?? -1;
     const selectedIndex = ruleIndex >= 0 ? ruleIndex + 1 : -1;
 
-    setSelectedRow({ index: selectedIndex, data: null });
+    dispatch({
+      type: TYPES.SELECTED_ROW,
+      payload: { index: selectedIndex, data: null }
+    });
   };
 
   return (
     <article className={`sidebar ${additionalClass}`}>
       <header className='sidebar-header'>
-        {isBackIcon && (
-          <span className='back-icon' onClick={handleBack}></span>
-        )}
+        {isBackIcon && <span className='back-icon' onClick={handleBack}></span>}
+
         <h2 className='sidebar-title'>{title}</h2>
+
         {isShowStatus && <Status isActive={isActive} />}
+
         {isShowIcon && (
           <span className='edit-icon' onClick={onShowPanel}></span>
         )}
@@ -71,6 +81,7 @@ const InformationSidebar = ({
           <p className='info-name'>{fullName}</p>
         </div>
       )}
+
       <div className='info-list'>
         <SideBarInfo data={data} />
       </div>
