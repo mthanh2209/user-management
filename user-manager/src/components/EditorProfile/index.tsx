@@ -30,7 +30,7 @@ import { isEmailValid, isFullNameValid } from '@helpers/string';
 import { Context } from '@stores';
 
 // Constants
-import { TOAST_TYPE } from '@constants';
+import { TYPES } from '@constants';
 
 interface IEditorProfile {
   id: number;
@@ -90,7 +90,7 @@ const EditorProfile = ({
     const fullNameError = isFullNameValid(formData.fullName);
 
     if (fullNameError) {
-      dispatch({ type: TOAST_TYPE.ERROR });
+      dispatch({ type: TYPES.ERROR });
       return;
     }
 

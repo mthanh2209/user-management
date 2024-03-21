@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import '@components/Toast/Toast.css';
 
 // Constants
-import { LOADING, TOAST_TYPE } from '@constants';
+import { LOADING, TYPES } from '@constants';
 
 export interface IToastContainer {
   position?: string;
@@ -15,15 +15,15 @@ const Toast = ({ type, position = 'top-right' }: IToastContainer) => {
   const [showToast, setShowToast] = useState(false);
 
   const toastMessage =
-    type === TOAST_TYPE.SUCCESS ? 'Done' : 'Failed';
+    type === TYPES.SUCCESS ? 'Done' : 'Failed';
 
   const iconClass =
-    type === TOAST_TYPE.SUCCESS ? 'success-icon' : 'error-icon';
+    type === TYPES.SUCCESS ? 'success-icon' : 'error-icon';
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
 
-    if (type === TOAST_TYPE.SUCCESS || type === TOAST_TYPE.ERROR) {
+    if (type === TYPES.SUCCESS || type === TYPES.ERROR) {
       setShowToast(true);
 
       timer = setTimeout(() => {
@@ -41,7 +41,7 @@ const Toast = ({ type, position = 'top-right' }: IToastContainer) => {
   return (
     <>
       {showToast &&
-        (type === TOAST_TYPE.SUCCESS || type === TOAST_TYPE.ERROR) && (
+        (type === TYPES.SUCCESS || type === TYPES.ERROR) && (
           <div className={`toast-wrapper ${position}`}>
             <div className='toast'>
               <p className='toast-message'>{toastMessage}</p>
