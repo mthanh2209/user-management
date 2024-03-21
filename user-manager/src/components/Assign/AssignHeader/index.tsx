@@ -1,3 +1,5 @@
+import { useContext } from 'react';
+
 // CSS
 import '@components/Assign/AssignHeader/AssignHeader.css';
 
@@ -7,7 +9,12 @@ import TextView from '@components/EditorProfile/TextView';
 import Button from '@components/Button';
 
 // Types
-import { ItemAssign } from '@types';
+import {
+  IRoleRule,
+  IUserRole,
+  IUserRule,
+  ItemAssign
+} from '@types';
 
 // Constants
 import {
@@ -15,11 +22,24 @@ import {
   SingleOptionTypes
 } from '@constants';
 
+// Stores
+import { Context } from '@stores';
+
+// Helpers
+import {
+  getRoleRulesForRole,
+  getUserRolesForUser,
+  getUserRulesForUser
+} from '@helpers/array';
+
 interface AssignHeaderProp {
   items: ItemAssign[];
   title: string;
   optionName: string;
   isModifying: boolean;
+  userRules?: IUserRule[];
+  userRoles?: IUserRole[];
+  roleRules?: IRoleRule[];
   onModifyClick: () => void;
   selectedType: AssignmentOptions;
   singleOption?: SingleOptionTypes;
@@ -31,48 +51,85 @@ const AssignHeader = ({
   title,
   optionName,
   isModifying,
+  userRules,
+  userRoles,
+  roleRules,
   onModifyClick,
   selectedType,
   singleOption,
   onTypeChange
 }: AssignHeaderProp) => {
+  const { state } = useContext(Context);
+  const { selectedRow } = state;
+
+  // Count directly assigned items
   const directlyAssignedCount =
     items.filter((item) => item.isAssigned).length || 0;
 
-  const allAssignmentsCount = items.length || 0;
+  // Get user rules and roles
+  const userRulesForUser = getUserRulesForUser(userRules, selectedRow.data.id);
+  const userRolesForUser = getUserRolesForUser(userRoles, selectedRow.data.id);
 
-  const data = singleOption
-    ? [
-        {
-          id: singleOption.toLowerCase().replace(' ', '-'),
-          name: optionName,
-          value: singleOption,
-          label: `${singleOption} (${directlyAssignedCount})`,
-          isChecked: false,
-          onChange: () => {}
-        }
-      ]
-    : [
-        {
-          id: 'assigned-directly',
-          name: optionName,
-          value: 'Assigned directly',
-          label: `Assigned directly (${directlyAssignedCount})`,
-          isChecked: selectedType === AssignmentOptions.AssignDirectly,
-          onChange: () => {}
-        },
-        {
-          id: 'all-assignments',
-          name: optionName,
-          value: 'All assignments',
-          label: `All assignments (${allAssignmentsCount})`,
-          isChecked: selectedType === AssignmentOptions.AllAssignment,
-          onChange: () => {}
-        }
-      ];
+  // Extract unique rule ids
+  const ruleIds = new Set();
 
+  userRulesForUser?.forEach((userRule) => ruleIds.add(userRule.ruleId));
+
+  userRolesForUser?.forEach((userRole) => {
+    const roleRulesForRole = getRoleRulesForRole(roleRules, userRole.roleId);
+
+    roleRulesForRole?.forEach((roleRule) => ruleIds.add(roleRule.ruleId));
+  });
+
+  const allAssignmentsCount = ruleIds.size + directlyAssignedCount;
+
+  // Determine data for radio buttons or text view
+  let data = [];
+
+  if (singleOption) {
+    if (directlyAssignedCount > 0) {
+      data.push({
+        id: singleOption.toLowerCase().replace(' ', '-'),
+        name: optionName,
+        value: singleOption,
+        label: `${singleOption} (${directlyAssignedCount})`,
+        isChecked: false,
+        onChange: () => {}
+      });
+    } else {
+      const noSingleOptionLabel = `No ${singleOption.toLowerCase()}`;
+      data.push({
+        id: 'no-single-option',
+        name: optionName,
+        value: noSingleOptionLabel,
+        label: noSingleOptionLabel,
+        isChecked: false,
+        onChange: () => {}
+      });
+    }
+  } else {
+    data = [
+      {
+        id: 'assigned-directly',
+        name: optionName,
+        value: 'Assigned directly',
+        label: `Assigned directly (${directlyAssignedCount})`,
+        isChecked: selectedType === AssignmentOptions.AssignDirectly,
+        onChange: () => {}
+      },
+      {
+        id: 'all-assignments',
+        name: optionName,
+        value: 'All assignments',
+        label: `All assignments (${allAssignmentsCount})`,
+        isChecked: selectedType === AssignmentOptions.AllAssignment,
+        onChange: () => {}
+      }
+    ];
+  }
+
+  // Determine whether to show radio buttons or text view
   const showRadioBtnView = data.length > 1;
-
   const showTextView = !showRadioBtnView && data[0];
 
   return (
@@ -95,7 +152,11 @@ const AssignHeader = ({
 
         {showTextView && (
           <TextView
-            content={`${data[0].value} (${directlyAssignedCount})`}
+            content={
+              directlyAssignedCount > 0
+                ? `${data[0].value} (${directlyAssignedCount})`
+                : data[0].value
+            }
           />
         )}
       </div>

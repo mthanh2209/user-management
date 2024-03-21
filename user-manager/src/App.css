@@ -1,7 +1,6 @@
 .main-header {
   display: flex;
   align-items: center;
-  height: 64px;
   font-weight: var(--fw-medium);
   font-size: var(--font-md);
   color: var(--secondary-color);
@@ -15,7 +14,12 @@
 }
 
 .body-content {
+  display: flex;
+  width: 100%;
   padding: 10px;
+}
+
+.content {
   width: 100%;
 }
 
@@ -28,5 +32,11 @@
     height: 23px;
     cursor: pointer;
     margin-right: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .body-content {
+    padding: 0;
   }
 }

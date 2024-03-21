@@ -31,12 +31,14 @@ import {
   getRoles,
   getUserRoles,
   getUserRules,
-  getRules
+  getRules,
+  getRoleRules
 } from '@services';
 
 // Types
 import {
   IColumnProps,
+  IRoleRule,
   IUser,
   ItemAssign
 } from '@types';
@@ -45,7 +47,7 @@ import {
 import {
   INFO_TYPE,
   PATH,
-  TOAST_TYPE
+  TYPES
 } from '@constants';
 
 // Stores
@@ -123,11 +125,8 @@ const COLUMNS = (searchKeyword: string): IColumnProps<IUser>[] => {
 };
 
 const HomePage = () => {
-  const {
-    dispatch,
-    selectedRow,
-    setSelectedRow,
-  } = useContext(Context);
+  const { state, dispatch } = useContext(Context);
+  const { selectedRow } = state;
 
   const [searchKeyword, setSearchKeyword] = useState('');
   const [showSidebar, setShowSidebar] = useState(true);
@@ -142,6 +141,7 @@ const HomePage = () => {
   const { data: rulesData } = getRules();
   const { data: userRolesData } = getUserRoles();
   const { data: userRulesData } = getUserRules();
+  const { data: roleRules } = getRoleRules();
 
   // Filter the data
   const roles = filterRolesOfUser(
@@ -165,7 +165,10 @@ const HomePage = () => {
     const roleIndex = rolesData?.findIndex((role) => role.id === roleId);
     const index = roleIndex !== -1 ? roleIndex + 1 : 0;
 
-    setSelectedRow({ index, data: rolesData[roleIndex] });
+    dispatch({
+      type: TYPES.SELECTED_ROW,
+      payload: { index, data: rolesData[roleIndex] }
+    });
     navigate(PATH.ROLES_PATH);
   };
 
@@ -178,7 +181,10 @@ const HomePage = () => {
     const ruleIndex = rulesData?.findIndex((rule) => rule.id === ruleId);
     const index = ruleIndex !== -1 ? ruleIndex + 1 : 0;
 
-    setSelectedRow({ index, data: rulesData[ruleIndex] });
+    dispatch({
+      type: TYPES.SELECTED_ROW,
+      payload: { index, data: rulesData[ruleIndex] }
+    });
     navigate(PATH.RULES_PATH);
   };
 
@@ -192,10 +198,10 @@ const HomePage = () => {
     {
       type: INFO_TYPE.TEXT_VIEW,
       icon: 'icon-date',
-      title: 'Last visited:',
+      title: 'Last Modified:',
       content:
-        selectedRow.data?.lastVisitedDate !== null
-          ? formatDate(selectedRow.data?.lastVisitedDate)
+        selectedRow.data?.lastModifiedDate !== null
+          ? formatDate(selectedRow.data?.lastModifiedDate)
           : 'Unknown'
     },
     {
@@ -213,7 +219,7 @@ const HomePage = () => {
           icon: 'icon-rule',
           title: `Rules (${rules.length})`,
           content: rules.map((rule) => ({
-            text: rule?.name,
+            text: rule?.description,
             onClick: handleNavigateToRule(rule?.id!)
           }))
         }
@@ -241,7 +247,11 @@ const HomePage = () => {
    * @param {IUser} dataItem - Data of the selected user.
    */
   const handleSelectedRow = (index: number, dataItem: IUser): void => {
-    setSelectedRow({ index, data: dataItem });
+    dispatch({
+      type: TYPES.SELECTED_ROW,
+      payload: { index, data: dataItem }
+    });
+
     if (showSidebar || showSidebar === null) {
       setShowSidebar(true);
     } else if (!showSidebar) {
@@ -279,19 +289,22 @@ const HomePage = () => {
    * Deletes the selected user and updates the user list.
    */
   const handleDeleteUsers = async () => {
-    dispatch({ type: TOAST_TYPE.PROCESSING });
+    dispatch({ type: TYPES.PROCESSING });
 
     if (selectedRow.data) {
       const response = await deleteUser(selectedRow.data.id);
 
       if (response.data) {
-        setSelectedRow({ index: 0, data: null });
+        dispatch({
+          type: TYPES.SELECTED_ROW,
+          payload: { index: 0, data: null }
+        });
 
         mutateUsers();
 
-        dispatch({ type: TOAST_TYPE.SUCCESS });
+        dispatch({ type: TYPES.SUCCESS });
       } else {
-        dispatch({ type: TOAST_TYPE.ERROR });
+        dispatch({ type: TYPES.ERROR });
       }
     }
   };
@@ -301,23 +314,23 @@ const HomePage = () => {
    * @param {IUser} itemData - Updated user data.
    */
   const handleUpdateUsers = async (itemData: IUser) => {
-    dispatch({ type: TOAST_TYPE.PROCESSING });
+    dispatch({ type: TYPES.PROCESSING });
 
     const response = await editUser(itemData);
 
     if (response.data) {
-      setSelectedRow({
-        index: selectedRow.index,
-        data: itemData
+      dispatch({
+        type: TYPES.SELECTED_ROW,
+        payload: { index: selectedRow.index, data: itemData }
       });
 
       mutateUsers();
 
       setShowSidebar(true);
 
-      dispatch({ type: TOAST_TYPE.SUCCESS });
+      dispatch({ type: TYPES.SUCCESS });
     } else {
-      dispatch({ type: TOAST_TYPE.ERROR });
+      dispatch({ type: TYPES.ERROR });
     }
   };
 
@@ -364,16 +377,45 @@ const HomePage = () => {
           userRule.ruleId === rule.id
       );
 
+      // Filter the role rules that match both role and rule of the current iteration
+      let rolesAssigned: IRoleRule[] = [];
+
+      if (roleRules && roleRules.length && roles) {
+        rolesAssigned = roleRules.filter((item) => {
+          const role = roles.find((role) => role && role.id === item.roleId);
+          return role && item.ruleId === rule.id;
+        });
+      }
+
+      // If any roles are assigned, map them to include additional information
+      if (rolesAssigned.length) {
+        rolesAssigned = rolesAssigned
+          .map((item) => {
+            const filteredRoles = roles.filter(
+              (role) => role?.id === item.roleId
+            ); // Filter out potentially undefined roles
+            const role = filteredRoles.length ? filteredRoles[0] : undefined; // Get the first role (if any) from the filtered list
+            if (role) {
+              return {
+                ...role
+              };
+            }
+            return null; // Or handle the case where role is undefined
+          })
+          .filter(Boolean) as any; // Filter out potential null values
+      }
+
       return {
         ...rule,
-        isAssigned: isAssigned
+        isAssigned: isAssigned,
+        assignedTo: rolesAssigned
       };
     });
   }
 
   return (
-    <>
-      <div className='body-content'>
+    <div className='body-content'>
+      <div className='content'>
         <Toolbar
           content='Users'
           onClose={handleCloseSearchBar}
@@ -415,7 +457,7 @@ const HomePage = () => {
                   email={selectedRow.data.email}
                   isActive={selectedRow.data.isActive}
                   registeredDate={selectedRow.data.registeredDate}
-                  lastVisitedDate={selectedRow.data.lastVisitedDate}
+                  lastModifiedDate={selectedRow.data.lastModifiedDate}
                   details={selectedRow.data.details}
                   bgColor={selectedRow.data.bgColor}
                   onSaveUser={handleUpdateUsers}
@@ -426,16 +468,6 @@ const HomePage = () => {
             },
             {
               content: (
-                <AssignUserRoles
-                  key={selectedRow.data.id}
-                  title={selectedRow.data.fullName}
-                  items={userRoles}
-                />
-              ),
-              title: 'Roles'
-            },
-            {
-              content: (
                 <AssignUserRules
                   key={selectedRow.data.id}
                   title={selectedRow.data.fullName}
@@ -443,12 +475,22 @@ const HomePage = () => {
                 />
               ),
               title: 'Rules'
+            },
+            {
+              content: (
+                <AssignUserRoles
+                  key={selectedRow.data.id}
+                  title={selectedRow.data.fullName}
+                  items={userRoles}
+                />
+              ),
+              title: 'Roles'
             }
           ]}
           onReturnClick={handleTogglePanel}
         />
       )}
-    </>
+    </div>
   );
 };
 

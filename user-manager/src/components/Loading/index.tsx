@@ -14,14 +14,14 @@ const Loading = ({ isProcessing }: ILoadingProp) => {
   const [showLoading, setShowLoading] = useState(false);
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
+    let timer: number;
 
     if (!isProcessing) {
       setShowLoading(false);
     }
 
     setShowLoading(true);
-    timer = setTimeout(() => {
+    timer = window.setTimeout(() => {
       setShowLoading(false);
     }, LOADING.TIMER_LOADING);
 

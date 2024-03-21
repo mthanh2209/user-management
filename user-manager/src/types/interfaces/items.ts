@@ -18,6 +18,7 @@ export interface ItemViewProps {
 export interface ItemAssign {
   id: number;
   name: string;
+  avatar?: string;
   bgColor?: string;
   description?: string;
   isAssigned: boolean;

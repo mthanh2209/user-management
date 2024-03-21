@@ -5,11 +5,11 @@ import {
   IUser,
   IUserRole,
   IUserRule
-} from "@types";
+} from '@types';
 
 /**
  * Checks if an item is assigned to a user.
- * 
+ *
  * @param userId - The ID of the user.
  * @param itemId - The ID of the item.
  * @param userItems - The array of user items.
@@ -225,3 +225,39 @@ export const filterRolesOfUser = (
 
   return roleOfUser;
 };
+
+/**
+ * Retrieves user rules for a specific user.
+ *
+ * @param userRules - An array of user rules.
+ * @param userId - The ID of the user.
+ * @returns An array of user rules associated with the specified user.
+ */
+export const getUserRulesForUser = (
+  userRules: IUserRule[] | undefined,
+  userId: number
+) => userRules?.filter((userRule) => userRule.userId === userId);
+
+/**
+ * Retrieves user roles for a specific user.
+
+ * @param userRoles - An array of user roles.
+ * @param userId - The ID of the user.
+ * @returns An array of user roles associated with the specified user.
+ */
+export const getUserRolesForUser = (
+  userRoles: IUserRole[] | undefined,
+  userId: number
+) => userRoles?.filter((userRole) => userRole.userId === userId);
+
+/**
+ * Retrieves role rules for a specific role.
+ * 
+ * @param roleRules - An array of role rules.
+ * @param roleId - The ID of the role.
+ * @returns An array of role rules associated with the specified role.
+ */
+export const getRoleRulesForRole = (
+  roleRules: IRoleRule[] | undefined,
+  roleId: number
+) => roleRules?.filter((roleRule) => roleRule.roleId === roleId);

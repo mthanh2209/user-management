@@ -43,7 +43,7 @@ export const Default: Story = {
             email={''}
             isActive={true}
             registeredDate={null}
-            lastVisitedDate={null}
+            lastModifiedDate={null}
             details={''}
             bgColor={getRandomColor()}
             onSaveUser={() => {}}

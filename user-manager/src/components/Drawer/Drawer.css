@@ -15,7 +15,6 @@
 
 .drawer-wrapper.left {
   width: 210px;
-  height: 100vh;
 }
 
 .drawer-wrapper.bottom {
@@ -29,7 +28,6 @@
   position: absolute;
   right: 0;
   width: 210px;
-  height: 100vh;
 }
 
 @media (max-width: 1200px) {
@@ -52,5 +50,6 @@
 @media (max-width: 320px) {
   .drawer-wrapper.left {
     width: 100vw;
+    height: 100vh;
   }
 }

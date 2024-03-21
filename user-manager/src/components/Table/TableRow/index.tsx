@@ -21,6 +21,10 @@ const TableRow = <T,>({
   selectedRowIndex,
   onRowClick
 }: ITableRow<T>) => {
+  if (!rowData.length) {
+    return <div className='notification-message'>No data displayed</div>;
+  }
+
   return (
     <>
       {rowData.map((item, itemIndex) => (

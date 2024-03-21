@@ -30,7 +30,7 @@ import { isEmailValid, isFullNameValid } from '@helpers/string';
 import { Context } from '@stores';
 
 // Constants
-import { TOAST_TYPE } from '@constants';
+import { TYPES } from '@constants';
 
 interface IEditorProfile {
   id: number;
@@ -39,7 +39,7 @@ interface IEditorProfile {
   email: string;
   isActive: boolean;
   registeredDate: string | null;
-  lastVisitedDate: string | null;
+  lastModifiedDate: string | null;
   details: string;
   bgColor: string;
   onSaveUser: (itemData: IUser) => void;
@@ -53,7 +53,7 @@ const EditorProfile = ({
   email,
   isActive,
   registeredDate,
-  lastVisitedDate,
+  lastModifiedDate,
   details,
   bgColor,
   onSaveUser,
@@ -87,11 +87,10 @@ const EditorProfile = ({
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const emailError = isEmailValid(formData.email);
     const fullNameError = isFullNameValid(formData.fullName);
 
-    if (emailError || fullNameError) {
-      dispatch({ type: TOAST_TYPE.ERROR });
+    if (fullNameError) {
+      dispatch({ type: TYPES.ERROR });
       return;
     }
 
@@ -103,7 +102,7 @@ const EditorProfile = ({
       email: formData.email,
       isActive: formData.status,
       registeredDate: registeredDate,
-      lastVisitedDate: currentDate,
+      lastModifiedDate: currentDate,
       details: formData.details,
       bgColor
     };
@@ -214,8 +213,8 @@ const EditorProfile = ({
         />
 
         <TextView
-          label='Last visited'
-          content={lastVisitedDate ? formatDate(lastVisitedDate) : 'Unknown'}
+          label='Last Modified'
+          content={lastModifiedDate ? formatDate(lastModifiedDate) : 'Unknown'}
         />
 
         <div className='form-item form-item-details'>

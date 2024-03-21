@@ -13,7 +13,7 @@ import {
 } from '@components';
 
 // Constants
-import { PATH, TOAST_TYPE } from '@constants';
+import { PATH, TYPES } from '@constants';
 
 // Services
 import {
@@ -30,11 +30,7 @@ import { Context } from '@stores';
 import { findSelectedIndex } from '@helpers/object';
 
 const Layout = () => {
-  const {
-    state,
-    dispatch,
-    setSelectedRow
-  } = useContext(Context);
+  const { state, dispatch } = useContext(Context);
   const { toast } = state;
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -54,42 +50,46 @@ const Layout = () => {
    * @param userName - The name of the user to add.
    */
   const handleAddUser = async (userName: string) => {
-    dispatch({ type: TOAST_TYPE.PROCESSING });
+    dispatch({ type: TYPES.PROCESSING });
 
     const response = await addUser(userName);
 
     if (response.data) {
       const data = await mutateUser();
 
-      setSelectedRow({
-        index: data.length,
-        data: data[data.length - 1]
+      dispatch({
+        type: TYPES.SELECTED_ROW,
+        payload: { index: data.length, data: data[data.length - 1] }
       });
 
-      dispatch({ type: TOAST_TYPE.SUCCESS });
+      dispatch({ type: TYPES.SUCCESS });
+
+      setIsDrawerOpen(false);
       navigate(PATH.HOME_PATH);
     } else {
-      dispatch({ type: TOAST_TYPE.ERROR });
+      dispatch({ type: TYPES.ERROR });
     }
   };
 
   const handleAddRole = async (roleName: string) => {
-    dispatch({ type: TOAST_TYPE.PROCESSING });
+    dispatch({ type: TYPES.PROCESSING });
 
     const response = await addRole(roleName);
 
     if (response.data) {
       const data = await mutateRole();
 
-      setSelectedRow({
-        index: data.length,
-        data: data[data.length - 1]
+      dispatch({
+        type: TYPES.SELECTED_ROW,
+        payload: { index: data.length, data: data[data.length - 1] }
       });
 
-      dispatch({ type: TOAST_TYPE.SUCCESS });
+      dispatch({ type: TYPES.SUCCESS });
+
+      setIsDrawerOpen(false);
       navigate(PATH.ROLES_PATH);
     } else {
-      dispatch({ type: TOAST_TYPE.ERROR });
+      dispatch({ type: TYPES.ERROR });
     }
   };
 
@@ -114,7 +114,10 @@ const Layout = () => {
 
   // Helper function to reset the selected row in the table
   const resetSelectedRow = () => {
-    setSelectedRow({ index: 0, data: null });
+    dispatch({
+      type: TYPES.SELECTED_ROW,
+      payload: { index: 0, data: null }
+    });
   };
 
   /**
@@ -128,7 +131,7 @@ const Layout = () => {
       onClick: () => {
         resetSelectedRow();
         navigate(PATH.HOME_PATH);
-        setIsDrawerOpen(false)
+        setIsDrawerOpen(false);
       }
     },
     {
@@ -137,7 +140,7 @@ const Layout = () => {
       onClick: () => {
         resetSelectedRow();
         navigate(PATH.ROLES_PATH);
-        setIsDrawerOpen(false)
+        setIsDrawerOpen(false);
       }
     },
     {
@@ -146,7 +149,7 @@ const Layout = () => {
       onClick: () => {
         resetSelectedRow();
         navigate(PATH.RULES_PATH);
-        setIsDrawerOpen(false)
+        setIsDrawerOpen(false);
       }
     }
   ];

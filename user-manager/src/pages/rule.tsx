@@ -32,7 +32,13 @@ import { IColumnProps, IRule } from '@types';
 
 // Stores
 import { Context } from '@stores';
-import { INFO_TYPE, PATH } from '@constants';
+
+// Constants
+import {
+  INFO_TYPE,
+  PATH,
+  TYPES
+} from '@constants';
 
 /**
  * Column configuration for the rules table.
@@ -84,7 +90,8 @@ const COLUMNS = (searchKeyword: string): IColumnProps<IRule>[] => {
 };
 
 const RulePage = () => {
-  const { selectedRow, setSelectedRow } = useContext(Context);
+  const { state, dispatch } = useContext(Context);
+  const { selectedRow } = state;
 
   const [showSidebar, setShowSidebar] = useState(true);
   const [searchKeyword, setSearchKeyword] = useState('');
@@ -122,7 +129,11 @@ const RulePage = () => {
     const roleIndex = rolesData?.findIndex((role) => role.id === roleId);
     const index = roleIndex !== -1 ? roleIndex + 1 : 0;
 
-    setSelectedRow({ index, data: rolesData[roleIndex] });
+    dispatch({
+      type: TYPES.SELECTED_ROW,
+      payload: { index, data: rolesData[roleIndex] }
+    });
+
     navigate(PATH.ROLES_PATH);
   };
 
@@ -135,7 +146,11 @@ const RulePage = () => {
     const userIndex = usersData?.findIndex((user) => user.id === userId);
     const index = userIndex !== -1 ? userIndex + 1 : 0;
 
-    setSelectedRow({ index: index, data: usersData[userIndex] });
+    dispatch({
+      type: TYPES.SELECTED_ROW,
+      payload: { index: index, data: usersData[userIndex] }
+    });
+
     navigate(PATH.HOME_PATH);
   };
 
@@ -190,7 +205,11 @@ const RulePage = () => {
    * @param dataItem - Data of the selected row.
    */
   const handleSelectedRow = (index: number, dataItem: IRule): void => {
-    setSelectedRow({ index, data: dataItem });
+    dispatch({
+      type: TYPES.SELECTED_ROW,
+      payload: { index, data: dataItem }
+    });
+    
     if (showSidebar || showSidebar === null) {
       setShowSidebar(true);
     } else if (!showSidebar) {
@@ -214,8 +233,8 @@ const RulePage = () => {
   };
 
   return (
-    <>
-      <div className='body-content'>
+    <div className='body-content'>
+      <div className='content'>
         <Toolbar
           content='Rules'
           onClose={handleCloseSearchBar}
@@ -240,7 +259,7 @@ const RulePage = () => {
           isBackIcon={true}
         />
       )}
-    </>
+    </div>
   );
 };
 

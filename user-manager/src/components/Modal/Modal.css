@@ -81,3 +81,15 @@
   height: 20px;
   cursor: pointer;
 }
+
+@media (max-width: 320px) {
+  .modal-submit {
+    width: 285px;
+    min-width: auto;
+    padding: 12px;
+  }
+
+  .modal-submit .input-submit {
+    width: 155px;
+  }
+}
