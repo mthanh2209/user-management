@@ -1,52 +1,58 @@
-import { TOAST_TYPE } from '@constants';
+import { TYPES } from '@constants';
 
 export interface StateProp {
   toast: 'idle' | 'processing' | 'success' | 'error';
+  selectedRow: { index: number; data: any | null };
 }
 
-interface ActionProp {
-  type: keyof typeof TOAST_TYPE;
-  payload: any;
+export interface ActionProp {
+  type: keyof typeof TYPES;
+  payload?: any;
 }
 
 export const initialState: StateProp = {
-  toast: 'idle'
+  toast: 'idle',
+  selectedRow: { index: 0, data: null }
 };
 
 /**
  * Reducer function for managing the state of toasts.
  *
- * @param _state - The current state of the toast.
+ * @param state - The current state of the toast.
  * @param action - The action to be performed on the toast state.
  * @returns The new state after applying the specified action.
  * @throws An error if the action type is unhandled.
  */
-export const toastReducer = (
-  state: StateProp,
-  action: ActionProp
-): StateProp => {
+const Reducer = (state: StateProp, action: ActionProp): StateProp => {
   switch (action.type) {
-    case TOAST_TYPE.IDLE:
+    case TYPES.IDLE:
       return {
         ...state,
         toast: 'idle'
       };
-    case TOAST_TYPE.PROCESSING:
+    case TYPES.PROCESSING:
       return {
         ...state,
         toast: 'processing'
       };
-    case TOAST_TYPE.SUCCESS:
+    case TYPES.SUCCESS:
       return {
         ...state,
         toast: 'success'
       };
-    case TOAST_TYPE.ERROR:
+    case TYPES.ERROR:
       return {
         ...state,
         toast: 'error'
+      };
+    case TYPES.SELECTED_ROW:
+      return {
+        ...state, 
+        selectedRow: action.payload
       };
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }
 };
+
+export default Reducer;
