@@ -368,22 +368,31 @@ const HomePage = () => {
       );
 
       // Filter the role rules that match both role and rule of the current iteration
-      let rolesAssigned =
-        (roleRules?.length &&
-          roleRules.filter((item) => {
-            return roles.find(
-              (role) => role.id === item.roleId && item.ruleId === rule.id
-            );
-          })) ||
-        ([] as IRoleRule[]);
+      let rolesAssigned: IRoleRule[] = [];
+
+      if (roleRules && roleRules.length && roles) {
+        rolesAssigned = roleRules.filter((item) => {
+          const role = roles.find((role) => role && role.id === item.roleId);
+          return role && item.ruleId === rule.id;
+        });
+      }
 
       // If any roles are assigned, map them to include additional information
       if (rolesAssigned.length) {
-        rolesAssigned = rolesAssigned.map((item) => {
-          return {
-            ...roles.find((role) => role.id === item.roleId)
-          };
-        }) as any;
+        rolesAssigned = rolesAssigned
+          .map((item) => {
+            const filteredRoles = roles.filter(
+              (role) => role?.id === item.roleId
+            ); // Filter out potentially undefined roles
+            const role = filteredRoles.length ? filteredRoles[0] : undefined; // Get the first role (if any) from the filtered list
+            if (role) {
+              return {
+                ...role
+              };
+            }
+            return null; // Or handle the case where role is undefined
+          })
+          .filter(Boolean) as any; // Filter out potential null values
       }
 
       return {
