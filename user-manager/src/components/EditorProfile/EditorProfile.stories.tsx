@@ -30,8 +30,8 @@ export default {
     registeredDate: {
       description: 'The date when the user registered.'
     },
-    lastVisitedDate: {
-      description: 'The date when the user last visited.'
+    lastModifiedDate: {
+      description: 'The date when the user last modify.'
     },
     details: {
       description: 'Additional details or description about the user.'
@@ -62,10 +62,10 @@ export const Default: Story = {
     email: '',
     isActive: true,
     registeredDate: null,
-    lastVisitedDate: null,
+    lastModifiedDate: null,
     details: '',
     bgColor: getRandomColor(),
     onSaveUser: () => {},
-    onDeleteUser: () => {},
+    onDeleteUser: () => {}
   }
 };

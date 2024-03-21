@@ -42,7 +42,7 @@ export const Default: Story = {
       {
         type: INFO_TYPE.TEXT_VIEW,
         icon: 'icon-date',
-        title: 'Last visited:',
+        title: 'Last Modified:',
         content: formatDate(new Date().toISOString())
       },
       {
