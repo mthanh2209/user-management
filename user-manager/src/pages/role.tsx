@@ -339,8 +339,8 @@ const RolePage = () => {
   }
 
   return (
-    <>
-      <div className='body-content'>
+    <div className='body-content'>
+      <div className='content'>
         <Toolbar
           content='Roles'
           onClose={handleCloseSearchBar}
@@ -407,7 +407,7 @@ const RolePage = () => {
           onReturnClick={handleTogglePanel}
         />
       )}
-    </>
+    </div>
   );
 };
 
