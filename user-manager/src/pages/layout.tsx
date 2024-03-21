@@ -63,6 +63,8 @@ const Layout = () => {
       });
 
       dispatch({ type: TYPES.SUCCESS });
+
+      setIsDrawerOpen(false);
       navigate(PATH.HOME_PATH);
     } else {
       dispatch({ type: TYPES.ERROR });
@@ -84,6 +86,7 @@ const Layout = () => {
 
       dispatch({ type: TYPES.SUCCESS });
 
+      setIsDrawerOpen(false);
       navigate(PATH.ROLES_PATH);
     } else {
       dispatch({ type: TYPES.ERROR });
