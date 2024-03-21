@@ -404,8 +404,8 @@ const HomePage = () => {
   }
 
   return (
-    <>
-      <div className='body-content'>
+    <div className='body-content'>
+      <div className='content'>
         <Toolbar
           content='Users'
           onClose={handleCloseSearchBar}
@@ -480,7 +480,7 @@ const HomePage = () => {
           onReturnClick={handleTogglePanel}
         />
       )}
-    </>
+    </div>
   );
 };
 

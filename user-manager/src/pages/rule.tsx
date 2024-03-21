@@ -214,8 +214,8 @@ const RulePage = () => {
   };
 
   return (
-    <>
-      <div className='body-content'>
+    <div className='body-content'>
+      <div className='content'>
         <Toolbar
           content='Rules'
           onClose={handleCloseSearchBar}
@@ -240,7 +240,7 @@ const RulePage = () => {
           isBackIcon={true}
         />
       )}
-    </>
+    </div>
   );
 };
 
