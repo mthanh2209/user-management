@@ -56,10 +56,10 @@ const Drawer = ({
   const handleOnSubmit = () => {
     if (!textInput.trim()) {
       return null;
-    } else {
-      onSubmit({ type, value: textInput });
-      setOpenModal(false);
     }
+
+    onSubmit({ type, value: textInput });
+    setOpenModal(false);
   };
 
   const popoverOption: IPopoverOption[] = [

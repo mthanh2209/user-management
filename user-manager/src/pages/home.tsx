@@ -371,7 +371,7 @@ const HomePage = () => {
       let rolesAssigned =
         (roleRules?.length &&
           roleRules.filter((item) => {
-            return rolesData.find(
+            return roles.find(
               (role) => role.id === item.roleId && item.ruleId === rule.id
             );
           })) ||
@@ -381,7 +381,7 @@ const HomePage = () => {
       if (rolesAssigned.length) {
         rolesAssigned = rolesAssigned.map((item) => {
           return {
-            ...rolesData.find((role) => role.id === item.roleId)
+            ...roles.find((role) => role.id === item.roleId)
           };
         }) as any;
       }

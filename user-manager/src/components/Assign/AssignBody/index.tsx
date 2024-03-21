@@ -24,46 +24,50 @@ const AssignBody = ({
   selectedType,
   handleItemSelect
 }: IAssignBody) => {
-  if (!isModifying) {
+  const isAssigned = items.some(
+    (item) => item.isAssigned || item.assignedTo?.length
+  );
+
+  if (isModifying || isAssigned) {
     return (
-      <div className='notification-message'>Click Modify button to assign.</div>
+      <ul>
+        {items.map(
+          (item) =>
+            (isModifying ||
+              item.isAssigned ||
+              Boolean(item.assignedTo?.length)) && (
+              <li key={item.id} className='panel-assign-body-list'>
+                {item.avatar || item.bgColor ? (
+                  <AssignAvatarTextItem
+                    id={item.id}
+                    name={item.name}
+                    bgColor={item.bgColor}
+                    isModifying={isModifying}
+                    isAssigned={item.isAssigned}
+                    handleItemSelect={handleItemSelect}
+                    src={item.avatar}
+                  />
+                ) : (
+                  <AssignTextItem
+                    id={item.id}
+                    name={item.name}
+                    description={item.description}
+                    isAssigned={item.isAssigned}
+                    isModifying={isModifying}
+                    assignedTo={item.assignedTo}
+                    selectedType={selectedType}
+                    handleItemSelect={handleItemSelect}
+                  />
+                )}
+              </li>
+            )
+        )}
+      </ul>
     );
   }
 
   return (
-    <ul>
-      {items.map(
-        (item) =>
-          (isModifying ||
-            item.isAssigned ||
-            Boolean(item.assignedTo?.length)) && (
-            <li key={item.id} className='panel-assign-body-list'>
-              {item.avatar || item.bgColor ? (
-                <AssignAvatarTextItem
-                  id={item.id}
-                  name={item.name}
-                  bgColor={item.bgColor}
-                  isModifying={isModifying}
-                  isAssigned={item.isAssigned}
-                  handleItemSelect={handleItemSelect}
-                  src={item.avatar}
-                />
-              ) : (
-                <AssignTextItem
-                  id={item.id}
-                  name={item.name}
-                  description={item.description}
-                  isAssigned={item.isAssigned}
-                  isModifying={isModifying}
-                  assignedTo={item.assignedTo}
-                  selectedType={selectedType}
-                  handleItemSelect={handleItemSelect}
-                />
-              )}
-            </li>
-          )
-      )}
-    </ul>
+    <div className='notification-message'>Click Modify button to assign.</div>
   );
 };
 
