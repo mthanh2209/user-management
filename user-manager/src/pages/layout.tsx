@@ -67,6 +67,8 @@ const Layout = () => {
       });
 
       dispatch({ type: TOAST_TYPE.SUCCESS });
+      
+      setIsDrawerOpen(false);
       navigate(PATH.HOME_PATH);
     } else {
       dispatch({ type: TOAST_TYPE.ERROR });
@@ -87,6 +89,8 @@ const Layout = () => {
       });
 
       dispatch({ type: TOAST_TYPE.SUCCESS });
+
+      setIsDrawerOpen(false);
       navigate(PATH.ROLES_PATH);
     } else {
       dispatch({ type: TOAST_TYPE.ERROR });
