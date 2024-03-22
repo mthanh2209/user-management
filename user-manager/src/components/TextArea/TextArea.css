@@ -16,8 +16,8 @@
   border: 1px solid var(--primary-color);
 }
 
-@media (max-width: 320px) {
+@media (max-width: 420px) {
   .text-area {
-    width: 170px;
+    width: 190px;
   }
 }

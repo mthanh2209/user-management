@@ -61,7 +61,7 @@
   z-index: 1;
 }
 
-@media (max-width: 320px) {
+@media (max-width: 420px) {
   .confirm-buttons {
     justify-content: space-between;
   }
@@ -75,12 +75,12 @@
   }
 
   .form-item {
-    grid-template-columns: 72px 1fr;
+    grid-template-columns: 86px 1fr;
     margin-left: 15px;
     gap: 15px;
   }
 
   .form-item-status {
-    grid-template-columns: 72px 40px 1fr;
+    grid-template-columns: 86px 40px 1fr;
   }
 }
