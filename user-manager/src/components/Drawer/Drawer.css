@@ -41,6 +41,7 @@
     flex-direction: column;
     gap: 16px;
     min-width: 210px;
+    height: 100%;
     padding: 20px 0;
     background-color: #4a4e58;
     z-index: 1;
